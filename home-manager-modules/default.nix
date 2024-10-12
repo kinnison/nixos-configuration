@@ -20,5 +20,26 @@ in {
       };
     })
     (mkIf nmcfg.enable { services.network-manager-applet.enable = true; })
+    {
+      programs.zsh = {
+        enable = true;
+        enableCompletion = true;
+        enableVteIntegration = true;
+        autosuggestion = {
+          enable = true;
+          # This turns up in newer home-manager?
+          # strategy = [ "history" ];
+        };
+        history = {
+          # This turns up in newer home-manager?
+          # append = true;
+          share = true;
+          extended = true;
+          ignoreAllDups = true;
+          ignoreSpace = true;
+        };
+        syntaxHighlighting.enable = true;
+      };
+    }
   ];
 }
