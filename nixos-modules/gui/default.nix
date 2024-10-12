@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 let cfg = config.kinnison.gui;
 in {
   imports = [ ./wayland.nix ];
@@ -17,5 +17,7 @@ in {
     catppuccin.enable = true;
     catppuccin.flavor = lib.mkDefault cfg.theme;
     catppuccin.accent = lib.mkDefault cfg.accent;
+    environment.systemPackages = lib.mkIf config.kinnison.network-manager.enable
+      [ pkgs.networkmanagerapplet ];
   };
 }

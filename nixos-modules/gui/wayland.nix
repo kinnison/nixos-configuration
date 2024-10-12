@@ -48,5 +48,7 @@ in {
     #];
 
     hardware.opengl.enable = true;
+
+    kinnison.user.groups = [ "input" ];
   };
 }

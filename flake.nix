@@ -9,7 +9,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     catppuccin.url = "github:catppuccin/nix";
   };
@@ -27,6 +27,13 @@
         home-manager.nixosModules.home-manager
         self.nixosModules.default
         {
+          _module.args = {
+            homes = self.homes;
+            hm-modules = [
+              catppuccin.homeManagerModules.catppuccin
+              (import ./home-manager-modules)
+            ];
+          };
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
         }
@@ -54,7 +61,6 @@
         let pkgs = import nixpkgs { inherit system; };
         in (import ./packages) { inherit pkgs; });
       nixosModules.default = import ./nixos-modules;
-      homeManagerModules.default = import ./home-manager-modules;
       nixosConfigurations = {
         testvm = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -64,5 +70,7 @@
       };
 
       lib = { inherit defaultSystemModules; };
+
+      homes = { dsilvers = ./homes/dsilvers; };
     };
 }

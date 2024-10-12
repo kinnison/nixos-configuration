@@ -1,17 +1,21 @@
-{ pkgs, ... }:
+{ pkgs, homes, ... }:
 let lib = pkgs.lib;
 in rec {
   imports = [ ./hardware-configuration.nix ];
   system.stateVersion = "24.05";
   networking.hostName = "testvm";
 
-  users.users.test = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "input" "networkmanager" ];
-    initialPassword = "test";
-  };
+  #users.users.test = {
+  #  isNormalUser = true;
+  #  extraGroups = [ "wheel" "input" "networkmanager" ];
+  #  initialPassword = "test";
+  #};
 
-  networking.networkmanager.enable = true;
+  kinnison.user = {
+    name = "test";
+    home = homes.dsilvers;
+    extra = { initialPassword = "test"; };
+  };
 
   environment.systemPackages = with pkgs; [
     kitty
@@ -41,4 +45,5 @@ in rec {
     wayland.enable = true;
   };
   kinnison.sound.enable = true;
+  kinnison.network-manager.enable = true;
 }
