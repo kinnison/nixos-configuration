@@ -23,8 +23,11 @@ in {
     catppuccin.flavor = lib.mkDefault cfg.theme;
     catppuccin.accent = lib.mkDefault cfg.accent;
     console.catppuccin.enable = false;
-    environment.systemPackages = lib.mkIf config.kinnison.network-manager.enable
-      [ pkgs.networkmanagerapplet ];
+    environment.systemPackages = lib.mkMerge [
+      (lib.mkIf config.kinnison.network-manager.enable
+        [ pkgs.networkmanagerapplet ])
+      [ config.stylix.cursor.package ]
+    ];
     stylix = {
       enable = true;
       image = config.lib.stylix.pixel "base01";
@@ -36,6 +39,10 @@ in {
         package = pkgs.catppuccin-cursors.${cursor-name};
         size = 32;
       };
+    };
+    services.displayManager.sddm.settings.Theme = {
+      cursorTheme = config.stylix.cursor.name;
+      cursorSize = config.stylix.cursor.size;
     };
   };
 }
