@@ -38,6 +38,11 @@ in {
         package = mkForce pkgs.catppuccin-cursors.${cursor-name};
         size = mkForce 32;
       };
+      services.udiskie = {
+        enable = true;
+        automount = true;
+        notify = true;
+      };
     })
     (mkIf (guicfg.enable && bluecfg.enable) {
       services.blueman-applet.enable = true;

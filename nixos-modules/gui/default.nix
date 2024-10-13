@@ -44,5 +44,6 @@ in {
       cursorTheme = config.stylix.cursor.name;
       cursorSize = config.stylix.cursor.size;
     };
+    services.udisks2.enable = true;
   };
 }
