@@ -1,15 +1,7 @@
-{ pkgs, homes, ... }:
-let lib = pkgs.lib;
-in rec {
+{ pkgs, homes, ... }: rec {
   imports = [ ./hardware-configuration.nix ];
   system.stateVersion = "24.05";
   networking.hostName = "testvm";
-
-  #users.users.test = {
-  #  isNormalUser = true;
-  #  extraGroups = [ "wheel" "input" "networkmanager" ];
-  #  initialPassword = "test";
-  #};
 
   kinnison.user = {
     name = "test";
@@ -17,17 +9,7 @@ in rec {
     extra = { initialPassword = "test"; };
   };
 
-  environment.systemPackages = with pkgs; [
-    kitty
-    waybar
-    dunst
-    libnotify
-    rofi-wayland
-    firefox
-    networkmanagerapplet
-    shikane
-    quasselClient
-  ];
+  environment.systemPackages = with pkgs; [ firefox quasselClient ];
 
   virtualisation.vmVariantWithBootLoader = {
     virtualisation.qemu.options = [
