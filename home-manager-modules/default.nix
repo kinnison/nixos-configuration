@@ -76,6 +76,11 @@ in {
         '';
         defaultEditor = true;
       };
+      xdg = {
+        enable = true;
+        mimeApps.enable = true;
+      };
+      home.packages = [ pkgs.at-spi2-atk ];
     }
   ];
 }

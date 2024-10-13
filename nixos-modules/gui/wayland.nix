@@ -16,7 +16,11 @@ in {
 
     xdg.portal = {
       enable = true;
+      # Enable wlroots portal (swayish)
+      wlr.enable = true;
+      # Enable GTK portal for GTK apps
       extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      config = { common = { default = "wlr"; }; };
     };
 
     boot.plymouth = {

@@ -16,5 +16,12 @@
     autosuggestions.enable = true;
   };
 
-  environment.pathsToLink = [ "/share/zsh" ];
+  environment.pathsToLink = lib.mkMerge [
+    [ "/share/zsh" ]
+    (lib.mkIf config.kinnison.gui.enable [
+      "/share/xdg-desktop-portal"
+      "/share/applications"
+    ])
+  ];
+
 }
