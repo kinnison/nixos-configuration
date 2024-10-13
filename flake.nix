@@ -25,6 +25,7 @@
         (final: prev: {
           unstable = import nixpkgs-unstable { system = prev.system; };
         })
+        (final: prev: { kinnison = import ./packages { pkgs = final; }; })
       ];
       defaultSystemModules = [
         catppuccin.nixosModules.catppuccin

@@ -6,6 +6,8 @@ let
   waybar-battery-modules = [ ];
   waybar-battery-blocks = { };
   rofi-bin = "${config.programs.rofi.package}/bin/rofi";
+  rofi-lock =
+    pkgs.kinnison.rofi-lock.override { rofi = config.programs.rofi.package; };
 in {
   options.kinnison.batteries = mkOption {
     description = "Batteries, if any";
@@ -70,6 +72,7 @@ in {
           "Mod1+f11" = "fullscreen toggle";
           "Mod4+Shift+r" = "reload";
           "Control+Mod1+l" = "exec ${pkgs.swaylock}/bin/swaylock -fF";
+          "Control+Mod4+Mod1+s" = "exec ${rofi-lock}/bin/rofi-lock";
         };
       };
     };
