@@ -8,6 +8,10 @@ let
   rofi-bin = "${config.programs.rofi.package}/bin/rofi";
   rofi-lock =
     pkgs.kinnison.rofi-lock.override { rofi = config.programs.rofi.package; };
+  dmenu = pkgs.writeShellScriptBin "dmenu" ''
+    exec ${rofi-bin} -dmenu "$@"
+  '';
+
 in {
   options.kinnison.batteries = mkOption {
     description = "Batteries, if any";
@@ -16,6 +20,7 @@ in {
   };
 
   config = mkIf guicfg.wayland.enable {
+    home.packages = [ dmenu ];
     programs.swaylock = {
       enable = true;
       catppuccin.enable = false;
@@ -104,6 +109,7 @@ in {
 
     programs.foot = {
       enable = true;
+      server.enable = true;
       catppuccin.enable = false;
       settings = {
         main = {
@@ -112,30 +118,6 @@ in {
           dpi-aware = mkForce "yes";
         };
         mouse = { hide-when-typing = "yes"; };
-      };
-    };
-
-    programs.swayr = {
-      enable = true;
-      systemd = {
-        enable = true;
-        target = "sway-session.target";
-      };
-      settings = {
-        menu = {
-          executable = "${config.programs.rofi.package}/bin/rofi";
-          args = [
-            "-dmenu"
-            "-markup"
-            "-show-icons"
-            "-no-case-sensitive"
-            "-no-drun-use-desktop-cache"
-            "-l"
-            "20"
-            "-p"
-            "{prompt}"
-          ];
-        };
       };
     };
 

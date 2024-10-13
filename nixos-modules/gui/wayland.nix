@@ -11,6 +11,7 @@ in {
     programs.sway = {
       enable = true;
       xwayland.enable = true;
+      extraPackages = [ ];
     };
 
     xdg.portal = {

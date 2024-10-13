@@ -4,6 +4,7 @@ let
   inherit (lib) mkMerge mkIf mkForce;
   guicfg = osConfig.kinnison.gui;
   nmcfg = osConfig.kinnison.network-manager;
+  bluecfg = osConfig.kinnison.bluetooth;
   mkUpper = str:
     (lib.toUpper (builtins.substring 0 1 str))
     + (builtins.substring 1 (builtins.stringLength str) str);
@@ -38,6 +39,9 @@ in {
         size = mkForce 32;
       };
     })
+    (mkIf (guicfg.enable && bluecfg.enable) {
+      services.blueman-applet.enable = true;
+    })
     (mkIf nmcfg.enable { services.network-manager-applet.enable = true; })
     {
       programs.zsh = {
@@ -58,6 +62,14 @@ in {
           ignoreSpace = true;
         };
         syntaxHighlighting.enable = true;
+      };
+      programs.vim = {
+        enable = true;
+        settings = { background = "dark"; };
+        extraConfig = ''
+          set mouse=
+        '';
+        defaultEditor = true;
       };
     }
   ];
