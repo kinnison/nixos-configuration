@@ -1,10 +1,11 @@
 # Wayland based configuration
-{ osConfig, lib, pkgs, ... }:
+{ osConfig, config, lib, pkgs, ... }:
 let
   inherit (lib) mkIf mkOption mkForce;
   guicfg = osConfig.kinnison.gui;
   waybar-battery-modules = [ ];
   waybar-battery-blocks = { };
+  rofi-bin = "${config.programs.rofi.package}/bin/rofi";
 in {
   options.kinnison.batteries = mkOption {
     description = "Batteries, if any";
@@ -16,24 +17,86 @@ in {
     programs.swaylock = {
       enable = true;
       catppuccin.enable = false;
+      settings = {
+        font-size = 24;
+        indicator-radius = 250;
+        show-failed-attempts = true;
+      };
     };
     wayland.windowManager.sway = {
       enable = true;
       catppuccin.enable = true;
       systemd.enable = true;
-      config.bars = [ ];
-      config.input."type:keyboard" = {
-        xkb_layout = "gb";
-        xkb_options = "compose:caps";
+      config = {
+        bars = [ ];
+        input."type:keyboard" = {
+          xkb_layout = "gb";
+          xkb_options = "compose:caps";
+        };
+        window = {
+          titlebar = false;
+          border = 1;
+        };
+        gaps = {
+          smartBorders = "on";
+          smartGaps = true;
+        };
+        menu = "rofi -show drun";
+        focus = { wrapping = "workspace"; };
+        # The recommendation is to not override all the bindings,
+        # but we're going to do so because we really want to
+        keybindings = let conf = config.wayland.windowManager.sway.config;
+        in {
+          "Mod4+x" = "exec ${pkgs.foot}/bin/foot";
+          "Mod4+e" = "exec ${rofi-bin} -modi emoji -show emoji";
+          "Mod1+f2" = "exec ${rofi-bin} -show run";
+          "Mod1+f3" = "exec ${conf.menu}";
+          "Control+Mod1+Left" = "workspace prev_on_output";
+          "Control+Mod1+Right" = "workspace next_on_output";
+          "Mod4+Tab" = "focus next";
+          "Mod4+Shift+Tab" = "focus prev";
+          # Move window one workspace prev / next
+          "Control+Shift+Mod1+Left" =
+            "move container to workspace prev_on_output;workspace prev_on_output";
+          "Control+Shift+Mod1+Right" =
+            "move container to workspace prev_on_output;workspace prev_on_output";
+          # Move window one output prev/next
+          # "Control+Shift+Mod1+Up" = "";
+          # "Control+Shift+Mod1+Down" = "";
+          # Switch focus one output prev/next
+          # "Control+Mod1+Up" = "";
+          # "Control+Mod1+Down" = "";
+          "Mod1+f4" = "kill";
+          "Mod1+f11" = "fullscreen toggle";
+          "Mod4+Shift+r" = "reload";
+          "Control+Mod1+l" = "exec ${pkgs.swaylock}/bin/swaylock -fF";
+        };
       };
-      config.window = {
-        titlebar = false;
-        border = 1;
-      };
-      config.gaps = {
-        smartBorders = "on";
-        smartGaps = true;
-      };
+    };
+
+    services.swayidle = {
+      enable = true;
+      systemdTarget = "sway-session.target";
+      events = [
+        {
+          event = "before-sleep";
+          command = "${pkgs.swaylock}/bin/swaylock -fF";
+        }
+        {
+          event = "lock";
+          command = "lock";
+        }
+      ];
+      timeouts = [
+        {
+          timeout = 300;
+          command = "${pkgs.swaylock}/bin/swaylock -fF";
+        }
+        {
+          timeout = 300;
+          command = "${pkgs.systemd}/bin/systemctl suspend";
+        }
+      ];
     };
 
     programs.foot = {
@@ -46,6 +109,30 @@ in {
           dpi-aware = mkForce "yes";
         };
         mouse = { hide-when-typing = "yes"; };
+      };
+    };
+
+    programs.swayr = {
+      enable = true;
+      systemd = {
+        enable = true;
+        target = "sway-session.target";
+      };
+      settings = {
+        menu = {
+          executable = "${config.programs.rofi.package}/bin/rofi";
+          args = [
+            "-dmenu"
+            "-markup"
+            "-show-icons"
+            "-no-case-sensitive"
+            "-no-drun-use-desktop-cache"
+            "-l"
+            "20"
+            "-p"
+            "{prompt}"
+          ];
+        };
       };
     };
 
@@ -154,6 +241,13 @@ in {
             rofi-unwrapped = pkgs.rofi-wayland-unwrapped;
           })
         ];
+      };
+      extraConfig = {
+        modi = "drun,emoji,run";
+        kb-primary-paste = "Control+V,Shift+Insert";
+        kb-secondary-paste = "Control+v,Insert";
+        icon-theme = "Papirus";
+        show-icons = true;
       };
     };
   };
