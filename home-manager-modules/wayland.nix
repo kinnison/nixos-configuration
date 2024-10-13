@@ -146,5 +146,15 @@ in {
       enable = true;
       catppuccin.enable = true;
     };
+    programs.rofi = {
+      enable = true;
+      package = pkgs.rofi-wayland.override {
+        plugins = [
+          (pkgs.rofi-emoji.override {
+            rofi-unwrapped = pkgs.rofi-wayland-unwrapped;
+          })
+        ];
+      };
+    };
   };
 }
