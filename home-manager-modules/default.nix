@@ -12,11 +12,21 @@ in {
         enable = true;
         flavor = guicfg.theme;
         accent = guicfg.accent;
-        pointerCursor.enable = true;
+        #pointerCursor.enable = true;
       };
-      gtk.catppuccin = {
+      # https://github.com/catppuccin/gtk/issues/262
+      # Essentially don't bother - GTK is impossible to theme properly
+      # unless you're GNOME
+      #gtk.catppuccin = {
+      #  enable = true;
+      #  icon.enable = true;
+      #};
+      gtk.enable = true;
+      qt = {
         enable = true;
-        icon.enable = true;
+        style.name = "kvantum";
+        platformTheme.name = "kvantum";
+        style.catppuccin.enable = true;
       };
     })
     (mkIf nmcfg.enable { services.network-manager-applet.enable = true; })

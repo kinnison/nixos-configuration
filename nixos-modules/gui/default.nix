@@ -17,7 +17,15 @@ in {
     catppuccin.enable = true;
     catppuccin.flavor = lib.mkDefault cfg.theme;
     catppuccin.accent = lib.mkDefault cfg.accent;
+    console.catppuccin.enable = false;
     environment.systemPackages = lib.mkIf config.kinnison.network-manager.enable
       [ pkgs.networkmanagerapplet ];
+    stylix = {
+      enable = true;
+      image = config.lib.stylix.pixel "base01";
+      base16Scheme =
+        "${pkgs.base16-schemes}/share/themes/catppuccin-${cfg.theme}.yaml";
+      polarity = "dark";
+    };
   };
 }

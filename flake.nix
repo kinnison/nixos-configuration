@@ -11,10 +11,14 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    stylix.url = "github:danth/stylix/release-24.05";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
+    stylix.inputs.home-manager.follows = "home-manager";
     catppuccin.url = "github:catppuccin/nix";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, catppuccin }:
+  outputs =
+    { self, nixpkgs, nixpkgs-unstable, home-manager, catppuccin, stylix }:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       overlays = [
@@ -24,6 +28,7 @@
       ];
       defaultSystemModules = [
         catppuccin.nixosModules.catppuccin
+        stylix.nixosModules.stylix
         home-manager.nixosModules.home-manager
         self.nixosModules.default
         {

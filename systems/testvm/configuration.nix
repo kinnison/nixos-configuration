@@ -26,11 +26,12 @@ in rec {
     firefox
     networkmanagerapplet
     shikane
+    quasselClient
   ];
 
   virtualisation.vmVariantWithBootLoader = {
     virtualisation.qemu.options = [
-      "-device virtio-vga,max_outputs=2"
+      "-device virtio-vga,max_outputs=1"
       "-display gtk,gl=off,show-cursor=off"
     ];
 

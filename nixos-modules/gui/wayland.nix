@@ -22,6 +22,7 @@ in {
       enable = true;
       catppuccin.enable = true;
     };
+    stylix.targets.plymouth.enable = false;
 
     boot.initrd.systemd.enable = true;
     boot.kernelParams = [ "quiet" "splash" ];
@@ -30,6 +31,7 @@ in {
       enable = true;
       wayland.enable = true;
       catppuccin.enable = true;
+      catppuccin.fontSize = "20";
       package = pkgs.kdePackages.sddm;
     };
 

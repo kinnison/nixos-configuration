@@ -1,7 +1,7 @@
 # Wayland based configuration
 { osConfig, lib, pkgs, ... }:
 let
-  inherit (lib) mkIf mkOption;
+  inherit (lib) mkIf mkOption mkForce;
   guicfg = osConfig.kinnison.gui;
   waybar-battery-modules = [ ];
   waybar-battery-blocks = { };
@@ -15,7 +15,7 @@ in {
   config = mkIf guicfg.wayland.enable {
     programs.swaylock = {
       enable = true;
-      catppuccin.enable = true;
+      catppuccin.enable = false;
     };
     wayland.windowManager.sway = {
       enable = true;
@@ -38,12 +38,12 @@ in {
 
     programs.foot = {
       enable = true;
-      catppuccin.enable = true;
+      catppuccin.enable = false;
       settings = {
         main = {
           term = "xterm-256color";
-          font = "InconsolataNerdFont:size=20";
-          dpi-aware = "yes";
+          font = mkForce "InconsolataNerdFont:size=20";
+          dpi-aware = mkForce "yes";
         };
         mouse = { hide-when-typing = "yes"; };
       };
@@ -141,6 +141,10 @@ in {
 
         } // waybar-battery-blocks;
       };
+    };
+    services.dunst = {
+      enable = true;
+      catppuccin.enable = true;
     };
   };
 }
