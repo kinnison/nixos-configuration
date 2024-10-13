@@ -1,9 +1,13 @@
 # The various packages provided directly by my system and home configs
-{ lib, osConfig, ... }:
+{ lib, pkgs, osConfig, ... }:
 let
-  inherit (lib) mkMerge mkIf;
+  inherit (lib) mkMerge mkIf mkForce;
   guicfg = osConfig.kinnison.gui;
   nmcfg = osConfig.kinnison.network-manager;
+  mkUpper = str:
+    (lib.toUpper (builtins.substring 0 1 str))
+    + (builtins.substring 1 (builtins.stringLength str) str);
+  cursor-name = "${guicfg.theme}${mkUpper guicfg.accent}";
 in {
   imports = [ ./wayland.nix ];
   config = mkMerge [
@@ -27,6 +31,11 @@ in {
         style.name = "kvantum";
         platformTheme.name = "kvantum";
         style.catppuccin.enable = true;
+      };
+      home.pointerCursor = {
+        name = mkForce "catppuccin-${guicfg.theme}-${guicfg.accent}-cursors";
+        package = mkForce pkgs.catppuccin-cursors.${cursor-name};
+        size = mkForce 32;
       };
     })
     (mkIf nmcfg.enable { services.network-manager-applet.enable = true; })

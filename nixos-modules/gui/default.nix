@@ -1,5 +1,10 @@
 { lib, config, pkgs, ... }:
-let cfg = config.kinnison.gui;
+let
+  cfg = config.kinnison.gui;
+  mkUpper = str:
+    (lib.toUpper (builtins.substring 0 1 str))
+    + (builtins.substring 1 (builtins.stringLength str) str);
+  cursor-name = "${cfg.theme}${mkUpper cfg.accent}";
 in {
   imports = [ ./wayland.nix ];
   options.kinnison.gui = {
@@ -26,6 +31,11 @@ in {
       base16Scheme =
         "${pkgs.base16-schemes}/share/themes/catppuccin-${cfg.theme}.yaml";
       polarity = "dark";
+      cursor = {
+        name = "catppuccin-${cfg.theme}-${cfg.accent}-cursors";
+        package = pkgs.catppuccin-cursors.${cursor-name};
+        size = 32;
+      };
     };
   };
 }
