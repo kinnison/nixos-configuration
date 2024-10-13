@@ -15,6 +15,7 @@
     virtualisation.qemu.options = [
       "-device virtio-vga,max_outputs=1"
       "-display gtk,gl=off,show-cursor=off"
+      "-m 4G"
     ];
 
     environment.sessionVariables =
