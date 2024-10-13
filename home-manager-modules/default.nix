@@ -42,6 +42,12 @@ in {
         enable = true;
         automount = true;
         notify = true;
+        settings = {
+          device_config = [{
+            device_file = "/dev/fd0";
+            ignore = true;
+          }];
+        };
       };
     })
     (mkIf (guicfg.enable && bluecfg.enable) {
