@@ -78,8 +78,15 @@
         };
         installer = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = self.lib.defaultSystemModules
-            ++ [ ./systems/installer/configuration.nix ];
+          modules = self.lib.defaultSystemModules ++ [
+            ./systems/installer/configuration.nix
+            {
+              environment.systemPackages = [
+                disko.packages.x86_64-linux.disko-install
+                disko.packages.x86_64-linux.disko
+              ];
+            }
+          ];
         };
       };
 
