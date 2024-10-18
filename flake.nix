@@ -15,10 +15,12 @@
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     stylix.inputs.home-manager.follows = "home-manager";
     catppuccin.url = "github:catppuccin/nix";
+    disko.url = "github:nix-community/disko/v1.8.2";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs =
-    { self, nixpkgs, nixpkgs-unstable, home-manager, catppuccin, stylix }:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, catppuccin, stylix
+    , disko }:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       overlays = [
@@ -31,6 +33,7 @@
         catppuccin.nixosModules.catppuccin
         stylix.nixosModules.stylix
         home-manager.nixosModules.home-manager
+        disko.nixosModules.disko
         self.nixosModules.default
         {
           _module.args = {
@@ -73,10 +76,18 @@
           modules = self.lib.defaultSystemModules
             ++ [ ./systems/testvm/configuration.nix ];
         };
+        installer = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = self.lib.defaultSystemModules
+            ++ [ ./systems/installer/configuration.nix ];
+        };
       };
 
       lib = { inherit defaultSystemModules; };
 
-      homes = { dsilvers = ./homes/dsilvers; };
+      homes = {
+        dsilvers = ./homes/dsilvers;
+        installer = ./homes/installer;
+      };
     };
 }
