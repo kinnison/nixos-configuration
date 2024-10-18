@@ -1,6 +1,6 @@
 # Base Role for all systems which I want
 { config, lib, pkgs, ... }: {
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable = lib.mkDefault true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   time.timeZone = lib.mkDefault "Europe/London";
