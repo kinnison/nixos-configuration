@@ -5,9 +5,9 @@
   system.stateVersion = "24.05";
   networking.hostName = "installer";
   kinnison.user = {
-    name = "installer";
+    name = "nixos";
     home = homes.installer;
-    extra = { initialPassword = "installer"; };
+    extra = { initialPassword = "nixos"; };
   };
   kinnison.gui = {
     enable = true;
