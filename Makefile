@@ -4,7 +4,7 @@ help:
 	@echo Various targets which can be of use:
 	@echo
 	@echo "help -- this message"
-	@echo "runvm -- Build the 'testvm' system and run it fresh (uses result link)"
+	@echo "runvm -- Build the 'test' VM system and run it fresh (uses result link)"
 	@echo "         Set BOOT=1 to use the vmWithBootLoader target instead of the vm target"
 	@ehco "installer -- Create an installation ISO image"
 
@@ -21,9 +21,9 @@ VM=vm
 endif
 
 runvm:
-	nix build .\#nixosConfigurations.testvm.config.system.build.$(VM)
-	$(RM) testvm.qcow2
-	result/bin/run-testvm-vm
+	nix build .\#nixosConfigurations.test.config.system.build.$(VM)
+	$(RM) test.qcow2
+	result/bin/run-test-vm
 
 installer:
 	nix build .\#nixosConfigurations.installer.config.system.build.isoImage

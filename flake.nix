@@ -71,10 +71,10 @@
         in (import ./packages) { inherit pkgs; });
       nixosModules.default = import ./nixos-modules;
       nixosConfigurations = {
-        testvm = nixpkgs.lib.nixosSystem {
+        test = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = self.lib.defaultSystemModules
-            ++ [ ./systems/testvm/configuration.nix ];
+            ++ [ ./systems/test/configuration.nix ];
         };
         installer = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";

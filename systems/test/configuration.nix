@@ -1,7 +1,7 @@
 { pkgs, homes, ... }: rec {
   imports = [ ./hardware-configuration.nix ];
   system.stateVersion = "24.05";
-  networking.hostName = "testvm";
+  networking.hostName = "test";
 
   kinnison.user = {
     name = "test";
