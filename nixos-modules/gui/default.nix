@@ -31,8 +31,7 @@ in {
     stylix = {
       enable = true;
       image = config.lib.stylix.pixel "base01";
-      base16Scheme =
-        "${pkgs.base16-schemes}/share/themes/catppuccin-${cfg.theme}.yaml";
+      base16Scheme = ./themes/catppuccin-${cfg.theme}.yaml;
       polarity = "dark";
       cursor = {
         name = "catppuccin-${cfg.theme}-${cfg.accent}-cursors";
