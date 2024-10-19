@@ -36,7 +36,7 @@ in {
       enable = true;
       wayland.enable = true;
       catppuccin.enable = true;
-      catppuccin.fontSize = "20";
+      catppuccin.fontSize = "18";
       package = pkgs.kdePackages.sddm;
     };
 

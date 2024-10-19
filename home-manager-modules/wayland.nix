@@ -117,7 +117,7 @@ in {
       settings = {
         main = {
           term = "xterm-256color";
-          font = mkForce "InconsolataNerdFont:size=20";
+          font = mkForce "InconsolataNerdFont:size=16";
           dpi-aware = mkForce "yes";
         };
         mouse = { hide-when-typing = "yes"; };
