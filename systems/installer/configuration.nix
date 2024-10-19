@@ -1,13 +1,15 @@
 # This is the nixos installer for my stuff
 
 { modulesPath, homes, lib, config, ... }: {
-  imports = [ "${modulesPath}/installer/cd-dvd/installation-cd-base.nix" ];
+  imports = [
+    "${modulesPath}/installer/cd-dvd/installation-cd-base.nix"
+    ./systems.nix
+  ];
   system.stateVersion = "24.05";
   networking.hostName = "installer";
   kinnison.user = {
     name = "nixos";
     home = homes.installer;
-    extra = { initialPassword = "nixos"; };
   };
   kinnison.gui = {
     enable = true;

@@ -1,5 +1,5 @@
 # This is the "hardware" configuration for a basic test VM
-{ config, lib, pkgs, modulesPath, ... }:
+{ config, lib, modulesPath, ... }:
 
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
@@ -10,14 +10,69 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" = {
-    device = "/dev/vda1";
-    fsType = "ext4";
-  };
-
-  swapDevices = [ ];
-
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode =
     lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  disko.devices = {
+    disk = {
+      main = {
+        type = "disk";
+        device = "/dev/nvme0n1";
+        content = {
+          type = "gpt";
+          partitions = {
+            ESP = {
+              size = "500M";
+              type = "EF00";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+                mountOptions = [ "umask=0077" ];
+              };
+            };
+            luks = {
+              size = "100%";
+              content = {
+                type = "luks";
+                name = "testcrypt";
+                askPassword = true;
+                settings = { allowDiscards = true; };
+                content = {
+                  type = "lvm_pv";
+                  vg = "testvg";
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+    lvm_vg = {
+      testvg = {
+        type = "lvm_vg";
+        lvs = {
+          root = {
+            size = "20G";
+            content = {
+              type = "filesystem";
+              format = "ext4";
+              mountpoint = "/";
+              mountOptions = [ "defaults" "relatime" ];
+            };
+          };
+          home = {
+            size = "50G";
+            content = {
+              type = "filesystem";
+              format = "ext4";
+              mountpoint = "/home";
+              mountOptions = [ "defaults" "relatime" ];
+            };
+          };
+        };
+      };
+    };
+  };
 }

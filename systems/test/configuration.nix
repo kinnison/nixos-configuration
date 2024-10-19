@@ -25,6 +25,7 @@
   };
 
   virtualisation.vmVariant = virtualisation.vmVariantWithBootLoader;
+  virtualisation.vmVariantWithDisko = virtualisation.vmVariant;
 
   kinnison.gui = {
     enable = true;

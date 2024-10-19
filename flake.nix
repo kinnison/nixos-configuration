@@ -79,6 +79,7 @@
         installer = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = self.lib.defaultSystemModules ++ [
+            { _module.args = { systems = self.nixosConfigurations; }; }
             ./systems/installer/configuration.nix
             {
               environment.systemPackages = [
