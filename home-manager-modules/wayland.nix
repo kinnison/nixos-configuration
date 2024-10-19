@@ -81,8 +81,27 @@ in {
           "Mod4+Shift+r" = "reload";
           "Control+Mod1+l" = "exec ${pkgs.swaylock}/bin/swaylock -fF";
           "Control+Mod4+Mod1+s" = "exec ${rofi-lock}/bin/rofi-lock";
+
+          # Layout switching
+          "Mod4+Space" = "layout toggle splith splitv tabbed";
+
+          # These aren't great because they moose up mod-tab
+          # "Mod4+Up" = "move up";
+          # "Mod4+Down" = "move down";
+          # "Mod4+Left" = "move left";
+          # "Mod4+Right" = "move right";
+
+          # New bindings I might get used to
+          "Mod4+k" = "kill";
+          "Mod4+f" = "fullscreen toggle";
+          "Mod4+l" = "exec ${pkgs.swaylock}/bin/swaylock -fF";
+          "Mod4+q" = "exec ${rofi-lock}/bin/rofi-lock";
+
         };
       };
+      extraConfig = ''
+        bindswitch lid:on exec systemctl suspend
+      '';
     };
 
     services.swayidle = {
