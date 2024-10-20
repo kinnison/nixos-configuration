@@ -20,7 +20,7 @@
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, catppuccin, stylix
-    , disko }:
+    , disko }@inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       overlays = [
@@ -79,7 +79,12 @@
         installer = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = self.lib.defaultSystemModules ++ [
-            { _module.args = { systems = self.nixosConfigurations; }; }
+            {
+              _module.args = {
+                systems = self.nixosConfigurations;
+                flakeInputs = inputs;
+              };
+            }
             ./systems/installer/configuration.nix
             {
               environment.systemPackages = [
