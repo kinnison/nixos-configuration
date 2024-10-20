@@ -28,4 +28,19 @@
 
   boot.initrd.systemd.enable = lib.mkForce false;
   boot.loader.systemd-boot.enable = false;
+
+  # If we run as a VM...
+  virtualisation.vmVariant = {
+    virtualisation.qemu.options = [
+      "-device virtio-vga,max_outputs=1"
+      "-display gtk,gl=off,show-cursor=off"
+      "-m 4G"
+    ];
+
+    environment.sessionVariables =
+      lib.mkVMOverride { WLR_NO_HARDWARE_CURSORS = "1"; };
+
+    boot.kernelParams = [ "mitigations=off" ];
+  };
+
 }
