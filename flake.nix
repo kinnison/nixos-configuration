@@ -17,17 +17,25 @@
     catppuccin.url = "github:catppuccin/nix";
     disko.url = "github:nix-community/disko/v1.8.2";
     disko.inputs.nixpkgs.follows = "nixpkgs";
+    cats.url = "github:kinnison/cats-backgrounds";
+    cats.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, catppuccin, stylix
-    , disko }@inputs:
+    , disko, cats }@inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       overlays = [
         (final: prev: {
           unstable = import nixpkgs-unstable { system = prev.system; };
         })
-        (final: prev: { kinnison = import ./packages { pkgs = final; }; })
+        (final: prev:
+          let cats = inputs.cats.packages.${prev.system}.cats;
+          in {
+            kinnison = (import ./packages { pkgs = final; }) // {
+              inherit cats;
+            };
+          })
       ];
       defaultSystemModules = [
         catppuccin.nixosModules.catppuccin

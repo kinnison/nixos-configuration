@@ -96,11 +96,12 @@ in {
           "Mod4+f" = "fullscreen toggle";
           "Mod4+l" = "exec ${pkgs.swaylock}/bin/swaylock -fF";
           "Mod4+q" = "exec ${rofi-lock}/bin/rofi-lock";
-
         };
+
       };
       extraConfig = ''
         bindswitch lid:on exec systemctl suspend
+        exec sleep 1 && swaymsg output "*" background "#000000" solid_color
       '';
     };
 
@@ -256,6 +257,30 @@ in {
         icon-theme = "Papirus";
         show-icons = true;
       };
+    };
+    programs.wpaperd = {
+      enable = true;
+      settings = {
+        default = {
+          mode = "stretch";
+          sorting = "random";
+          transition-time = "500";
+          duration = "5m";
+        };
+        any = { path = lib.mkForce "${pkgs.kinnison.cats}"; };
+      };
+    };
+    systemd.user.services.wpaperd = {
+      Unit = {
+        Description = "Wallpaper daemon";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session-pre.target" ];
+      };
+      Service = {
+        Type = "exec";
+        ExecStart = "${config.programs.wpaperd.package}/bin/wpaperd";
+      };
+      Install = { WantedBy = [ "sway-session.target" ]; };
     };
   };
 }
