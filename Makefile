@@ -30,7 +30,7 @@ endif
 
 runvm:
 	nix build .\#nixosConfigurations.$(SYSTEM).config.system.build.$(VM)
-	$(RM) test.qcow2
+	$(RM) $(SYSTEM).qcow2
 	result/bin/*-vm
 
 installer:
