@@ -3,8 +3,9 @@
 with lib;
 let
   cfg = config.kinnison.gnupg;
-  pinentry-rofi =
-    pkgs.pinentry-rofi.override { rofi = config.programs.rofi.package; };
+  pinentry-rofi = pkgs.kinnison.pinentry-rofi.override {
+    rofi = config.programs.rofi.package;
+  };
 in {
   options.kinnison.gnupg = { enable = mkEnableOption "GnuPG Support"; };
 
