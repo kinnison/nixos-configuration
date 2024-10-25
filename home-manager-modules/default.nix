@@ -73,6 +73,7 @@ in {
           ignoreSpace = true;
         };
         syntaxHighlighting.enable = true;
+        defaultKeymap = "emacs";
       };
       programs.vim = {
         enable = true;
