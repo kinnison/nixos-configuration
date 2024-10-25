@@ -19,8 +19,7 @@
       "-m 4G"
     ];
 
-    environment.sessionVariables =
-      pkgs.lib.mkVMOverride { WLR_NO_HARDWARE_CURSORS = "1"; };
+    environment.sessionVariables = { WLR_NO_HARDWARE_CURSORS = "1"; };
 
     boot.kernelParams = [ "mitigations=off" ];
     virtualisation.diskSize = 5120;
