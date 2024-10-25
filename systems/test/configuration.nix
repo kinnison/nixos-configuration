@@ -5,6 +5,7 @@
 
   kinnison.user = {
     name = "test";
+    realName = "Testy McTestface";
     home = homes.dsilvers;
     extra = { initialPassword = "test"; };
   };

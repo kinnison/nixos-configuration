@@ -9,6 +9,7 @@
   networking.hostName = "installer";
   kinnison.user = {
     name = "nixos";
+    realname = "NixOS Installer";
     home = homes.installer;
   };
   kinnison.gui = {

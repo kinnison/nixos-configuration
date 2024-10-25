@@ -21,6 +21,11 @@ in {
       description = "The user's home configuration";
       type = lib.types.path;
     };
+    realName = mkOption {
+      description = "The user's real name";
+      type = lib.types.str;
+      default = cfg.name;
+    };
   };
 
   config = {
