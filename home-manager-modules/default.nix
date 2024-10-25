@@ -49,6 +49,11 @@ in {
           }];
         };
       };
+      services.gnome-keyring = {
+        enable = true;
+        components = [ "secrets" ];
+      };
+      home.packages = [ pkgs.libsecret ];
     })
     (mkIf (guicfg.enable && bluecfg.enable) {
       services.blueman-applet.enable = true;

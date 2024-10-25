@@ -44,5 +44,6 @@ in {
       cursorSize = config.stylix.cursor.size;
     };
     services.udisks2.enable = true;
+    services.gnome.gnome-keyring.enable = true;
   };
 }
