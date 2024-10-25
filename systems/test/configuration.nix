@@ -23,6 +23,7 @@
       pkgs.lib.mkVMOverride { WLR_NO_HARDWARE_CURSORS = "1"; };
 
     boot.kernelParams = [ "mitigations=off" ];
+    virtualisation.diskSize = 5120;
   };
 
   virtualisation.vmVariant = virtualisation.vmVariantWithBootLoader;
