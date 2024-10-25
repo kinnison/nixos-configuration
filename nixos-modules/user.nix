@@ -32,6 +32,7 @@ in {
     users.users.${cfg.name} = {
       isNormalUser = true;
       extraGroups = cfg.groups ++ [ "wheel" ];
+      description = cfg.realName;
     } // cfg.extra;
     home-manager.users.${cfg.name} = { imports = hm-modules ++ [ cfg.home ]; };
   };
