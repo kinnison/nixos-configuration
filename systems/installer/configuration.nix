@@ -9,7 +9,7 @@
   networking.hostName = "installer";
   kinnison.user = {
     name = "nixos";
-    realname = "NixOS Installer";
+    realName = "NixOS Installer";
     home = homes.installer;
   };
   kinnison.gui = {
@@ -38,8 +38,7 @@
       "-m 4G"
     ];
 
-    environment.sessionVariables =
-      lib.mkVMOverride { WLR_NO_HARDWARE_CURSORS = "1"; };
+    environment.sessionVariables = { WLR_NO_HARDWARE_CURSORS = "1"; };
 
     boot.kernelParams = [ "mitigations=off" ];
   };
