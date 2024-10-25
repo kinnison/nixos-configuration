@@ -24,4 +24,13 @@
     ])
   ];
 
+  # We are not prudish about non-free software for the most part,
+  # though we do limit it, so here we list what's allowed
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "vscode"
+      "vscode-extension-ms-vscode-cpptools"
+      "vscode-extension-ms-vscode-remote-remote-ssh"
+      "vscode-extension-ms-vsliveshare-vsliveshare"
+    ];
 }

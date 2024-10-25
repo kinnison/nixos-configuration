@@ -7,4 +7,7 @@
     enable = true;
     email = "dsilvers@digital-scurf.org";
   };
+  # I like rust, and I use vscode to edit it
+  kinnison.rust.enable = true;
+  kinnison.vscode.enable = true;
 }
