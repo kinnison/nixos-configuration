@@ -75,6 +75,12 @@ in {
         syntaxHighlighting.enable = true;
         defaultKeymap = "emacs";
       };
+      programs.direnv = {
+        enable = true;
+        enableZshIntegration = true;
+        nix-direnv = { enable = true; };
+      };
+
       programs.vim = {
         enable = true;
         settings = { background = "dark"; };
