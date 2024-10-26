@@ -79,11 +79,19 @@
         in (import ./packages) { inherit pkgs; });
       nixosModules.default = import ./nixos-modules;
       nixosConfigurations = {
+        # The test system is used by `make runvm` et al.
         test = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = self.lib.defaultSystemModules
             ++ [ ./systems/test/configuration.nix ];
         };
+        # Daniel's personal laptop
+        catalepsy = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = self.lib.defaultSystemModules
+            ++ [ ./systems/catalepsy/configuration.nix ];
+        };
+        # The installer contains all of the above systems, including disko support
         installer = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = self.lib.defaultSystemModules ++ [
