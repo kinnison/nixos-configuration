@@ -17,6 +17,7 @@ in {
     ./rust.nix
     ./vscode.nix
     ./bitwarden.nix
+    ./irc.nix
   ];
   config = mkMerge [
     (mkIf guicfg.enable {
