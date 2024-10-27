@@ -10,7 +10,14 @@ let
     + (builtins.substring 1 (builtins.stringLength str) str);
   cursor-name = "${guicfg.theme}${mkUpper guicfg.accent}";
 in {
-  imports = [ ./wayland.nix ./gpg.nix ./git.nix ./rust.nix ./vscode.nix ];
+  imports = [
+    ./wayland.nix
+    ./gpg.nix
+    ./git.nix
+    ./rust.nix
+    ./vscode.nix
+    ./bitwarden.nix
+  ];
   config = mkMerge [
     (mkIf guicfg.enable {
       catppuccin = {

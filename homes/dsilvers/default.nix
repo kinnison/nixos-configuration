@@ -10,4 +10,6 @@
   # I like rust, and I use vscode to edit it
   kinnison.rust.enable = true;
   kinnison.vscode.enable = true;
+  # I use bitwarden for various things
+  kinnison.bitwarden.enable = true;
 }
