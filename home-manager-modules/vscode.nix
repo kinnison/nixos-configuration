@@ -28,6 +28,8 @@ let
       zxh404.vscode-proto3
       vadimcn.vscode-lldb
       redhat.vscode-yaml
+      catppuccin.catppuccin-vsc-icons
+      catppuccin.catppuccin-vsc
     ] ++ (cfg.pkgs.vscode-utils.extensionsFromVscodeMarketplace
       marketPlaceExtensions);
 in {
@@ -42,6 +44,7 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
+      stylix.targets.vscode.enable = false;
       programs.vscode = {
         enable = true;
         package = cfg.pkgs.vscode;
@@ -54,6 +57,7 @@ in {
             "'Fira Code Sans Mono', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'";
           "editor.fontLigatures" = true;
           "editor.formatOnSave" = true;
+          "editor.semanticHighlighting.enabled" = true;
           "nix.enableLanguageServer" = true;
           "nix.serverPath" = "${pkgs.nil}/bin/nil";
           "workbench.editorAssociations" = { "*.ipynb" = "jupyter-notebook"; };
@@ -61,7 +65,12 @@ in {
           "[nix]" = {
             "editor.defaultFormatter" = "brettm12345.nixfmt-vscode";
           };
+          "terminal.integrated.minimumContrastRatio" = 1;
           "window.zoomLevel" = 2;
+          "window.titleBarStyle" = "native";
+          "workbench.colorTheme" =
+            "Catppuccin Mocha"; # In theory need to tweak this
+          "workbench.iconTheme" = "catppuccin-mocha"; # Ditto
         };
       };
     })
