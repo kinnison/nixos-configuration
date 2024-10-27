@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 let
   inherit (lib) mkIf mkMerge mkEnableOption mkDefault;
   cfg = config.kinnison.bluetooth;
@@ -7,6 +7,9 @@ in {
 
   config = mkMerge [
     { kinnison.bluetooth = { enable = mkDefault true; }; }
-    (mkIf cfg.enable { services.blueman.enable = true; })
+    (mkIf cfg.enable {
+      hardware.bluetooth.enable = true;
+      services.blueman.enable = true;
+    })
   ];
 }
