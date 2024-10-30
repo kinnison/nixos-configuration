@@ -1,4 +1,4 @@
-{ pkgs, homes, ... }: rec {
+{ homes, ... }: rec {
   imports = [ ./hardware-configuration.nix ];
   system.stateVersion = "24.05";
   networking.hostName = "test";
@@ -9,8 +9,6 @@
     home = homes.dsilvers;
     extra = { initialPassword = "test"; };
   };
-
-  environment.systemPackages = with pkgs; [ firefox quasselClient ];
 
   virtualisation.vmVariantWithBootLoader = {
     virtualisation.qemu.options = [

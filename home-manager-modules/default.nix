@@ -61,7 +61,7 @@ in {
         enable = true;
         components = [ "secrets" ];
       };
-      home.packages = [ pkgs.libsecret ];
+      home.packages = [ pkgs.libsecret pkgs.firefox ];
     })
     (mkIf (guicfg.enable && bluecfg.enable) {
       services.blueman-applet.enable = true;

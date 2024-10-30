@@ -1,6 +1,6 @@
 # Configuration for my personal laptop Catalepsy (was Cataplexy)
 
-{ pkgs, homes, ... }: rec {
+{ homes, ... }: rec {
   imports = [ ./hardware-configuration.nix ];
 
   system.stateVersion = "24.05";
@@ -15,8 +15,6 @@
         "$6$jhPpRWgH6hEjTTmH$BZYw8lLV2lalgnsLdbm5r3JsZWxXwf/C7ldSqNaiz8i2xY/gHDEMmn4LK85MzSsOQOpbbZ334s90sPdCDDymH1";
     };
   };
-
-  environment.systemPackages = with pkgs; [ firefox quasselClient ];
 
   virtualisation.vmVariantWithBootLoader = {
     virtualisation.qemu.options = [
