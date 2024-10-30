@@ -26,6 +26,12 @@ in {
       type = lib.types.str;
       default = cfg.name;
     };
+    autoLogin = mkOption {
+      description =
+        "Whether or not to try and automatically log in to graphical envs";
+      type = lib.types.bool;
+      default = true;
+    };
   };
 
   config = {
