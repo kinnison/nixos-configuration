@@ -1,7 +1,7 @@
 # Wayland GUI setup
 { lib, config, pkgs, ... }:
 let
-  inherit (lib) mkEnableOption mkIf mkMerge;
+  inherit (lib) mkEnableOption mkIf mkMerge mkForce;
   cfg = config.kinnison.gui.wayland;
   enable = config.kinnison.gui.enable && cfg.enable;
   autoLogin = config.kinnison.user.autoLogin;
@@ -69,13 +69,22 @@ in {
       # Adding this doesn't harm the non-encrypted case and helps with
       # encrypted disk unlock leading to keyring unlock
       systemd.services.display-manager.serviceConfig.KeyringMode = "inherit";
-      security.pam.services.login.rules.auth.systemd-loadkey = {
-        control = "optional";
-        enable = true;
-        modulePath = "${pkgs.systemd}/lib/security/pam_systemd_loadkey.so";
-        order = config.security.pam.services.login.rules.auth.unix-early.order
-          + 50;
-      };
+      security.pam.services.login.enableGnomeKeyring = true;
+      security.pam.services.sddm-autologin.text = mkForce ''
+        auth     requisite pam_nologin.so
+        auth     required  pam_succeed_if.so uid >= ${
+          toString config.services.displayManager.sddm.autoLogin.minimumUid
+        } quiet
+        auth     optional  ${pkgs.systemd}/lib/security/pam_systemd_loadkey.so
+        auth     optional  ${pkgs.gnome.gnome-keyring}/lib/security/pam_gnome_keyring.so
+        auth     required  pam_permit.so
+
+        account  include   sddm
+
+        password include   sddm
+
+        session  include   sddm
+      '';
     })
   ]);
 }
