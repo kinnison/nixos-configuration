@@ -45,6 +45,7 @@ in {
   config = mkMerge [
     (mkIf cfg.enable {
       stylix.targets.vscode.enable = false;
+      home.packages = with pkgs; [ nixfmt-classic nodePackages.prettier nil ];
       programs.vscode = {
         enable = true;
         package = cfg.pkgs.vscode;
