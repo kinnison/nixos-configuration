@@ -11,13 +11,13 @@ let
   cursor-name = "${guicfg.theme}${mkUpper guicfg.accent}";
 in {
   imports = [
-    ./wayland.nix
-    ./gpg.nix
+    ./bitwarden.nix
     ./git.nix
+    ./gpg.nix
+    ./irc.nix
     ./rust.nix
     ./vscode.nix
-    ./bitwarden.nix
-    ./irc.nix
+    ./wayland.nix
   ];
   config = mkMerge [
     (mkIf guicfg.enable {
