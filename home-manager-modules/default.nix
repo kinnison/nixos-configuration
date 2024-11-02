@@ -15,6 +15,8 @@ in {
     ./git.nix
     ./gpg.nix
     ./irc.nix
+    ./mail.nix
+    ./mail-personal.nix
     ./rust.nix
     ./vscode.nix
     ./wayland.nix

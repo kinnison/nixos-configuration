@@ -14,4 +14,6 @@
   kinnison.bitwarden.enable = true;
   # If we have a gui turned on, I want IRC clients
   kinnison.irc.enable = osConfig.kinnison.gui.enable;
+  # I want my email if I have a gui
+  kinnison.email.enable = osConfig.kinnison.gui.enable;
 }
