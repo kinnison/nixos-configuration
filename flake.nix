@@ -9,6 +9,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixos-hardware.url = "github:NixOs/nixos-hardware";
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     stylix.url = "github:danth/stylix/release-24.05";
@@ -21,8 +22,8 @@
     cats.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, catppuccin, stylix
-    , disko, cats }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager
+    , catppuccin, stylix, disko, cats }@inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       overlays = [
@@ -88,8 +89,10 @@
         # Daniel's personal laptop
         catalepsy = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = self.lib.defaultSystemModules
-            ++ [ ./systems/catalepsy/configuration.nix ];
+          modules = self.lib.defaultSystemModules ++ [
+            nixos-hardware.nixosModules.lenovo-thinkpad-t480
+            ./systems/catalepsy/configuration.nix
+          ];
         };
         # The installer contains all of the above systems, including disko support
         installer = nixpkgs.lib.nixosSystem {
