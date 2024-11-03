@@ -1,5 +1,5 @@
 # Visual Studio Code configuration
-{ config, lib, pkgs, ... }:
+{ osConfig, config, lib, pkgs, ... }:
 with lib;
 let
   cfg = config.kinnison.vscode;
@@ -70,8 +70,8 @@ in {
           "window.zoomLevel" = 2;
           "window.titleBarStyle" = "native";
           "workbench.colorTheme" =
-            "Catppuccin Mocha"; # In theory need to tweak this
-          "workbench.iconTheme" = "catppuccin-mocha"; # Ditto
+            "Catppuccin ${osConfig.kinnison.gui.upperTheme}";
+          "workbench.iconTheme" = "catppuccin-${osConfig.kinnison.gui.theme}";
         };
       };
     })

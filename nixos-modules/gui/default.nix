@@ -13,12 +13,25 @@ in {
       default = "mocha";
       description = "Which Catppuccin theme to use";
     };
+
+    upperTheme = lib.mkOption {
+      description = "The 'theme' with the first letter capitalised";
+      readOnly = true;
+    };
+
     accent = lib.mkOption {
       default = "mauve";
       description = "Which Catppuccin accent colour to use";
     };
+
+    upperAccent = lib.mkOption {
+      description = "The 'accent' with the first letter capitalised";
+      readOnly = true;
+    };
   };
   config = lib.mkIf cfg.enable {
+    kinnison.gui.upperTheme = mkUpper cfg.theme;
+    kinnison.gui.upperAccent = mkUpper cfg.accent;
     catppuccin.enable = true;
     catppuccin.flavor = lib.mkDefault cfg.theme;
     catppuccin.accent = lib.mkDefault cfg.accent;
