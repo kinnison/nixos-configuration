@@ -32,6 +32,16 @@
   virtualisation.vmVariant = virtualisation.vmVariantWithBootLoader;
   virtualisation.vmVariantWithDisko = virtualisation.vmVariant;
 
+  services.tlp = {
+    enable = true;
+    settings = {
+      START_CHARGE_THRESH_BAT0 = 70;
+      STOP_CHARGE_THRESH_BAT0 = 85;
+      START_CHARGE_THRESH_BAT1 = 70;
+      STOP_CHARGE_THRESH_BAT1 = 85;
+    };
+  };
+
   kinnison.gui = {
     enable = true;
     wayland.enable = true;
