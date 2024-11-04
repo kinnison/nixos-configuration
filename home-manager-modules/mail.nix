@@ -398,9 +398,11 @@ in {
         executable = false;
         text = ''
           text/html; ${pkgs.w3m}/bin/w3m -I %{charset} -dump -T text/html '%s'; copiousoutput; description=HTML Text; nametemplate=%s.html
-          # TODO: Decide on image viewer
+          # Images using swayimg
           image/jpeg; ${pkgs.swayimg}/bin/swayimg '%s'; test=test "$WAYLAND_DISPLAY"
           image/png; ${pkgs.swayimg}/bin/swayimg '%s'; test=test "$WAYLAND_DISPLAY"
+          # This relies on firefox on PATH
+          application/pdf; firefox '%s'; test=test "$WAYLAND_DISPLAY"
         '';
       };
       # We use msmtpq to send email, which means if we save the mail offline we
