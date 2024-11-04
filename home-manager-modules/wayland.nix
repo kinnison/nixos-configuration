@@ -11,7 +11,8 @@ let
   dmenu = pkgs.writeShellScriptBin "dmenu" ''
     exec ${rofi-bin} -dmenu "$@"
   '';
-
+  capture =
+    pkgs.kinnison.capture.override { rofi = config.programs.rofi.package; };
 in {
   options.kinnison.batteries = mkOption {
     description = "Batteries, if any";
@@ -20,7 +21,7 @@ in {
   };
 
   config = mkIf guicfg.wayland.enable {
-    home.packages = [ dmenu ];
+    home.packages = [ dmenu capture pkgs.swayimg ];
     programs.swaylock = {
       enable = true;
       catppuccin.enable = false;
@@ -96,6 +97,7 @@ in {
           "Mod4+f" = "fullscreen toggle";
           "Mod4+l" = "exec ${pkgs.swaylock}/bin/swaylock -fF";
           "Mod4+q" = "exec ${rofi-lock}/bin/rofi-lock";
+          "Print" = "exec capture";
         };
 
       };
