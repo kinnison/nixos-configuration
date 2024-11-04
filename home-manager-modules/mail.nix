@@ -399,8 +399,8 @@ in {
         text = ''
           text/html; ${pkgs.w3m}/bin/w3m -I %{charset} -dump -T text/html '%s'; copiousoutput; description=HTML Text; nametemplate=%s.html
           # TODO: Decide on image viewer
-          #image/jpeg; ${pkgs.qiv}/bin/qiv -t '%s'; test=test "$DISPLAY"
-          #image/png; ${pkgs.qiv}/bin/qiv -t '%s'; test=test "$DISPLAY"
+          image/jpeg; ${pkgs.swayimg}/bin/swayimg '%s'; test=test "$WAYLAND_DISPLAY"
+          image/png; ${pkgs.swayimg}/bin/swayimg '%s'; test=test "$WAYLAND_DISPLAY"
         '';
       };
       # We use msmtpq to send email, which means if we save the mail offline we
