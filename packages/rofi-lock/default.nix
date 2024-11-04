@@ -11,12 +11,16 @@ let
       action = "${sway}/bin/swaymsg exit";
     }
     {
-      text = "Shutdown Computer";
-      action = "poweroff";
-    }
-    {
       text = "Suspend Computer";
       action = "systemctl suspend";
+    }
+    {
+      text = "Reboot Computer";
+      action = "reboot";
+    }
+    {
+      text = "Shutdown Computer";
+      action = "poweroff";
     }
   ];
 
