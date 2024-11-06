@@ -55,7 +55,7 @@ in {
           "window.menuBarVisibility" = "toggle";
           "editor.minimap.enabled" = false;
           "editor.fontFamily" = mkForce
-            "'Fira Code Sans Mono', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'";
+            "'FiraCode Nerd Font', 'Droid Sans Mono', 'monospace', monospace";
           "editor.fontLigatures" = true;
           "editor.formatOnSave" = true;
           "editor.semanticHighlighting.enabled" = true;
