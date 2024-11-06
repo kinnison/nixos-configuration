@@ -4,8 +4,37 @@ let
   inherit (lib) mkIf mkOption mkForce;
   guicfg = osConfig.kinnison.gui;
   # TODO
-  waybar-battery-modules = [ ];
-  waybar-battery-blocks = { };
+  batcfg = config.kinnison.batteries;
+  waybar-batteries = if batcfg == [ ] then {
+    modules = [ ];
+    blocks = { };
+  } else
+    let
+      first-battery = builtins.head batcfg;
+      is-first = bat: bat == first-battery;
+      modname = bat: if is-first bat then "battery" else "battery#${bat}";
+      modules = map modname batcfg;
+      blocks = builtins.listToAttrs (map (bat: {
+        name = modname bat;
+        value = {
+          inherit bat;
+          states = {
+            good = 80;
+            warning = 30;
+            critical = 15;
+          };
+          format = "{capacity}% {icon}";
+          format-full = "{capacity}% {icon}";
+          format-charging = "{capacity}% 󰃨";
+          format-plugged = "{capacity}% ";
+          format-alt = "{time} {icon}";
+          format-icons = [ "" "" "" "" "" ];
+        };
+      }) batcfg);
+    in {
+      inherit modules;
+      inherit blocks;
+    };
   rofi-bin = "${config.programs.rofi.package}/bin/rofi";
   rofi-lock =
     pkgs.kinnison.rofi-lock.override { rofi = config.programs.rofi.package; };
@@ -184,7 +213,8 @@ in {
           spacing = 4;
           modules-left = [ "sway/workspaces" "sway/mode" "sway/scratchpad" ];
           modules-center = [ "sway/window" ];
-          modules-right = [ "memory" "cpu" "network" ] ++ waybar-battery-modules
+          modules-right = [ "memory" "cpu" "network" ]
+            ++ waybar-batteries.modules
             ++ [ "temperature" "clock" "pulseaudio" "tray" "idle_inhibitor" ];
 
           "sway/workspaces" = {
@@ -195,7 +225,7 @@ in {
           "sway/scratchpad" = {
             "format" = "{icon} {count}";
             "show-empty" = false;
-            "format-icons" = [ "" "<U+F2D2>" ];
+            "format-icons" = [ "" "" ];
             "tooltip" = true;
             "tooltip-format" = "{app}: {title}";
           };
@@ -250,7 +280,7 @@ in {
             on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
           };
 
-        } // waybar-battery-blocks;
+        } // waybar-batteries.blocks;
       };
     };
     services.dunst = {
