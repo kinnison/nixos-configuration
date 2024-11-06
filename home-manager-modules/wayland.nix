@@ -3,6 +3,7 @@
 let
   inherit (lib) mkIf mkOption mkForce;
   guicfg = osConfig.kinnison.gui;
+  # TODO
   waybar-battery-modules = [ ];
   waybar-battery-blocks = { };
   rofi-bin = "${config.programs.rofi.package}/bin/rofi";
@@ -28,7 +29,7 @@ in {
   options.kinnison.batteries = mkOption {
     description = "Batteries, if any";
     type = lib.types.listOf lib.types.str;
-    default = [ ];
+    default = osConfig.kinnison.batteries;
   };
 
   config = mkIf guicfg.wayland.enable {

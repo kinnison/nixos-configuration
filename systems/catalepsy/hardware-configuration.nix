@@ -3,6 +3,8 @@
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
+  kinnison.batteries = [ "BAT0" "BAT1" ];
+
   boot.initrd.availableKernelModules = [
     "virtio_net"
     "virtio_pci"
