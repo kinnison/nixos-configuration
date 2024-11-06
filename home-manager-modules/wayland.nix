@@ -13,6 +13,17 @@ let
   '';
   capture =
     pkgs.kinnison.capture.override { rofi = config.programs.rofi.package; };
+  new-workspace-pkg = pkgs.writeShellScriptBin "new-workspace" ''
+    NEW_WS=$(comm -13 \
+      <(${pkgs.sway}/bin/swaymsg -t get_tree | ${pkgs.jq}/bin/jq '.. | select(.orientation? and .output?) | .num' | sort -n) \
+      <(seq 1 9) \
+      | head -1)
+      
+    if test "x$NEW_WS" != "x"; then
+      swaymsg workspace $NEW_WS
+    fi
+  '';
+  new-workspace = "${new-workspace-pkg}/bin/new-workspace";
 in {
   options.kinnison.batteries = mkOption {
     description = "Batteries, if any";
@@ -97,6 +108,8 @@ in {
           "Mod4+f" = "fullscreen toggle";
           "Mod4+l" = "exec ${pkgs.swaylock}/bin/swaylock -fF";
           "Mod4+q" = "exec ${rofi-lock}/bin/rofi-lock";
+          "Mod4+t" = "exec ${new-workspace}";
+          "Mod4+n" = "exec ${new-workspace}";
           "Print" = "exec capture";
         };
 
