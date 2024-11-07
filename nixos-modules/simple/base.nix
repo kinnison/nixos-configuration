@@ -14,6 +14,9 @@
     enable = true;
     syntaxHighlighting.enable = true;
     autosuggestions.enable = true;
+    promptInit = ''
+      eval "$(${pkgs.kinnison.prompter}/bin/prompter init)"
+    '';
   };
 
   environment.pathsToLink = lib.mkMerge [
