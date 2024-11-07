@@ -29,7 +29,6 @@
   boot.kernelModules = [ "kvm-intel" "acpi_call" ];
   boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
 
-  powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
   hardware.cpu.intel.updateMicrocode =
     lib.mkDefault config.hardware.enableRedistributableFirmware;
 
