@@ -4,12 +4,18 @@ let
   allSystemNames = builtins.attrNames systems;
   systemNames = builtins.filter (n: n != "installer") allSystemNames;
   topLevel = system: systems.${system}.config.system.build.toplevel;
+  bootLoader = system: systems.${system}.config.system.build.installBootLoader;
   flake = ./../..;
   installer = system:
     pkgs.writeShellScriptBin "disko-install-${system}" ''
       disko-install -f ${flake}#${system} "$@"
     '';
+  bootloader-installer = system: {
+    name = "bootloader-installers/${system}";
+    value = { source = bootLoader system; };
+  };
   installers = builtins.map (installer) systemNames;
+  bootloader-installers = builtins.map (bootloader-installer) systemNames;
   toplevels = builtins.map (system: {
     name = "toplevels/${system}";
     value = { source = topLevel system; };
@@ -32,5 +38,6 @@ let
   flakes = flakeMap "flakes/" flakeInputs;
 in {
   environment.systemPackages = installers;
-  environment.etc = builtins.listToAttrs (toplevels ++ flakes);
+  environment.etc =
+    builtins.listToAttrs (toplevels ++ flakes ++ bootloader-installers);
 }
