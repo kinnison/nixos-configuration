@@ -5,6 +5,7 @@ let
   guicfg = osConfig.kinnison.gui;
   nmcfg = osConfig.kinnison.network-manager;
   bluecfg = osConfig.kinnison.bluetooth;
+  sndcfg = osConfig.kinnison.sound;
   mkUpper = str:
     (lib.toUpper (builtins.substring 0 1 str))
     + (builtins.substring 1 (builtins.stringLength str) str);
@@ -67,6 +68,9 @@ in {
     })
     (mkIf (guicfg.enable && bluecfg.enable) {
       services.blueman-applet.enable = true;
+    })
+    (mkIf (guicfg.enable && sndcfg.enable) {
+      home.packages = [ pkgs.pavucontrol ];
     })
     (mkIf nmcfg.enable { services.network-manager-applet.enable = true; })
     {
