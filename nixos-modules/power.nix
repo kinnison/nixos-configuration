@@ -20,12 +20,14 @@ in {
       criticalPowerAction = "PowerOff";
     };
 
-    powerManagement.cpuFreqGovernor = mkDefault "ondemand";
+    # Modern Intel/AMD do it internally and performance is equivalent
+    # to `ondemand` - only set `ondemand` if you have an old CPU
+    powerManagement.cpuFreqGovernor = mkDefault "performance";
 
     services.tlp = {
       enable = true;
       settings = {
-        CPU_SCALING_GOVERNOR_ON_AC = "ondemand";
+        # inherit CPU_SCALING_GOVERNOR_ON_AC from the above
         CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
         START_CHARGE_THRESH_BAT0 = 70;
         STOP_CHARGE_THRESH_BAT0 = 85;
