@@ -131,7 +131,9 @@
     },
     "cats": {
       "inputs": {
-        "flake-utils": "flake-utils",
+        "flake-utils": [
+          "flake-utils"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -306,15 +308,40 @@
         "type": "github"
       }
     },
+    "prompter": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1731017452,
+        "narHash": "sha256-XlDxGc021vT8ez3PgfsJ07+GnQiE5EnGbxOnsp6+zwM=",
+        "owner": "kinnison",
+        "repo": "prompter",
+        "rev": "c86e763c16f01453ae6052f7438bcfe7242c348d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kinnison",
+        "repo": "prompter",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "catppuccin": "catppuccin",
         "cats": "cats",
         "disko": "disko",
+        "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "prompter": "prompter",
         "stylix": "stylix"
       }
     },

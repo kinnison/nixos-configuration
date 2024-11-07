@@ -7,6 +7,8 @@
   '';
 
   inputs = {
+    # While we don't use flake-utils, various of our sub-flakes do
+    flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOs/nixos-hardware";
@@ -20,10 +22,14 @@
     disko.inputs.nixpkgs.follows = "nixpkgs";
     cats.url = "github:kinnison/cats-backgrounds";
     cats.inputs.nixpkgs.follows = "nixpkgs";
+    cats.inputs.flake-utils.follows = "flake-utils";
+    prompter.url = "github:kinnison/prompter";
+    prompter.inputs.nixpkgs.follows = "nixpkgs";
+    prompter.inputs.flake-utils.follows = "flake-utils";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager
-    , catppuccin, stylix, disko, cats }@inputs:
+  outputs = { self, flake-utils, nixpkgs, nixpkgs-unstable, nixos-hardware
+    , home-manager, catppuccin, stylix, disko, cats, prompter }@inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       overlays = [
@@ -31,10 +37,13 @@
           unstable = import nixpkgs-unstable { system = prev.system; };
         })
         (final: prev:
-          let cats = inputs.cats.packages.${prev.system}.cats;
+          let
+            cats = inputs.cats.packages.${prev.system}.cats;
+            prompter = inputs.prompter.packages.${prev.system}.prompter;
           in {
             kinnison = (import ./packages { pkgs = final; }) // {
               inherit cats;
+              prompter = prompter;
             };
           })
       ];
