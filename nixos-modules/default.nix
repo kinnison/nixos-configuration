@@ -16,7 +16,7 @@ in {
   };
 
   config = mkMerge [
-    { kinnison.zram = mkDefault true; }
+    { kinnison.zram.enable = mkDefault true; }
     (mkIf zram.enable {
       zramSwap = {
         enable = true;
