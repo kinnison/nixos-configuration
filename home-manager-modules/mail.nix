@@ -391,6 +391,11 @@ in {
           }; do
             target="${cfg.maildirBase}/$account/.null"
             ${pkgs.coreutils}/bin/ln -sf /dev/null "$target"
+            MAILPASS=$(${config.xdg.configHome}/neomutt/.''${account}-email-password)
+            if test "x$MAILPASS" = "x"; then
+              echo "Cannot continue, missing $account password"
+              exit 1;
+            fi
           done
         '';
       };
@@ -428,6 +433,12 @@ in {
       xdg.configFile = getPasswordFiles;
       home.packages = setPasswordScripts;
       accounts.email.accounts = emailAccounts;
+      systemd.user.services = builtins.listToAttrs (map (acc: {
+        name = "imapnotify-${acc}";
+        value = {
+          Service.ExecStartPre = "${config.xdg.dataHome}/mail/.presync";
+        };
+      }) (attrNames cfg.accounts));
     }
   ]);
 }
