@@ -141,6 +141,20 @@ in {
           "Mod4+t" = "exec ${new-workspace}";
           "Mod4+n" = "exec ${new-workspace}";
           "Print" = "exec capture";
+
+          # Brightness and volume bindings (uses swayosd)
+          "XF86AudioLowerVolume" =
+            "exec ${pkgs.swayosd}/bin/swayosd-client --output-volume=lower";
+          "XF86AudioRaiseVolume" =
+            "exec ${pkgs.swayosd}/bin/swayosd-client --output-volume=raise";
+          "XF86AudioMute" =
+            "exec ${pkgs.swayosd}/bin/swayosd-client --output-volume=mute-toggle";
+          "XF86AudioMicMute" =
+            "exec ${pkgs.swayosd}/bin/swayosd-client --input-volume=mute-toggle";
+          "XF86MonBrightnessDown" =
+            "exec ${pkgs.swayosd}/bin/swayosd-client --brightness=lower";
+          "XF86MonBrightnessUp" =
+            "exec ${pkgs.swayosd}/bin/swayosd-client --brightness=raise";
         };
 
       };
@@ -173,6 +187,11 @@ in {
           command = "${pkgs.systemd}/bin/systemctl suspend";
         }
       ];
+    };
+
+    services.swayosd = {
+      enable = true;
+      topMargin = 0.8;
     };
 
     programs.foot = {

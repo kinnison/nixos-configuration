@@ -54,8 +54,9 @@ in {
         })
       ];
 
-      #environment.systemPackages = with pkgs; [
-      #];
+      environment.systemPackages = with pkgs; [ swayosd ];
+
+      services.udev.packages = [ pkgs.swayosd ];
 
       hardware.opengl.enable = true;
 
