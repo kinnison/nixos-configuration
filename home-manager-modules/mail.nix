@@ -247,35 +247,35 @@ in {
           set mailcap_path = "${config.xdg.configHome}/neomutt/mailcap:$mailcap_path"
         '';
         muttColours = ''
-          color index brightwhite default .
+          color index white default .
 
-          color index brightblue default ~N
-          color index brightblue default ~O
-          color index brightmagenta default ~F
+          color index blue default ~N
+          color index blue default ~O
+          color index magenta default ~F
           color index red default ~D
           color index yellow default ~T
 
 
-          color normal            brightwhite     default
-          color indicator         brightyellow    red
+          color normal            white     default
+          color indicator         yellow    red
           color signature         blue            default
-          color quoted            brightblue      default
-          color quoted1           brightcyan      default
-          color quoted2           brightmagenta   default
-          color quoted3           brightblue      default
-          color quoted4           brightcyan      default
-          color quoted5           brightmagenta   default
+          color quoted            blue      default
+          color quoted1           cyan      default
+          color quoted2           magenta   default
+          color quoted3           blue      default
+          color quoted4           cyan      default
+          color quoted5           magenta   default
           color attachment        yellow          default
-          color error             brightred       default
+          color error             red       default
           color hdrdefault        cyan            default
-          color markers           brightcyan      default
-          color message           brightcyan      default
+          color markers           cyan      default
+          color message           cyan      default
           color search            default         green
           color status            yellow          blue
           color tilde             magenta         default
           color tree              magenta         default
-          color sidebar_new       brightyellow    default
-          color sidebar_flagged   brightred       default
+          color sidebar_new       yellow    default
+          color sidebar_flagged   red       default
         '';
         muttHeaders = ''
           ignore *
