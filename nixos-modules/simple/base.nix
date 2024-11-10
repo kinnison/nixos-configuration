@@ -3,6 +3,8 @@
   boot.loader.systemd-boot.enable = lib.mkDefault true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  boot.tmp.cleanOnBoot = true;
+
   time.timeZone = lib.mkDefault "Europe/London";
   i18n.defaultLocale = lib.mkDefault "en_GB.UTF-8";
   environment.variables.LANG = lib.mkDefault "en_GB.UTF-8";
