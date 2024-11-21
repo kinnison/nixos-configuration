@@ -51,6 +51,8 @@
         pre-commit-hooks-nix.follows = "";
       };
     };
+    # Impermanence support
+    impermanence.url = "github:nix-community/impermanence";
 
     # Backdrops
     cats = {
@@ -72,7 +74,7 @@
 
   outputs = { self, flake-utils, flake-compat, nixpkgs, nixpkgs-unstable
     , nixos-hardware, home-manager, catppuccin, stylix, disko, cats, prompter
-    , lanzaboote }@inputs:
+    , lanzaboote, impermanence }@inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       overlays = [
@@ -97,6 +99,7 @@
         disko.nixosModules.disko
         self.nixosModules.default
         lanzaboote.nixosModules.lanzaboote
+        impermanence.nixosModules.impermanence
         {
           _module.args = {
             homes = self.homes;
