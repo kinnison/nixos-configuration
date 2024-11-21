@@ -1,4 +1,6 @@
-{ homes, ... }: rec {
+{ homes, lib, ... }:
+let inherit (lib) mkDefault;
+in rec {
   imports = [ ./hardware-configuration.nix ];
   system.stateVersion = "24.05";
   networking.hostName = "test";
@@ -32,4 +34,6 @@
   };
   kinnison.sound.enable = true;
   kinnison.network-manager.enable = true;
+
+  kinnison.secureboot.enable = mkDefault true;
 }

@@ -3,8 +3,16 @@
 with lib;
 let zram = config.kinnison.zram;
 in {
-  imports =
-    [ ./user.nix ./nm.nix ./simple ./gui ./sound ./bluetooth.nix ./power.nix ];
+  imports = [
+    ./user.nix
+    ./nm.nix
+    ./simple
+    ./gui
+    ./sound
+    ./bluetooth.nix
+    ./power.nix
+    ./secureboot.nix
+  ];
 
   options.kinnison.zram = {
     enable = mkEnableOption "Turn on zram";
