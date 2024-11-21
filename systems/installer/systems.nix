@@ -22,7 +22,9 @@ let
   }) systemNames;
   flakeMap = base: fin:
     let
-      fnames = builtins.filter (n: n != "self") (builtins.attrNames fin);
+      flakeIsToplevel = fname: fin.${fname} ? toplevelMarker;
+      fnames = builtins.filter (n: n != "self" && !(flakeIsToplevel n))
+        (builtins.attrNames fin);
       flakes = builtins.map (fname: {
         name = "${base}${fname}";
         value = { source = fin.${fname}; };
