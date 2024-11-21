@@ -38,4 +38,5 @@
   };
   kinnison.sound.enable = true;
   kinnison.network-manager.enable = true;
+  kinnison.secureboot.enable = true;
 }
