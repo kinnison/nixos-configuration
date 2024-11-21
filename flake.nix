@@ -34,13 +34,17 @@
     prompter.inputs.flake-utils.follows = "flake-utils";
     lanzaboote.url = "github:nix-community/lanzaboote/v0.4.1";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
+    # Note, we do not need pre-commit-hooks-nix and its dependencies for building
+    # but this introduces a loop in the flakes ("" is self) hence the toplevelMarker
+    # below.
     lanzaboote.inputs.pre-commit-hooks-nix.follows = "";
     lanzaboote.inputs.flake-utils.follows = "flake-utils";
     lanzaboote.inputs.flake-compat.follows = "flake-compat";
   };
 
-  outputs = { self, flake-utils, nixpkgs, nixpkgs-unstable, nixos-hardware
-    , home-manager, catppuccin, stylix, disko, cats, prompter }@inputs:
+  outputs = { self, flake-utils, flake-compat, nixpkgs, nixpkgs-unstable
+    , nixos-hardware, home-manager, catppuccin, stylix, disko, cats, prompter
+    , lanzaboote }@inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       overlays = [
@@ -64,6 +68,7 @@
         home-manager.nixosModules.home-manager
         disko.nixosModules.disko
         self.nixosModules.default
+        lanzaboote.nixosModules.lanzaboote
         {
           _module.args = {
             homes = self.homes;
@@ -95,6 +100,9 @@
         })
       ];
     in {
+      # We use this to detect if we recurse back into ourselves during flake traversal
+      toplevelMarker = "kinnison";
+      # Normal flake outputs
       packages = forAllSystems (system:
         let pkgs = import nixpkgs { inherit system; };
         in (import ./packages) { inherit pkgs; });
