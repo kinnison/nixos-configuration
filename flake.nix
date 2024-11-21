@@ -14,32 +14,60 @@
       url = "github:edolstra/flake-compat";
       flake = false;
     };
+    # Core nix stuff
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOs/nixos-hardware";
-    home-manager.url = "github:nix-community/home-manager/release-24.05";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    stylix.url = "github:danth/stylix/release-24.05";
-    stylix.inputs.nixpkgs.follows = "nixpkgs";
-    stylix.inputs.home-manager.follows = "home-manager";
-    stylix.inputs.flake-compat.follows = "flake-compat";
+    # Home Manager for home directories
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # Styling
+    stylix = {
+      url = "github:danth/stylix/release-24.05";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+        flake-compat.follows = "flake-compat";
+      };
+    };
     catppuccin.url = "github:catppuccin/nix";
-    disko.url = "github:nix-community/disko/v1.8.2";
-    disko.inputs.nixpkgs.follows = "nixpkgs";
-    cats.url = "github:kinnison/cats-backgrounds";
-    cats.inputs.nixpkgs.follows = "nixpkgs";
-    cats.inputs.flake-utils.follows = "flake-utils";
-    prompter.url = "github:kinnison/prompter";
-    prompter.inputs.nixpkgs.follows = "nixpkgs";
-    prompter.inputs.flake-utils.follows = "flake-utils";
-    lanzaboote.url = "github:nix-community/lanzaboote/v0.4.1";
-    lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
-    # Note, we do not need pre-commit-hooks-nix and its dependencies for building
-    # but this introduces a loop in the flakes ("" is self) hence the toplevelMarker
-    # below.
-    lanzaboote.inputs.pre-commit-hooks-nix.follows = "";
-    lanzaboote.inputs.flake-utils.follows = "flake-utils";
-    lanzaboote.inputs.flake-compat.follows = "flake-compat";
+    # Disk setup
+    disko = {
+      url = "github:nix-community/disko/v1.8.2";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # Secure boot
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.1";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+        flake-compat.follows = "flake-compat";
+        # Note, we do not need pre-commit-hooks-nix and its dependencies for building
+        # but this introduces a loop in the flakes ("" is self) hence the toplevelMarker
+        # below.
+        pre-commit-hooks-nix.follows = "";
+      };
+    };
+
+    # Backdrops
+    cats = {
+      url = "github:kinnison/cats-backgrounds";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
+    # My personal prompter
+    prompter = {
+      url = "github:kinnison/prompter";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
   };
 
   outputs = { self, flake-utils, flake-compat, nixpkgs, nixpkgs-unstable
