@@ -1,6 +1,8 @@
 { lib, config, pkgs, ... }:
 with lib;
-let cfg = config.kinnison.secureboot;
+let
+  cfg = config.kinnison.secureboot;
+  imperm = config.kinnison.impermanence.enable;
 in {
   options.kinnison.secureboot = {
     enable = mkEnableOption "Secure boot with Lanzaboote";
@@ -20,5 +22,6 @@ in {
       pkiBundle = cfg.keysPath;
     };
     environment.systemPackages = [ pkgs.sbctl ];
+    kinnison.impermanence.directories = mkIf imperm [ cfg.keysPath ];
   };
 }

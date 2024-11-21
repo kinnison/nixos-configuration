@@ -1,5 +1,5 @@
 { homes, lib, ... }:
-let inherit (lib) mkDefault;
+let inherit (lib) mkDefault mkForce;
 in rec {
   imports = [ ./hardware-configuration.nix ];
   system.stateVersion = "24.05";
@@ -23,6 +23,10 @@ in rec {
 
     boot.kernelParams = [ "mitigations=off" ];
     virtualisation.diskSize = 5120;
+
+    # It's not possible to use secureboot or impermanence in a test-VM anyway
+    kinnison.secureboot.enable = mkForce false;
+    kinnison.impermanence.enable = mkForce false;
   };
 
   virtualisation.vmVariant = virtualisation.vmVariantWithBootLoader;
@@ -36,4 +40,5 @@ in rec {
   kinnison.network-manager.enable = true;
 
   kinnison.secureboot.enable = mkDefault true;
+  kinnison.impermanence.enable = mkDefault true;
 }

@@ -1,6 +1,6 @@
 # This is the nixos installer for my stuff
 
-{ modulesPath, homes, lib, config, ... }: {
+{ modulesPath, homes, lib, config, pkgs, ... }: {
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-base.nix"
     ./systems.nix
@@ -43,4 +43,6 @@
     boot.kernelParams = [ "mitigations=off" ];
   };
 
+  # Impermanence uses btrfs, so make sure we have it available
+  environment.systemPackages = [ pkgs.btrfs-progs ];
 }

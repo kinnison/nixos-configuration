@@ -72,11 +72,34 @@
         type = "lvm_vg";
         lvs = {
           root = {
+            size = "5G";
+            content = {
+              type = "btrfs";
+              extraArgs = [ "-f " ];
+              subvolumes = {
+                "/root-blank" = { };
+                "/root" = {
+                  mountpoint = "/";
+                  mountOptions = [ "compress=zstd" "defaults" "relatime" ];
+                };
+              };
+            };
+          };
+          persist = {
+            size = "10G";
+            content = {
+              type = "filesystem";
+              format = "ext4";
+              mountpoint = "/persist";
+              mountOptions = [ "defaults" "relatime" ];
+            };
+          };
+          nix = {
             size = "20G";
             content = {
               type = "filesystem";
               format = "ext4";
-              mountpoint = "/";
+              mountpoint = "/nix";
               mountOptions = [ "defaults" "relatime" ];
             };
           };

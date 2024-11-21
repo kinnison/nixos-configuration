@@ -12,6 +12,7 @@ in {
     ./bluetooth.nix
     ./power.nix
     ./secureboot.nix
+    ./impermanence.nix
   ];
 
   options.kinnison.zram = {

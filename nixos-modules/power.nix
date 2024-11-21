@@ -1,6 +1,8 @@
 { config, lib, ... }:
 with lib;
-let batcfg = config.kinnison.batteries;
+let
+  batcfg = config.kinnison.batteries;
+  imperm = config.kinnison.impermanence.enable;
 in {
   options.kinnison.batteries = mkOption {
     description = "Batteries, if any";
@@ -40,5 +42,7 @@ in {
     boot.kernelModules =
       [ "cpufreq_ondemand" "cpufreq_powersave" "cpufreq_performance" ];
 
+    # Impermanence support
+    kinnison.impermanence.directories = mkIf imperm [ "/var/lib/upower" ];
   };
 }

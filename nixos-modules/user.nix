@@ -1,7 +1,8 @@
 { config, lib, hm-modules, ... }:
 let
-  inherit (lib) mkOption;
+  inherit (lib) mkOption mkIf mkForce;
   cfg = config.kinnison.user;
+  imperm = config.kinnison.impermanence.enable;
 in {
   options.kinnison.user = {
     name = mkOption {
@@ -35,6 +36,7 @@ in {
   };
 
   config = {
+    users.mutableUsers = mkIf imperm (mkForce false);
     users.users.${cfg.name} = {
       isNormalUser = true;
       extraGroups = cfg.groups ++ [ "wheel" ];
