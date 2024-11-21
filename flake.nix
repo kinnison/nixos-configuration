@@ -9,6 +9,11 @@
   inputs = {
     # While we don't use flake-utils, various of our sub-flakes do
     flake-utils.url = "github:numtide/flake-utils";
+    # Ditto for flake-compat
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOs/nixos-hardware";
@@ -17,6 +22,7 @@
     stylix.url = "github:danth/stylix/release-24.05";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     stylix.inputs.home-manager.follows = "home-manager";
+    stylix.inputs.flake-compat.follows = "flake-compat";
     catppuccin.url = "github:catppuccin/nix";
     disko.url = "github:nix-community/disko/v1.8.2";
     disko.inputs.nixpkgs.follows = "nixpkgs";
@@ -26,6 +32,11 @@
     prompter.url = "github:kinnison/prompter";
     prompter.inputs.nixpkgs.follows = "nixpkgs";
     prompter.inputs.flake-utils.follows = "flake-utils";
+    lanzaboote.url = "github:nix-community/lanzaboote/v0.4.1";
+    lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
+    lanzaboote.inputs.pre-commit-hooks-nix.follows = "";
+    lanzaboote.inputs.flake-utils.follows = "flake-utils";
+    lanzaboote.inputs.flake-compat.follows = "flake-compat";
   };
 
   outputs = { self, flake-utils, nixpkgs, nixpkgs-unstable, nixos-hardware
