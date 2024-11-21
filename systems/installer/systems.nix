@@ -8,7 +8,7 @@ let
   flake = ./../..;
   installer = system:
     pkgs.writeShellScriptBin "disko-install-${system}" ''
-      disko-install -f ${flake}#${system} "$@"
+      disko-install -f ${flake}#${system} --system-config '{"kinnison":{"secureboot":{"enable": false}}}' "$@"
     '';
   bootloader-installer = system: {
     name = "bootloader-installers/${system}";
