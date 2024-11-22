@@ -36,7 +36,7 @@ if [ ! -d "${MOUNTDIR}/${BLANK_ROOT_SNAPSHOT}" ]; then
 fi
 
 # Determine the transaction ID belonging to the blank snapshot
-BASE_TRANSID=$(btrfs subvolume find-new "${MOUNTDIR}/${BLANK_ROOT_SNAPSHOT}" | tr -dc '[:digit:]')
+BASE_TRANSID=$(btrfs subvolume find-new "${MOUNTDIR}/${BLANK_ROOT_SNAPSHOT}" 9999999 | tr -dc '[:digit:]')
 
 btrfs subvolume find-new "${MOUNTDIR}/${ROOT_SUBVOL}" "${BASE_TRANSID}" |
     sed '$d' |
