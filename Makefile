@@ -8,6 +8,12 @@ help:
 	@echo "         Set BOOT=1 to use the vmWithBootLoader target instead of the vm target"
 	@echo "         Set INSTALLER=1 to use the 'installer' system rather than the test system"
 	@echo "installer -- Create an installation ISO image"
+	@echo
+	@echo "Local targets:"
+	@echo
+	@echo "update-lock -- Updates (and commits) the flake lock"
+	@echo "rebuild-build -- Runs nixos-rebuild build from here"
+	@echo "rebuild-switch -- Runs sudo nixos-rebuild switch from here"
 
 # Commands
 RM?=rm -f
@@ -35,3 +41,15 @@ runvm:
 
 installer:
 	nix build .\#nixosConfigurations.installer.config.system.build.isoImage
+
+
+# Stuff for local operation
+
+update-lock:
+	nix flake update --commit-lockfile
+
+rebuild-build:
+	nixos-rebuild build --flake .
+
+rebuild-switch:
+	sudo nixos-rebuild switch --flake .
