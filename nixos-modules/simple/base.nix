@@ -12,6 +12,13 @@
 
   users = { defaultUserShell = pkgs.zsh; };
 
+  security.sudo = {
+    enable = lib.mkDefault true;
+    extraConfig = ''
+      Defaults lecture = never
+    '';
+  };
+
   programs.zsh = {
     enable = true;
     syntaxHighlighting.enable = true;
