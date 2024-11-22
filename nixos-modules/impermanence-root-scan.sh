@@ -19,7 +19,7 @@ fi
 
 MOUNTDIR=$(mktemp -d)
 cleanup () { umount "${MOUNTDIR}"; rmdir "${MOUNTDIR}"; }
-trap 0 cleanup
+trap cleanup 0
 
 if [ ! -r "${BTRFS_VOL}" ]; then
     >&2 echo "Device '${BTRFS_VOL}' not found"
