@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Note, this script was reimplemented by reference to scripts
+# available in https://github.com/kjhoerr/dotfiles
+# which at the time of doing this was under the MIT licence:
+# https://github.com/kjhoerr/dotfiles/blob/f897c38654218dc51f580ad0c7ad6fddb1d7525b/LICENSE
+
 # Configurables
 BTRFS_VOL="@ROOT_DEVICE@"
 MOUNTDIR="/mnt"

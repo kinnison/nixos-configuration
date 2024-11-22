@@ -1,5 +1,5 @@
 # Impermanence core support
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 let
   cfg = config.kinnison.impermanence;
@@ -10,6 +10,15 @@ let
   root-reset-src =
     replaceStrings [ "@ROOT_DEVICE@" ] [ config.fileSystems."/".device ]
     root-reset-src-raw;
+  root-scan-src-raw = builtins.readFile ./impermanence-root-scan.sh;
+  root-scan-src =
+    replaceStrings [ "@ROOT_DEVICE@" ] [ config.fileSystems."/".device ]
+    root-scan-src-raw;
+  root-scan-pkg = pkgs.writeShellApplication {
+    name = "root-scan";
+    runtimeInputs = [ pkgs.btrfs-progs ];
+    text = root-scan-src;
+  };
 in {
   options.kinnison.impermanence = {
     enable = mkEnableOption "Impermanence support";
@@ -76,5 +85,7 @@ in {
       ];
       files = cfg.files;
     };
+
+    environment.systemPackages = [ root-scan-pkg ];
   };
 }
