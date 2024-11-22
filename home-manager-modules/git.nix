@@ -31,6 +31,9 @@ in {
         lfs.enable = true;
         userName = usercfg.realName;
         userEmail = cfg.email;
+
+        ignores = [ "target" "result" ".direnv/" ];
+
         extraConfig = {
           branch.autoSetupRebase = "always";
           checkout.defaultRemote = "origin";
