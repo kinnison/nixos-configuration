@@ -61,6 +61,8 @@ in {
       hardware.opengl.enable = true;
 
       kinnison.user.groups = [ "input" ];
+      kinnison.impermanence.directories =
+        [ "/var/lib/sddm" "/var/lib/plymouth" ];
     }
     (mkIf autoLogin {
       services.displayManager.autoLogin = {

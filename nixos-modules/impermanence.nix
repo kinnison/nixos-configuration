@@ -81,7 +81,8 @@ in {
       directories = cfg.directories ++ [
         # These are essential to functioning really
         "/var/lib/nixos"
-        "/var/lib/systemd/coredump"
+        "/var/lib/systemd"
+        "/var/log"
       ];
       files = cfg.files;
     };
