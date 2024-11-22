@@ -11,12 +11,9 @@ in {
     networking.networkmanager.enable = true;
     kinnison.user.groups = [ "networkmanager" ];
     networking.wireless.enable = mkForce false;
-    kinnison.impermanence.directories =
-      mkIf imperm [ "/etc/NetworkManager/system-connections" ];
-    kinnison.impermanence.files = mkIf imperm [
-      "/var/lib/NetworkManager/secret_key"
-      "/var/lib/NetworkManager/seen-bssids"
-      "/var/lib/NetworkManager/timestamps"
+    kinnison.impermanence.directories = mkIf imperm [
+      "/etc/NetworkManager/system-connections"
+      "/var/lib/NetworkManager"
     ];
   };
 }
