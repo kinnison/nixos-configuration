@@ -12,16 +12,19 @@ in {
       type = types.str;
       default = "/etc/secureboot";
     };
+
+    installMode = mkEnableOption "Prevent the bootloader change";
   };
 
   config = mkIf cfg.enable {
     boot.bootspec.enable = true;
-    boot.loader.systemd-boot.enable = lib.mkForce false;
+    boot.loader.systemd-boot.enable = mkIf (!cfg.installMode) (mkForce false);
     boot.lanzaboote = {
-      enable = true;
+      enable = !cfg.installMode;
       pkiBundle = cfg.keysPath;
     };
-    environment.systemPackages = [ pkgs.sbctl ];
+    environment.systemPackages =
+      [ pkgs.sbctl (mkIf cfg.installMode config.boot.lanzaboote.package) ];
     kinnison.impermanence.directories = mkIf imperm [ cfg.keysPath ];
   };
 }

@@ -1,5 +1,5 @@
 # Systems (and thus installers) for all relevant systems
-{ systems, pkgs, flakeInputs, ... }:
+{ systems, pkgs, flakeInputs, lib, ... }:
 let
   allSystemNames = builtins.attrNames systems;
   systemNames = builtins.filter (n: n != "installer") allSystemNames;
@@ -8,13 +8,14 @@ let
   flake = ./../..;
   installer = system:
     pkgs.writeShellScriptBin "disko-install-${system}" ''
-      disko-install -f ${flake}#${system} --system-config '{"kinnison":{"secureboot":{"enable": false}}}' "$@"
+      disko-install -f ${flake}#${system} --system-config '{"kinnison":{"installer-image":true}}' "$@"
     '';
   bootloader-installer = system: {
     name = "bootloader-installers/${system}";
     value = { source = bootLoader system; };
   };
-  installers = builtins.map (installer) systemNames;
+  installers = builtins.map (installer)
+    (builtins.filter (name: !lib.hasSuffix "-installable" name) systemNames);
   bootloader-installers = builtins.map (bootloader-installer) systemNames;
   toplevels = builtins.map (system: {
     name = "toplevels/${system}";

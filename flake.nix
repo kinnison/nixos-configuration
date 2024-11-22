@@ -130,6 +130,15 @@
           nixpkgs.overlays = overlays;
         })
       ];
+      systemPair = name: body:
+        let
+          installerBody = body // {
+            modules = body.modules ++ [{ kinnison.installer-image = true; }];
+          };
+        in {
+          "${name}" = nixpkgs.lib.nixosSystem body;
+          "${name}-installable" = nixpkgs.lib.nixosSystem installerBody;
+        };
     in {
       # We use this to detect if we recurse back into ourselves during flake traversal
       toplevelMarker = "kinnison";
@@ -141,41 +150,41 @@
         let pkgs = import nixpkgs { inherit system; };
         in with pkgs; { default = mkShell { buildInputs = [ gnumake ]; }; });
       nixosModules.default = import ./nixos-modules;
-      nixosConfigurations = {
+      nixosConfigurations =
         # The test system is used by `make runvm` et al.
-        test = nixpkgs.lib.nixosSystem {
+        (systemPair "test" {
           system = "x86_64-linux";
           modules = self.lib.defaultSystemModules
             ++ [ ./systems/test/configuration.nix ];
-        };
+        }) //
         # Daniel's personal laptop
-        catalepsy = nixpkgs.lib.nixosSystem {
+        (systemPair "catalepsy" {
           system = "x86_64-linux";
           modules = self.lib.defaultSystemModules ++ [
             nixos-hardware.nixosModules.lenovo-thinkpad-t480
             ./systems/catalepsy/configuration.nix
           ];
+        }) // {
+          # The installer contains all of the above systems, including disko support
+          installer = nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = self.lib.defaultSystemModules ++ [
+              {
+                _module.args = {
+                  systems = self.nixosConfigurations;
+                  flakeInputs = inputs;
+                };
+              }
+              ./systems/installer/configuration.nix
+              {
+                environment.systemPackages = [
+                  disko.packages.x86_64-linux.disko-install
+                  disko.packages.x86_64-linux.disko
+                ];
+              }
+            ];
+          };
         };
-        # The installer contains all of the above systems, including disko support
-        installer = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = self.lib.defaultSystemModules ++ [
-            {
-              _module.args = {
-                systems = self.nixosConfigurations;
-                flakeInputs = inputs;
-              };
-            }
-            ./systems/installer/configuration.nix
-            {
-              environment.systemPackages = [
-                disko.packages.x86_64-linux.disko-install
-                disko.packages.x86_64-linux.disko
-              ];
-            }
-          ];
-        };
-      };
 
       lib = { inherit defaultSystemModules; };
 
