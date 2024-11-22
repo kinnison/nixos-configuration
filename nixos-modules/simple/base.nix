@@ -31,8 +31,12 @@
 
   # We pretty much always want SSH and can mkForce it off later if needs be
   services.sshd.enable = true;
-  kinnison.impermanence.directories =
-    lib.mkIf config.services.sshd.enable [ "/etc/ssh" ];
+  kinnison.impermanence.files = lib.mkIf config.services.sshd.enable [
+    "/etc/ssh/ssh_host_ed25519_key"
+    "/etc/ssh/ssh_host_ed25519_key.pub"
+    "/etc/ssh/ssh_host_rsa_key"
+    "/etc/ssh/ssh_host_rsa_key.pub"
+  ];
 
   # We are not prudish about non-free software for the most part,
   # though we do limit it, so here we list what's allowed
