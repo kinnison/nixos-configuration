@@ -61,7 +61,8 @@ with lib; {
 
   # We like fwupd because it lets us have firmware updates
   services.fwupd.enable = mkDefault true;
-  kinnison.impermanence.directories = [ "/var/lib/fwupd" ];
+  kinnison.impermanence.directories =
+    [ "/var/lib/fwupd" "/var/cache/fwupd" "/var/cache/fwupdmgr" ];
 
   # We like vim and want it for the default editor (eww nano)
   programs.vim.defaultEditor = mkDefault true;
