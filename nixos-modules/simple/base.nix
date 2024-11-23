@@ -55,4 +55,7 @@ with lib; {
       "vscode-extension-ms-vscode-remote-remote-ssh"
       "vscode-extension-ms-vsliveshare-vsliveshare"
     ];
+
+  # Generally speaking, our systems need fstrim
+  services.fstrim.enable = mkDefault true;
 }
