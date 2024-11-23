@@ -288,6 +288,11 @@ in {
       # The various packages we need enabled
       home.packages = with pkgs; [ neomutt ];
 
+      systemd.user.sessionVariables =
+        lib.mkIf (config.home.sessionVariables ? MSMTP_QUEUE) {
+          inherit (config.home.sessionVariables) MSMTP_QUEUE;
+        };
+
       # Now the various programs and services
       programs = {
         mbsync.enable = true;
