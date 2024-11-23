@@ -12,5 +12,8 @@ in {
     };
   };
 
-  config = mkIf cfg.enable { home.packages = [ cfg.package ]; };
+  config = mkIf cfg.enable {
+    home.packages = [ cfg.package ];
+    home.sessionVariables = { RUSTUP_HOME = "${xdg.dataHome}/rustup"; };
+  };
 }
