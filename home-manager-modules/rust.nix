@@ -14,6 +14,10 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = [ cfg.package ];
-    home.sessionVariables = { RUSTUP_HOME = "${xdg.dataHome}/rustup"; };
+    home.sessionVariables = {
+      RUSTUP_HOME = "${xdg.dataHome}/rustup";
+      CARGO_HOME = "${xdg.dataHome}/cargo";
+    };
+    home.sessionPath = [ "${xdg.dataHome}/cargo/bin" ];
   };
 }
