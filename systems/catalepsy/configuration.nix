@@ -39,4 +39,6 @@
   kinnison.sound.enable = true;
   kinnison.network-manager.enable = true;
   kinnison.secureboot.enable = true;
+  kinnison.impermanence.enable = true;
+  kinnison.virt-manager.enable = true;
 }
