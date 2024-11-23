@@ -13,6 +13,7 @@ in {
     ./power.nix
     ./secureboot.nix
     ./impermanence.nix
+    ./virt-manager.nix
   ];
 
   options.kinnison.zram = {

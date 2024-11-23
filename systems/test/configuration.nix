@@ -41,4 +41,5 @@ in rec {
 
   kinnison.secureboot.enable = mkDefault true;
   kinnison.impermanence.enable = mkDefault true;
+  kinnison.virt-manager.enable = mkDefault true;
 }
