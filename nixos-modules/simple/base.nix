@@ -58,4 +58,7 @@ with lib; {
 
   # Generally speaking, our systems need fstrim
   services.fstrim.enable = mkDefault true;
+
+  # We like fwupd because it lets us have firmware updates
+  services.fwupd.enable = mkDefault true;
 }
