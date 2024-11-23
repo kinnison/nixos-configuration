@@ -23,6 +23,7 @@ in {
         };
       };
       environment.systemPackages = [ pkgs.virt-manager ];
+      kinnison.user.groups = [ "libvirtd" ];
 
       # Libvirt stores information in various places
       kinnison.impermanence.directories =
