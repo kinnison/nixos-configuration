@@ -54,6 +54,14 @@ in {
         })
       ];
 
+      fonts.fontconfig = {
+        defaultFonts = {
+          serif = [ "NotoSerif" ];
+          sansSerif = [ "NotoSans" ];
+          monospace = [ "FiraCode" ];
+        };
+      };
+
       environment.systemPackages = with pkgs; [ swayosd ];
 
       services.udev.packages = [ pkgs.swayosd ];
