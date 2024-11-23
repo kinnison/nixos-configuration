@@ -288,10 +288,14 @@ in {
       # The various packages we need enabled
       home.packages = with pkgs; [ neomutt ];
 
-      systemd.user.sessionVariables =
-        lib.mkIf (config.home.sessionVariables ? MSMTP_QUEUE) {
+      systemd.user.sessionVariables = lib.mkMerge [
+        (lib.mkIf (config.home.sessionVariables ? MSMTP_QUEUE) {
           inherit (config.home.sessionVariables) MSMTP_QUEUE;
-        };
+        })
+        (lib.mkIf (config.home.sessionVariables ? MSMTP_LOG) {
+          inherit (config.home.sessionVariables) MSMTP_LOG;
+        })
+      ];
 
       # Now the various programs and services
       programs = {
