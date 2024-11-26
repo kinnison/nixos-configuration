@@ -14,6 +14,7 @@ in {
     ./secureboot.nix
     ./impermanence.nix
     ./virt-manager.nix
+    ./gaming.nix
   ];
 
   options.kinnison.zram = {
