@@ -12,8 +12,7 @@ help:
 	@echo "Local targets:"
 	@echo
 	@echo "update-lock -- Updates (and commits) the flake lock"
-	@echo "rebuild-build -- Runs nixos-rebuild build from here"
-	@echo "rebuild-switch -- Runs sudo nixos-rebuild switch from here"
+	@echo "rebuild-* -- Runs nixos-rebuild * from here (eg. switch, build, etc)"
 
 # Commands
 RM?=rm -f
@@ -51,5 +50,5 @@ update-lock:
 rebuild-build:
 	nixos-rebuild build --flake .
 
-rebuild-switch:
-	sudo nixos-rebuild switch --flake .
+rebuild-%:
+	sudo nixos-rebuild $(subst rebuild-,,$@) --flake .
