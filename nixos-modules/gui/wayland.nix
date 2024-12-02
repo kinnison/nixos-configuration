@@ -66,7 +66,7 @@ in {
 
       services.udev.packages = [ pkgs.swayosd ];
 
-      hardware.opengl.enable = true;
+      hardware.graphics.enable = true;
 
       kinnison.user.groups = [ "input" ];
       kinnison.impermanence.directories =
@@ -87,7 +87,7 @@ in {
           toString config.services.displayManager.sddm.autoLogin.minimumUid
         } quiet
         auth     optional  ${pkgs.systemd}/lib/security/pam_systemd_loadkey.so
-        auth     optional  ${pkgs.gnome.gnome-keyring}/lib/security/pam_gnome_keyring.so
+        auth     optional  ${pkgs.gnome-keyring}/lib/security/pam_gnome_keyring.so
         auth     required  pam_permit.so
 
         account  include   sddm

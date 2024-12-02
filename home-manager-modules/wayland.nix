@@ -308,13 +308,8 @@ in {
     };
     programs.rofi = {
       enable = true;
-      package = pkgs.rofi-wayland.override {
-        plugins = [
-          (pkgs.rofi-emoji.override {
-            rofi-unwrapped = pkgs.rofi-wayland-unwrapped;
-          })
-        ];
-      };
+      package =
+        pkgs.rofi-wayland.override { plugins = [ pkgs.rofi-emoji-wayland ]; };
       extraConfig = {
         modi = "drun,emoji,run";
         kb-primary-paste = "Control+V,Shift+Insert";

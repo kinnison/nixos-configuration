@@ -16,7 +16,8 @@ in {
       dedicatedServer.openFirewall = true;
       localNetworkGameTransfers.openFirewall = true;
     };
-    kinnison.unfree.pkgs = [ "steamcmd" "steam-run" "steam-original" "steam" ];
+    kinnison.unfree.pkgs =
+      [ "steamcmd" "steam-run" "steam-original" "steam" "steam-unwrapped" ];
     environment.systemPackages = with pkgs; [ protontricks steamcmd ];
   };
 }

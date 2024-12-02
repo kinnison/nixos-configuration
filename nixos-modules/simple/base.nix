@@ -76,6 +76,9 @@ in {
       [ "/var/lib/fwupd" "/var/cache/fwupd" "/var/cache/fwupdmgr" ];
 
     # We like vim and want it for the default editor (eww nano)
-    programs.vim.defaultEditor = mkDefault true;
+    programs.vim = {
+      enable = mkDefault true;
+      defaultEditor = mkDefault (config.programs.vim.enable);
+    };
   };
 }
