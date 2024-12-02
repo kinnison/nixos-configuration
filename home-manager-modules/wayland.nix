@@ -161,6 +161,7 @@ in {
       extraConfig = ''
         bindswitch lid:on exec systemctl suspend
         exec sleep 1 && swaymsg output "*" background "#000000" solid_color
+        exec systemctl --user import-environment XDG_SESSION_ID
       '';
     };
 
