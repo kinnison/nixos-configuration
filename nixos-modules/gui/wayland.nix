@@ -63,6 +63,7 @@ in {
       };
 
       environment.systemPackages = with pkgs; [ swayosd ];
+      security.soteria.enable = true;
 
       services.udev.packages = [ pkgs.swayosd ];
 

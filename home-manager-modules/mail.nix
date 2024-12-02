@@ -289,11 +289,11 @@ in {
       home.packages = with pkgs; [ neomutt ];
 
       systemd.user.sessionVariables = lib.mkMerge [
-        (lib.mkIf (config.home.sessionVariables ? MSMTP_QUEUE) {
-          inherit (config.home.sessionVariables) MSMTP_QUEUE;
+        (lib.mkIf (config.home.sessionVariables ? MSMTPQ_Q) {
+          inherit (config.home.sessionVariables) MSMTPQ_Q;
         })
-        (lib.mkIf (config.home.sessionVariables ? MSMTP_LOG) {
-          inherit (config.home.sessionVariables) MSMTP_LOG;
+        (lib.mkIf (config.home.sessionVariables ? MSMTPQ_LOG) {
+          inherit (config.home.sessionVariables) MSMTPQ_LOG;
         })
       ];
 

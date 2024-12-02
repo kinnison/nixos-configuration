@@ -80,5 +80,8 @@ in {
       enable = mkDefault true;
       defaultEditor = mkDefault (config.programs.vim.enable);
     };
+
+    # It's always OK for the user to run dmesg IMO
+    boot.kernel.sysctl."kernel.dmesg_restrict" = false;
   };
 }
