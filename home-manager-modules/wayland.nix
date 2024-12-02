@@ -245,15 +245,15 @@ in {
           "sway/scratchpad" = {
             "format" = "{icon} {count}";
             "show-empty" = false;
-            "format-icons" = [ "" "" ];
+            "format-icons" = [ "" " " ];
             "tooltip" = true;
             "tooltip-format" = "{app}: {title}";
           };
           idle_inhibitor = {
             "format" = "{icon}";
             "format-icons" = {
-              "activated" = "";
-              "deactivated" = "";
+              "activated" = " ";
+              "deactivated" = " ";
             };
           };
           tray.spacing = 10;
@@ -263,9 +263,9 @@ in {
               <tt><small>{calendar}</small></tt>'';
             format-alt = "{:%Y-%m-%d}";
           };
-          memory = { "format" = "{}% "; };
+          memory = { "format" = "{}%  "; };
           cpu = {
-            format = "{usage}% ";
+            format = "{usage}%  ";
             tooltip = false;
           };
           temperature = {
@@ -275,28 +275,28 @@ in {
             format-icons = [ "" "" "" ];
           };
           network = {
-            format-wifi = "{essid} ({signalStrength}%) ";
-            format-ethernet = "{ipaddr}/{cidr} ";
-            tooltip-format = "{ifname} via {gwaddr} ";
-            format-linked = "{ifname} (No IP) ";
-            format-disconnected = "Disconnected ⚠";
+            format-wifi = "{essid} ({signalStrength}%)  ";
+            format-ethernet = "{ipaddr}/{cidr}  ";
+            tooltip-format = "{ifname} via {gwaddr}  ";
+            format-linked = "{ifname} (No IP)  ";
+            format-disconnected = "Disconnected ⚠ ";
             format-alt = "{ifname}: {ipaddr}/{cidr}";
           };
           pulseaudio = {
             format = "{volume}% {icon} {format_source}";
-            format-bluetooth = "{volume}% {icon} {format_source}";
-            format-bluetooth-muted = " {icon} {format_source}";
+            format-bluetooth = "{volume}% {icon}  {format_source}";
+            format-bluetooth-muted = "  {icon}  {format_source}";
             format-muted = "󰝟 {format_source}";
             format-source = "{volume}% ";
-            format-source-muted = "";
+            format-source-muted = " ";
             format-icons = {
-              headphone = "";
-              hands-free = "";
-              headset = "";
-              phone = "";
-              portable = "";
-              car = "";
-              default = [ "" "" "" ];
+              headphone = " ";
+              hands-free = " ";
+              headset = " ";
+              phone = " ";
+              portable = " ";
+              car = " ";
+              default = [ " " " " " " ];
             };
             on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
           };
