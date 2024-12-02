@@ -47,7 +47,7 @@ in {
       home.pointerCursor = {
         name = mkForce "catppuccin-${guicfg.theme}-${guicfg.accent}-cursors";
         package = mkForce pkgs.catppuccin-cursors.${cursor-name};
-        size = mkForce 32;
+        size = mkForce 16;
       };
       services.udiskie = {
         enable = true;
