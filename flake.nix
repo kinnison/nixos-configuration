@@ -16,7 +16,6 @@
     };
     # Core nix stuff
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOs/nixos-hardware";
     # Home Manager for home directories
     home-manager = {
@@ -72,15 +71,12 @@
     };
   };
 
-  outputs = { self, flake-utils, flake-compat, nixpkgs, nixpkgs-unstable
-    , nixos-hardware, home-manager, catppuccin, stylix, disko, cats, prompter
-    , lanzaboote, impermanence }@inputs:
+  outputs = { self, flake-utils, flake-compat, nixpkgs, nixos-hardware
+    , home-manager, catppuccin, stylix, disko, cats, prompter, lanzaboote
+    , impermanence }@inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       overlays = [
-        (final: prev: {
-          unstable = import nixpkgs-unstable { system = prev.system; };
-        })
         (final: prev:
           let
             cats = inputs.cats.packages.${prev.system}.cats;
