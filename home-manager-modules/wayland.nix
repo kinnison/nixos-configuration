@@ -25,10 +25,10 @@ let
           };
           format = "{capacity}% {icon}";
           format-full = "{capacity}% {icon}";
-          format-charging = "{capacity}% 󰃨";
-          format-plugged = "{capacity}% ";
+          format-charging = "{capacity}% 󰃨 ";
+          format-plugged = "{capacity}%  ";
           format-alt = "{time} {icon}";
-          format-icons = [ "" "" "" "" "" ];
+          format-icons = [ " " " " " " " " " " ];
         };
       }) batcfg);
     in {
@@ -269,6 +269,7 @@ in {
             tooltip = false;
           };
           temperature = {
+            thermal-zone = 2;
             critical-threshold = 80;
             format = "{temperatureC}°C {icon}";
             format-icons = [ "" "" "" ];
