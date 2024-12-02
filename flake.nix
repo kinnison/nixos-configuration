@@ -15,20 +15,22 @@
       flake = false;
     };
     # Core nix stuff
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixos-hardware.url = "github:NixOs/nixos-hardware";
     # Home Manager for home directories
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # Styling
     stylix = {
-      url = "github:danth/stylix/release-24.05";
+      # Swap back to release-24.11 when the branch is made
+      url = "github:danth/stylix/master";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         home-manager.follows = "home-manager";
         flake-compat.follows = "flake-compat";
+        flake-utils.follows = "flake-utils";
       };
     };
     catppuccin.url = "github:catppuccin/nix";
