@@ -5,7 +5,7 @@
     "${modulesPath}/installer/cd-dvd/installation-cd-base.nix"
     ./systems.nix
   ];
-  system.stateVersion = "24.05";
+  system.stateVersion = "24.11";
   networking.hostName = "installer";
   kinnison.user = {
     name = "nixos";
