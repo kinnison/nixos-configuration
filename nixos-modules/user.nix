@@ -33,6 +33,10 @@ in {
       type = lib.types.bool;
       default = true;
     };
+    extraHomeModules = mkOption {
+      description = "Extra home modules";
+      default = [ ];
+    };
   };
 
   config = {
@@ -42,6 +46,8 @@ in {
       extraGroups = cfg.groups ++ [ "wheel" ];
       description = cfg.realName;
     } // cfg.extra;
-    home-manager.users.${cfg.name} = { imports = hm-modules ++ [ cfg.home ]; };
+    home-manager.users.${cfg.name} = {
+      imports = hm-modules ++ [ cfg.home ] ++ cfg.extraHomeModules;
+    };
   };
 }
