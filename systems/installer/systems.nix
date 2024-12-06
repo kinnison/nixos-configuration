@@ -5,7 +5,7 @@ let
   systemNames = builtins.filter (n: n != "installer") allSystemNames;
   topLevel = system: systems.${system}.config.system.build.toplevel;
   bootLoader = system: systems.${system}.config.system.build.installBootLoader;
-  flake = ./../..;
+  flake = flakeInputs.self;
   installer = system:
     pkgs.writeShellScriptBin "disko-install-${system}" ''
       disko-install -f ${flake}#${system} --system-config '{"kinnison":{"installer-image":true}}' "$@"
