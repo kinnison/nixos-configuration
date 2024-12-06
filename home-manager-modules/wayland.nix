@@ -54,6 +54,16 @@ let
     fi
   '';
   new-workspace = "${new-workspace-pkg}/bin/new-workspace";
+  display-switch-pkg = pkgs.writeShellScriptBin "display-switch" ''
+    export $(${pkgs.sway}/bin/swaymsg -t get_outputs | ${pkgs.jq}/bin/jq -r '[[.[-1]] + .[0:-1], .[0:], .[1:] + [.[0]]] | transpose | .[] | select(.[1].focused) | [.[].name] | [["PREV", "CURRENT", "NEXT"], .] | transpose | .[] | .[0] + "=" + (.[1] | tostring)')
+    TARGET=$1
+    TARGET=''${!TARGET}
+    if [ "$2" = "move" ]; then
+      ${pkgs.sway}/bin/swaymsg move container to output $TARGET
+    fi
+    ${pkgs.sway}/bin/swaymsg focus output $TARGET
+  '';
+  display-switch = "${display-switch-pkg}/bin/display-switch";
 in {
   options.kinnison.batteries = mkOption {
     description = "Batteries, if any";
@@ -113,11 +123,11 @@ in {
           "Control+Shift+Mod1+Right" =
             "move container to workspace prev_on_output;workspace prev_on_output";
           # Move window one output prev/next
-          # "Control+Shift+Mod1+Up" = "";
-          # "Control+Shift+Mod1+Down" = "";
+          "Control+Shift+Mod1+Up" = "exec ${display-switch} PREV move";
+          "Control+Shift+Mod1+Down" = "exec ${display-switch} NEXT move";
           # Switch focus one output prev/next
-          # "Control+Mod1+Up" = "";
-          # "Control+Mod1+Down" = "";
+          "Control+Mod1+Up" = "exec ${display-switch} PREV";
+          "Control+Mod1+Down" = "exec ${display-switch} NEXT";
           "Mod1+f4" = "kill";
           "Mod1+f11" = "fullscreen toggle";
           "Mod4+Shift+r" = "reload";
