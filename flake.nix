@@ -184,7 +184,10 @@
           };
         };
 
-      lib = { inherit defaultSystemModules; };
+      lib = {
+        inherit defaultSystemModules;
+        inherit systemPair;
+      };
 
       homes = {
         dsilvers = ./homes/dsilvers;
