@@ -124,6 +124,7 @@
               experimental-features = nix-command flakes
             '';
             settings = { auto-optimise-store = true; };
+            channel.enable = false; # We use flakes
           };
           nixpkgs.overlays = overlays;
         })
