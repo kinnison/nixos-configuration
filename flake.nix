@@ -137,6 +137,25 @@
           "${name}" = nixpkgs.lib.nixosSystem body;
           "${name}-installable" = nixpkgs.lib.nixosSystem installerBody;
         };
+      makeInstaller = { systems, flakeInputs, baseModules }:
+        nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = baseModules ++ [
+            {
+              _module.args = {
+                inherit systems;
+                inherit flakeInputs;
+              };
+            }
+            ./systems/installer/configuration.nix
+            {
+              environment.systemPackages = [
+                disko.packages.x86_64-linux.disko-install
+                disko.packages.x86_64-linux.disko
+              ];
+            }
+          ];
+        };
     in {
       # We use this to detect if we recurse back into ourselves during flake traversal
       toplevelMarker = "kinnison";
@@ -163,30 +182,19 @@
             ./systems/catalepsy/configuration.nix
           ];
         }) // {
-          # The installer contains all of the above systems, including disko support
-          installer = nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-            modules = self.lib.defaultSystemModules ++ [
-              {
-                _module.args = {
-                  systems = self.nixosConfigurations;
-                  flakeInputs = inputs;
-                };
-              }
-              ./systems/installer/configuration.nix
-              {
-                environment.systemPackages = [
-                  disko.packages.x86_64-linux.disko-install
-                  disko.packages.x86_64-linux.disko
-                ];
-              }
-            ];
+          # The installer contains all of the above systems,
+          # adds disko support, and is a GUI installer
+          installer = self.lib.makeInstaller {
+            baseModules = self.lib.defaultSystemModules;
+            flakeInputs = inputs;
+            systems = self.nixosConfigurations;
           };
         };
 
       lib = {
         inherit defaultSystemModules;
         inherit systemPair;
+        inherit makeInstaller;
       };
 
       homes = {
