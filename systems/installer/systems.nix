@@ -18,11 +18,23 @@ let
     alldeps = builtins.concatMap deps-for-closure-for systemNames;
     mydeps =
       builtins.map (i: i.outPath) (builtins.attrValues flakeInputs.self.inputs);
-  in pkgs.closureInfo { rootPaths = alldeps ++ mydeps; };
+    allFlakes = let
+      recFlake = seen: fname: f:
+        let
+          found = builtins.elem fname seen;
+          seen' = seen ++ [ fname ];
+          done = let inputs = if f ? inputs then f.inputs else { };
+          in [ f.outPath ] ++ (recFlakes seen' inputs);
+        in if found then [ ] else done;
+      recFlakes = seen: fis:
+        let allFlakes = lib.mapAttrsToList (recFlake seen) fis;
+        in builtins.concatLists allFlakes;
+    in lib.unique (recFlakes [ ] flakeInputs);
+  in pkgs.closureInfo { rootPaths = alldeps ++ mydeps ++ allFlakes; };
   flake = flakeInputs.self;
   installer = system:
     pkgs.writeShellScriptBin "disko-install-${system}" ''
-      disko-install -f ${flake}#${system} --system-config '{"kinnison":{"installer-image":true}}' "$@"
+      disko-install -f ${flake}#${system}-installable --write-efi-boot-entries "$@"
     '';
   installers = builtins.map (installer)
     (builtins.filter (name: !lib.hasSuffix "-installable" name) systemNames);
