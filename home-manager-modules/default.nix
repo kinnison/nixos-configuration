@@ -1,5 +1,5 @@
 # The various packages provided directly by my system and home configs
-{ lib, pkgs, osConfig, ... }:
+{ lib, pkgs, osConfig, config, ... }:
 let
   inherit (lib) mkMerge mkIf mkForce;
   guicfg = osConfig.kinnison.gui;
@@ -10,6 +10,11 @@ let
     (lib.toUpper (builtins.substring 0 1 str))
     + (builtins.substring 1 (builtins.stringLength str) str);
   cursor-name = "${guicfg.theme}${mkUpper guicfg.accent}";
+  catppuccin-sources-names =
+    builtins.map (n: config.catppuccin.sources.${n}) [ "rofi" ];
+  closure = pkgs.closureInfo {
+    rootPaths = builtins.map (s: s.outPath) catppuccin-sources-names;
+  };
 in {
   imports = [
     ./bitwarden.nix
@@ -64,7 +69,7 @@ in {
         enable = true;
         components = [ "secrets" ];
       };
-      home.packages = [ pkgs.libsecret pkgs.firefox ];
+      home.packages = [ pkgs.libsecret pkgs.firefox closure ];
     })
     (mkIf (guicfg.enable && bluecfg.enable) {
       services.blueman-applet.enable = true;
