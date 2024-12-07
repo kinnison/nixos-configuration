@@ -7,8 +7,10 @@
   '';
 
   inputs = {
-    # While we don't use flake-utils, various of our sub-flakes do
+    # While we don't use nix-systems, flake-utils, etc. various of our sub-flakes do
+    nix-systems.url = "github:nix-systems/default";
     flake-utils.url = "github:numtide/flake-utils";
+    flake-utils.inputs.systems.follows = "nix-systems";
     # Ditto for flake-compat
     flake-compat = {
       url = "github:edolstra/flake-compat";
@@ -31,6 +33,7 @@
         home-manager.follows = "home-manager";
         flake-compat.follows = "flake-compat";
         flake-utils.follows = "flake-utils";
+        systems.follows = "nix-systems";
       };
     };
     catppuccin.url = "github:catppuccin/nix";
@@ -73,9 +76,9 @@
     };
   };
 
-  outputs = { self, flake-utils, flake-compat, nixpkgs, nixos-hardware
-    , home-manager, catppuccin, stylix, disko, cats, prompter, lanzaboote
-    , impermanence }@inputs:
+  outputs = { self, nix-systems, flake-utils, flake-compat, nixpkgs
+    , nixos-hardware, home-manager, catppuccin, stylix, disko, cats, prompter
+    , lanzaboote, impermanence }@inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       overlays = [
