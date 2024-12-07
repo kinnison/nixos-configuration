@@ -45,4 +45,7 @@
 
   # Impermanence uses btrfs, so make sure we have it available
   environment.systemPackages = [ pkgs.btrfs-progs ];
+
+  # Make the iso image less compressed for now, for speed
+  isoImage.squashfsCompression = "zstd -Xcompression-level 6";
 }
