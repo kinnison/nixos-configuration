@@ -242,6 +242,9 @@ in {
           background-color: shade(@base, 0.9);
           border: 2px solid alpha(@crust, 0.3);
         }
+        .modules-left #workspaces button.focused {
+          background: radial-gradient(circle at center bottom, alpha(@base05, 0.5) 0%, alpha(@base05, 0) 40%);
+        }
       '';
       settings = {
         mainBar = {
@@ -256,7 +259,7 @@ in {
 
           "sway/workspaces" = {
             disable-scroll = true;
-            all-outputs = true;
+            all-outputs = false;
           };
           "sway/mode" = { "format" = ''<span style="italic">{}</span>''; };
           "sway/scratchpad" = {
