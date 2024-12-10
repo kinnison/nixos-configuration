@@ -60,6 +60,8 @@ let
     TARGET=''${!TARGET}
     if [ "$2" = "move" ]; then
       ${pkgs.sway}/bin/swaymsg move container to output $TARGET
+    elif [ "$2" = "movews" ]; then
+      ${pkgs.sway}/bin/swaymsg move workspace to output $TARGET
     fi
     ${pkgs.sway}/bin/swaymsg focus output $TARGET
   '';
@@ -131,6 +133,9 @@ in {
           # Switch focus one output prev/next
           "Control+Mod1+Up" = "exec ${display-switch} PREV";
           "Control+Mod1+Down" = "exec ${display-switch} NEXT";
+          # Move entire workspace one output prev/next
+          "Control+Mod1+Mod4+Up" = "exec ${display-switch} PREV movews";
+          "Control+Mod1+Mod4+Down" = "exec ${display-switch} NEXT movews";
           "Mod1+f4" = "kill";
           "Mod1+f11" = "fullscreen toggle";
           "Mod4+Shift+r" = "reload";
