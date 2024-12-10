@@ -113,15 +113,15 @@ in {
           "Mod4+e" = "exec ${rofi-bin} -modi emoji -show emoji";
           "Mod1+f2" = "exec ${rofi-bin} -show run";
           "Mod1+f3" = "exec ${conf.menu}";
-          "Control+Mod1+Left" = "workspace prev_on_output";
-          "Control+Mod1+Right" = "workspace next_on_output";
+          "Control+Mod1+Left" = "workspace prev";
+          "Control+Mod1+Right" = "workspace next";
           "Mod4+Tab" = "focus next";
           "Mod4+Shift+Tab" = "focus prev";
           # Move window one workspace prev / next
           "Control+Shift+Mod1+Left" =
-            "move container to workspace prev_on_output;workspace prev_on_output";
+            "move container to workspace prev;workspace prev";
           "Control+Shift+Mod1+Right" =
-            "move container to workspace prev_on_output;workspace prev_on_output";
+            "move container to workspace next;workspace next";
           # Move window one output prev/next
           "Control+Shift+Mod1+Up" = "exec ${display-switch} PREV move";
           "Control+Shift+Mod1+Down" = "exec ${display-switch} NEXT move";
