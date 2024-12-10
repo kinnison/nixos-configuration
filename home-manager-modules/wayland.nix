@@ -245,6 +245,10 @@ in {
         .modules-left #workspaces button.focused {
           background: radial-gradient(circle at center bottom, alpha(@base05, 0.5) 0%, alpha(@base05, 0) 40%);
         }
+        .modules-left #workspaces button.visible {
+          border-bottom: 3px solid @base05;
+        }
+
       '';
       settings = {
         mainBar = {
