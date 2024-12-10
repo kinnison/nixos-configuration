@@ -90,6 +90,9 @@ in {
         xdgAutostart = true;
       };
       config = {
+        # Override the background that stylix would have put in.
+        # So that wpaperd can take over properly
+        output."*".bg = mkForce "#000000 solid_color";
         bars = [ ];
         input."type:keyboard" = {
           xkb_layout = "gb";
@@ -170,7 +173,6 @@ in {
       };
       extraConfig = ''
         bindswitch lid:on exec systemctl suspend
-        exec sleep 1 && swaymsg output "*" background "#000000" solid_color
         exec systemctl --user import-environment XDG_SESSION_ID
       '';
     };
