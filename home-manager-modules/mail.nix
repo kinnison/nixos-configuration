@@ -177,6 +177,8 @@ let
     };
   }) cfg.accounts;
 
+  extraMailConfigs = mapAttrs (name: acc: acc.extraConfig) cfg.accounts;
+
 in {
   options.kinnison.email = {
     enable = mkEnableOption "Email Configuration";
@@ -458,5 +460,6 @@ in {
         };
       }) (attrNames cfg.accounts));
     }
+    { accounts.email.accounts = extraMailConfigs; }
   ]);
 }
