@@ -116,7 +116,8 @@ in {
         in {
           "Mod4+x" = "exec ${pkgs.foot}/bin/foot";
           "Mod4+e" = "exec ${rofi-bin} -modi emoji -show emoji";
-          "Mod1+f2" = "exec ${rofi-bin} -show run";
+          "Mod1+f2" = ''
+            exec ${rofi-bin} -show run -run-command 'bash -c "exec $0 $@" {cmd}' '';
           "Mod1+f3" = "exec ${conf.menu}";
           "Control+Mod1+Left" = "workspace prev_on_output";
           "Control+Mod1+Right" = "workspace next_on_output";
