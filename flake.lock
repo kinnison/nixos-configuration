@@ -359,11 +359,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1733993762,
-        "narHash": "sha256-VU7TfHysn/+QoqV8k1O6ai0ooc3tHG7V6k/PJn03NpY=",
+        "lastModified": 1733993934,
+        "narHash": "sha256-vmVqjFK7DsrhQuCmQRjiWaOcoPUNET8W5ZI2ajRS3io=",
         "owner": "kinnison",
         "repo": "prompter",
-        "rev": "4692f6e8d4db21d2a5a4455ccb92b7939f07e2af",
+        "rev": "a9faf7beb80d4b3bb74ad40d7bfea216a800c8d6",
         "type": "github"
       },
       "original": {
