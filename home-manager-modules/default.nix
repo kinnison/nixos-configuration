@@ -82,7 +82,6 @@ in {
       programs.zsh = {
         enable = true;
         enableCompletion = true;
-        enableVteIntegration = true;
         autosuggestion = {
           enable = true;
           # This turns up in newer home-manager?
