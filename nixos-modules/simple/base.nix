@@ -38,6 +38,24 @@ in {
       promptInit = ''
         eval "$(${pkgs.kinnison.prompter}/bin/prompter init)"
       '';
+      interactiveShellInit = ''
+        # Extended globbing
+        setopt extended_glob
+        # zsh: exit 1 stylee stuff
+        setopt print_exit_value
+        # turn off annoying vim style tab completion
+        setopt no_auto_menu
+        # Enable partial list style completion
+        zstyle ':completion:*' list-suffixes true
+        # Bash-style null glob result -> no error
+        setopt null_glob
+        # Comments in the shell prompt are permitted
+        setopt interactivecomments
+        # Remove / from the default WORDCHARS
+        WORDCHARS=$(echo $WORDCHARS | tr -d '/')
+        # Report if a command takes > 10s to run
+        REPORTTIME=10
+      '';
     };
 
     environment.pathsToLink = mkMerge [

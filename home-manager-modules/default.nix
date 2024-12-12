@@ -84,12 +84,10 @@ in {
         enableCompletion = true;
         autosuggestion = {
           enable = true;
-          # This turns up in newer home-manager?
-          # strategy = [ "history" ];
+          strategy = [ "history" "match_prev_cmd" "completion" ];
         };
         history = {
-          # This turns up in newer home-manager?
-          # append = true;
+          append = true;
           share = true;
           extended = true;
           ignoreAllDups = true;
