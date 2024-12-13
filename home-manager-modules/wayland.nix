@@ -100,6 +100,7 @@ in {
           xkb_layout = "gb";
           xkb_options = "compose:caps";
         };
+        input."type:touchpad" = mkIf (batcfg != [ ]) { events = "disabled"; };
         window = {
           titlebar = false;
           border = 1;
@@ -174,6 +175,8 @@ in {
             "exec ${pkgs.swayosd}/bin/swayosd-client --brightness=lower";
           "XF86MonBrightnessUp" =
             "exec ${pkgs.swayosd}/bin/swayosd-client --brightness=raise";
+          "Mod4+v" = mkIf (batcfg != [ ])
+            "input type:touchpad events toggle enabled disabled";
         };
 
       };
