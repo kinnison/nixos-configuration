@@ -91,6 +91,7 @@ in {
         enable = true;
         xdgAutostart = true;
       };
+      extraOptions = [ "--unsupported-gpu" ];
       config = {
         # Override the background that stylix would have put in.
         # So that wpaperd can take over properly

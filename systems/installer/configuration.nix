@@ -48,4 +48,17 @@
 
   # Make the iso image less compressed for now, for speed
   isoImage.squashfsCompression = "zstd -Xcompression-level 6";
+  hardware.graphics.enable = true;
+  # Seems dumb but hardware.nvidia requires it?
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia = {
+    modesetting.enable = true;
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
+    open = false;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+  kinnison.gaming.steam = true;
+  kinnison.unfree.pkgs = [ "nvidia-x11" "nvidia-settings" ];
 }
