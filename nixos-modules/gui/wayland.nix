@@ -6,6 +6,7 @@ let
   enable = config.kinnison.gui.enable && cfg.enable;
   autoLogin = config.kinnison.user.autoLogin;
   autoLoginUser = config.kinnison.user.name;
+  isNvidia = config.kinnison.nvidia.enable;
 in {
   options.kinnison.gui.wayland = { enable = mkEnableOption "Wayland GUI"; };
 
@@ -15,7 +16,7 @@ in {
         enable = true;
         xwayland.enable = true;
         extraPackages = [ ];
-        extraOptions = [ "--unsupported-gpu" ];
+        extraOptions = mkIf isNvidia [ "--unsupported-gpu" ];
         wrapperFeatures.gtk = true;
       };
 

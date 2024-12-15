@@ -3,8 +3,9 @@
 let
   inherit (lib) mkIf mkOption mkForce;
   guicfg = osConfig.kinnison.gui;
-  # TODO
   batcfg = config.kinnison.batteries;
+  hasBatteries = batcfg != [ ];
+  isNvidia = osConfig.kinnison.nvidia.enable;
   waybar-batteries = if batcfg == [ ] then {
     modules = [ ];
     blocks = { };
@@ -91,7 +92,7 @@ in {
         enable = true;
         xdgAutostart = true;
       };
-      extraOptions = [ "--unsupported-gpu" ];
+      extraOptions = mkIf isNvidia [ "--unsupported-gpu" ];
       xwayland = true;
       wrapperFeatures.gtk = true;
       config = {
@@ -103,7 +104,7 @@ in {
           xkb_layout = "gb";
           xkb_options = "compose:caps";
         };
-        input."type:touchpad" = mkIf (batcfg != [ ]) { events = "disabled"; };
+        input."type:touchpad" = mkIf hasBatteries { events = "disabled"; };
         window = {
           titlebar = false;
           border = 1;
@@ -207,10 +208,10 @@ in {
           timeout = 300;
           command = "${pkgs.swaylock}/bin/swaylock -fF";
         }
-        {
+        (mkIf hasBatteries {
           timeout = 1800;
           command = "${pkgs.systemd}/bin/systemctl suspend";
-        }
+        })
       ];
     };
 
