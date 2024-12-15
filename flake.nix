@@ -185,6 +185,15 @@
             nixos-hardware.nixosModules.lenovo-thinkpad-t480
             ./systems/catalepsy/configuration.nix
           ];
+        }) //
+        # Daniel's personal desktop
+        (systemPair "lassitude" {
+          system = "x86_64-linux";
+          modules = self.lib.defaultSystemModules ++ [
+            nixos-hardware.nixosModules.common-cpu-amd
+            nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
+            ./systems/lassitude/configuration.nix
+          ];
         }) // {
           # The installer contains all of the above systems,
           # adds disko support, and is a GUI installer
