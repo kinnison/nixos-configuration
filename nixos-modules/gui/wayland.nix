@@ -16,6 +16,7 @@ in {
         xwayland.enable = true;
         extraPackages = [ ];
         extraOptions = [ "--unsupported-gpu" ];
+        wrapperFeatures.gtk = true;
       };
 
       xdg.portal = {
