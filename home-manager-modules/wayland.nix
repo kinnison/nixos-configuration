@@ -182,8 +182,7 @@ in {
           "Mod4+v" = mkIf (batcfg != [ ])
             "input type:touchpad events toggle enabled disabled";
         };
-
-      };
+      } // osConfig.kinnison.gui.wayland.extraSwayConfig;
       extraConfig = ''
         bindswitch lid:on exec systemctl suspend
         exec systemctl --user import-environment XDG_SESSION_ID

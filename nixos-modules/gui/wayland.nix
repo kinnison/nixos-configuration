@@ -1,14 +1,21 @@
 # Wayland GUI setup
 { lib, config, pkgs, ... }:
 let
-  inherit (lib) mkEnableOption mkIf mkMerge mkForce;
+  inherit (lib) mkEnableOption mkIf mkMerge mkForce mkOption types;
   cfg = config.kinnison.gui.wayland;
   enable = config.kinnison.gui.enable && cfg.enable;
   autoLogin = config.kinnison.user.autoLogin;
   autoLoginUser = config.kinnison.user.name;
   isNvidia = config.kinnison.nvidia.enable;
 in {
-  options.kinnison.gui.wayland = { enable = mkEnableOption "Wayland GUI"; };
+  options.kinnison.gui.wayland = {
+    enable = mkEnableOption "Wayland GUI";
+    extraSwayConfig = mkOption {
+      description = "Extra configuration for Sway, eg. displays";
+      type = types.attrs;
+      default = { };
+    };
+  };
 
   config = mkIf enable (mkMerge [
     {

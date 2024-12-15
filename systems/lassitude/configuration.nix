@@ -35,6 +35,28 @@
   kinnison.gui = {
     enable = true;
     wayland.enable = true;
+    wayland.extraSwayConfig = {
+      output."HDMI-A-1" = {
+        mode = "1920x1080@60Hz";
+        pos = "0 0";
+        transform = "normal";
+      };
+      output."DP-1" = {
+        mode = "1920x1080@60Hz";
+        pos = "1920 0";
+        transform = "normal";
+      };
+      workspaceOutputAssign = [
+        {
+          workspace = "1";
+          output = "HDMI-A-1";
+        }
+        {
+          workspace = "2";
+          output = "DP-1";
+        }
+      ];
+    };
   };
   kinnison.sound.enable = true;
   kinnison.network-manager.enable = true;
