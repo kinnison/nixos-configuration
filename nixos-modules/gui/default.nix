@@ -6,7 +6,7 @@ let
     + (builtins.substring 1 (builtins.stringLength str) str);
   cursor-name = "${cfg.theme}${mkUpper cfg.accent}";
 in {
-  imports = [ ./wayland.nix ];
+  imports = [ ./wayland.nix ./nvidia.nix ];
   options.kinnison.gui = {
     enable = lib.mkEnableOption "gui";
     theme = lib.mkOption {
