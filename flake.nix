@@ -74,11 +74,19 @@
         flake-utils.follows = "flake-utils";
       };
     };
+    # My personal journalling tool
+    juntakami = {
+      url = "github:kinnison/juntakami";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
   };
 
   outputs = { self, nix-systems, flake-utils, flake-compat, nixpkgs
     , nixos-hardware, home-manager, catppuccin, stylix, disko, cats, prompter
-    , lanzaboote, impermanence }@inputs:
+    , lanzaboote, impermanence, juntakami }@inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       overlays = [
@@ -86,10 +94,10 @@
           let
             cats = inputs.cats.packages.${prev.system}.cats;
             prompter = inputs.prompter.packages.${prev.system}.prompter;
+            juntakami = inputs.juntakami.packages.${prev.system}.juntakami;
           in {
             kinnison = (import ./packages { pkgs = final; }) // {
-              inherit cats;
-              prompter = prompter;
+              inherit cats prompter juntakami;
             };
           })
       ];

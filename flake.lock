@@ -272,6 +272,29 @@
         "type": "github"
       }
     },
+    "juntakami": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1734536437,
+        "narHash": "sha256-NiarI3Ivu6RSvxtj9RH5J34AU6np6IX38lUCjI9AvE0=",
+        "owner": "kinnison",
+        "repo": "juntakami",
+        "rev": "1c42e69c94aef72ed1a957edde62e34d2714d0ea",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kinnison",
+        "repo": "juntakami",
+        "type": "github"
+      }
+    },
     "lanzaboote": {
       "inputs": {
         "crane": "crane",
@@ -381,6 +404,7 @@
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
+        "juntakami": "juntakami",
         "lanzaboote": "lanzaboote",
         "nix-systems": "nix-systems",
         "nixos-hardware": "nixos-hardware",
