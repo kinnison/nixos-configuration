@@ -16,6 +16,8 @@
   kinnison.irc.enable = osConfig.kinnison.gui.enable;
   # I want my email if I have a gui
   kinnison.email.enable = osConfig.kinnison.gui.enable;
+  # I play minecraft, but only on my desktop typically
+  kinnison.gaming.minecraft = osConfig.networking.hostName == "lassitude";
 
   # Keybase is something I only use on personal systems
   services.keybase.enable = true;

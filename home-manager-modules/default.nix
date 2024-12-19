@@ -26,6 +26,7 @@ in {
     ./rust.nix
     ./vscode.nix
     ./wayland.nix
+    ./gaming.nix
   ];
   config = mkMerge [
     (mkIf guicfg.enable {
