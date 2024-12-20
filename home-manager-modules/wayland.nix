@@ -67,6 +67,12 @@ let
     ${pkgs.sway}/bin/swaymsg focus output $TARGET
   '';
   display-switch = "${display-switch-pkg}/bin/display-switch";
+  from-resume-pkg = pkgs.writeShellScriptBin "from-resume" ''
+    ${pkgs.sway}/bin/swaymsg 'output * power on'
+    ${pkgs.coreutils}/bin/sleep 0.5
+    ${pkgs.systemd}/bin/systemctl --user restart wpaperd.service
+  '';
+  from-resume = "${from-resume-pkg}/bin/from-resume";
 in {
   options.kinnison.batteries = mkOption {
     description = "Batteries, if any";
@@ -197,6 +203,10 @@ in {
           event = "before-sleep";
           command = "${pkgs.swaylock}/bin/swaylock -fF";
         }
+        (mkIf isNvidia {
+          event = "after-resume";
+          command = "${from-resume}";
+        })
         {
           event = "lock";
           command = "${pkgs.swaylock}/bin/swaylock -fF";
