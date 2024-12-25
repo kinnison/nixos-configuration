@@ -1,6 +1,6 @@
 # Configuration for my personal laptop Catalepsy (was Cataplexy)
 
-{ homes, ... }: rec {
+{ homes, pkgs, ... }: rec {
   imports = [ ./hardware-configuration.nix ];
 
   system.stateVersion = "24.11";
@@ -64,4 +64,5 @@
   kinnison.impermanence.enable = true;
   kinnison.virt-manager.enable = true;
   kinnison.gaming.steam = true;
+  kinnison.sound.spotify = true;
 }
