@@ -36,20 +36,23 @@ in {
         config = { common = { default = "wlr"; }; };
       };
 
-      boot.plymouth = {
-        enable = true;
-        catppuccin.enable = true;
-      };
+      boot.plymouth.enable = true;
       stylix.targets.plymouth.enable = false;
 
       boot.initrd.systemd.enable = true;
       boot.kernelParams = [ "quiet" "splash" ];
 
+      catppuccin = {
+        sddm = {
+          enable = true;
+          fontSize = "18";
+        };
+        plymouth.enable = true;
+      };
+
       services.displayManager.sddm = {
         enable = true;
         wayland.enable = true;
-        catppuccin.enable = true;
-        catppuccin.fontSize = "18";
         package = pkgs.kdePackages.sddm;
       };
 

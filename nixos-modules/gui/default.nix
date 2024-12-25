@@ -35,7 +35,7 @@ in {
     catppuccin.enable = true;
     catppuccin.flavor = lib.mkDefault cfg.theme;
     catppuccin.accent = lib.mkDefault cfg.accent;
-    console.catppuccin.enable = false;
+    catppuccin.tty.enable = false;
     environment.systemPackages = lib.mkMerge [
       (lib.mkIf config.kinnison.network-manager.enable
         [ pkgs.networkmanagerapplet ])

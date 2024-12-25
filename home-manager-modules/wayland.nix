@@ -82,9 +82,17 @@ in {
 
   config = mkIf guicfg.wayland.enable {
     home.packages = [ dmenu capture pkgs.swayimg ];
+    catppuccin = {
+      swaylock.enable = true;
+      sway.enable = true;
+      foot.enable = true;
+      waybar.enable = true;
+      dunst.enable = true;
+    };
+    stylix.targets.foot.enable = false;
+    stylix.targets.swaylock.enable = false;
     programs.swaylock = {
       enable = true;
-      catppuccin.enable = false;
       settings = {
         font-size = 24;
         indicator-radius = 250;
@@ -93,7 +101,6 @@ in {
     };
     wayland.windowManager.sway = {
       enable = true;
-      catppuccin.enable = true;
       systemd = {
         enable = true;
         xdgAutostart = true;
@@ -232,7 +239,6 @@ in {
     programs.foot = {
       enable = true;
       server.enable = true;
-      catppuccin.enable = false;
       settings = {
         main = {
           term = "xterm-256color";
@@ -245,7 +251,6 @@ in {
 
     programs.waybar = {
       enable = true;
-      catppuccin.enable = true;
       systemd = {
         enable = true;
         target = "sway-session.target";
@@ -345,10 +350,7 @@ in {
         } // waybar-batteries.blocks;
       };
     };
-    services.dunst = {
-      enable = true;
-      catppuccin.enable = true;
-    };
+    services.dunst = { enable = true; };
     programs.rofi = {
       enable = true;
       package =

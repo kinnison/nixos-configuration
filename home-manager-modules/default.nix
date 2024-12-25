@@ -48,8 +48,8 @@ in {
         enable = true;
         style.name = "kvantum";
         platformTheme.name = "kvantum";
-        style.catppuccin.enable = true;
       };
+      catppuccin.kvantum.enable = true;
       home.pointerCursor = {
         name = mkForce "catppuccin-${guicfg.theme}-${guicfg.accent}-cursors";
         package = mkForce pkgs.catppuccin-cursors.${cursor-name};

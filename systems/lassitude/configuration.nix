@@ -1,6 +1,6 @@
 # Configuration for my personal laptop Catalepsy (was Cataplexy)
 
-{ homes, pkgs, ... }: rec {
+{ homes, ... }: rec {
   imports = [ ./hardware-configuration.nix ];
 
   system.stateVersion = "24.11";
