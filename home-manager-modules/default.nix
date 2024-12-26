@@ -27,6 +27,7 @@ in {
     ./vscode.nix
     ./wayland.nix
     ./gaming.nix
+    ./spotify.nix
   ];
   config = mkMerge [
     (mkIf guicfg.enable {

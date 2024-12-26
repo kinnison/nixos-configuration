@@ -5,8 +5,6 @@ let
   cfg = config.kinnison.sound;
 in {
 
-  imports = [ ./spotify.nix ];
-
   options.kinnison.sound = { enable = mkEnableOption "System sound support"; };
 
   config = mkIf cfg.enable {

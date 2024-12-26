@@ -22,4 +22,7 @@
   # Keybase is something I only use on personal systems
   services.keybase.enable = true;
   home.packages = with pkgs; [ kinnison.juntakami ];
+
+  # I like Spotify for music
+  kinnison.sound.spotify = true;
 }

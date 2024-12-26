@@ -64,5 +64,4 @@
   kinnison.impermanence.enable = true;
   kinnison.virt-manager.enable = true;
   kinnison.gaming.steam = true;
-  kinnison.sound.spotify = true;
 }
