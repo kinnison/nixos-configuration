@@ -74,6 +74,12 @@ in {
           "workbench.iconTheme" = "catppuccin-${osConfig.kinnison.gui.theme}";
         };
       };
+      kinnison.unfree.pkgs = [
+        "vscode"
+        "vscode-extension-ms-vscode-cpptools"
+        "vscode-extension-ms-vscode-remote-remote-ssh"
+        "vscode-extension-ms-vsliveshare-vsliveshare"
+      ];
     })
     (mkIf (config.kinnison.rust.enable && cfg.enable) {
       programs.vscode.userSettings = {

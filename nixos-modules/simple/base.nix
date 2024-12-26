@@ -1,7 +1,11 @@
 # Base Role for all systems which I want
 { config, lib, pkgs, ... }:
 with lib;
-let unfreecfg = config.kinnison.unfree;
+let
+  unfreecfg = config.kinnison.unfree;
+  all-user-unfree-pkgs' = mapAttrsToList (name: conf: conf.kinnison.unfree.pkgs)
+    config.home-manager.users;
+  all-user-unfree-pkgs = flatten all-user-unfree-pkgs';
 in {
   options.kinnison.unfree = {
     pkgs = mkOption {
@@ -12,6 +16,17 @@ in {
   };
 
   config = {
+
+    home-manager.sharedModules = [{
+      options.kinnison.unfree = {
+        pkgs = mkOption {
+          description = "Package names to permit in the unfree list";
+          type = types.listOf types.str;
+          default = [ ];
+        };
+      };
+    }];
+
     boot.loader.systemd-boot.enable = mkDefault true;
     boot.loader.efi.canTouchEfiVariables = true;
 
@@ -78,12 +93,7 @@ in {
     # We are not prudish about non-free software for the most part,
     # though we do limit it, so here we list what's allowed
     nixpkgs.config.allowUnfreePredicate = pkg:
-      builtins.elem (getName pkg) ([
-        "vscode"
-        "vscode-extension-ms-vscode-cpptools"
-        "vscode-extension-ms-vscode-remote-remote-ssh"
-        "vscode-extension-ms-vsliveshare-vsliveshare"
-      ] ++ unfreecfg.pkgs);
+      builtins.elem (getName pkg) (unfreecfg.pkgs ++ all-user-unfree-pkgs);
 
     # Generally speaking, our systems need fstrim
     services.fstrim.enable = mkDefault true;
