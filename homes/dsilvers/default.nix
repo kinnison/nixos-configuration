@@ -1,4 +1,4 @@
-{ osConfig, pkgs, ... }: {
+{ osConfig, pkgs, lib, ... }: {
   home.stateVersion = "24.11";
   # Turn on GnuPG if we have a gui enabled since that'll be needed for yubikeys etc.
   kinnison.gnupg.enable = osConfig.kinnison.gui.enable;
@@ -21,7 +21,11 @@
 
   # Keybase is something I only use on personal systems
   services.keybase.enable = true;
-  home.packages = with pkgs; [ kinnison.juntakami ];
+  home.packages = lib.mkMerge [
+    (with pkgs; [ kinnison.juntakami ])
+  # I like kicad, but only on my desktop for now
+    (lib.mkIf (osConfig.networking.hostName == "lassitude") [ pkgs.kicad ])
+  ];
 
   # I like Spotify for music
   kinnison.sound.spotify = true;
