@@ -1,6 +1,6 @@
 # Configuration for my personal laptop Catalepsy (was Cataplexy)
 
-{ homes, ... }: rec {
+{ pkgs, homes, ... }: rec {
   imports = [ ./hardware-configuration.nix ];
 
   system.stateVersion = "24.11";
@@ -64,4 +64,10 @@
   kinnison.impermanence.enable = true;
   kinnison.virt-manager.enable = true;
   kinnison.gaming.steam = true;
+
+  # Printing at home uses HP
+  kinnison.printing = {
+    enable = true;
+    drivers = [ pkgs.hplip ];
+  };
 }

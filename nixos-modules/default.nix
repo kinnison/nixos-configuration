@@ -15,6 +15,7 @@ in {
     ./impermanence.nix
     ./virt-manager.nix
     ./gaming.nix
+    ./printing.nix
   ];
 
   options.kinnison.zram = {
