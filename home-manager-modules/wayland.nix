@@ -224,6 +224,11 @@ in {
           timeout = 300;
           command = "${pkgs.swaylock}/bin/swaylock -fF";
         }
+        (mkIf (!hasBatteries) {
+          timeout = 600;
+          command = "${pkgs.sway}/bin/swaymsg 'output * power off'";
+          resumeCommand = "${pkgs.sway}/bin/swaymsg 'output * power on'";
+        })
         (mkIf hasBatteries {
           timeout = 1800;
           command = "${pkgs.systemd}/bin/systemctl suspend";
