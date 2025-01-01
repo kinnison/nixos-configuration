@@ -177,7 +177,9 @@
         in (import ./packages) { inherit pkgs; });
       devShells = forAllSystems (system:
         let pkgs = import nixpkgs { inherit system; };
-        in with pkgs; { default = mkShell { buildInputs = [ gnumake ]; }; });
+        in with pkgs; {
+          default = mkShell { buildInputs = [ gnumake nvd ]; };
+        });
       nixosModules.default = import ./nixos-modules;
       nixosConfigurations =
         # The test system is used by `make runvm` et al.
