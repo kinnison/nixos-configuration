@@ -70,4 +70,7 @@
     enable = true;
     drivers = [ pkgs.hplip ];
   };
+
+  # We use stlinks on our desktop
+  kinnison.stlink.enable = true;
 }

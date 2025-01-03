@@ -42,4 +42,5 @@
   kinnison.impermanence.enable = true;
   kinnison.virt-manager.enable = true;
   kinnison.gaming.steam = true;
+  kinnison.stlink.enable = true;
 }

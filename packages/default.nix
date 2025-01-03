@@ -3,4 +3,5 @@
   rofi-lock = pkgs.callPackage ./rofi-lock { };
   pinentry-rofi = pkgs.callPackage ./pinentry-rofi { };
   capture = pkgs.callPackage ./capture { };
+  stlink-udev = pkgs.callPackage ./stlink-udev { };
 }

@@ -16,6 +16,7 @@ in {
     ./virt-manager.nix
     ./gaming.nix
     ./printing.nix
+    ./stlink.nix
   ];
 
   options.kinnison.zram = {
