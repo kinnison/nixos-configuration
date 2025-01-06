@@ -1,7 +1,7 @@
 # Wayland based configuration
 { osConfig, config, lib, pkgs, ... }:
 let
-  inherit (lib) mkIf mkOption mkForce;
+  inherit (lib) mkIf mkOption mkForce mkOverride;
   guicfg = osConfig.kinnison.gui;
   batcfg = config.kinnison.batteries;
   hasBatteries = batcfg != [ ];
@@ -247,7 +247,9 @@ in {
       settings = {
         main = {
           term = "xterm-256color";
-          font = mkForce "InconsolataNerdFont:size=16";
+          # We use 90 as default is 100 and this still permits
+          # user definitions to force it if needed.
+          font = mkOverride 90 "InconsolataNerdFont:size=16";
           dpi-aware = mkForce "yes";
         };
         mouse = { hide-when-typing = "yes"; };
