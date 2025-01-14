@@ -32,7 +32,18 @@
         systems.follows = "nix-systems";
       };
     };
-    catppuccin.url = "github:catppuccin/nix";
+    catppuccin = {
+      url = "github:catppuccin/nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        nixpkgs-stable.follows = "";
+        home-manager.follows = "home-manager";
+        home-manager-stable.follows = "";
+        nuscht-search.follows = "";
+        catppuccin-v1_1.follows = "";
+        catppuccin-v1_2.follows = "";
+      };
+    };
     # Disk setup
     disko = {
       url = "github:nix-community/disko/v1.8.2";
@@ -79,21 +90,11 @@
       };
     };
 
-    # Until/unless https://github.com/NixOS/nixpkgs/pull/366901 is resolved
-    # we need a way to get Mozilla's firefox-bin which might annoy us with
-    # requests/failures to update itself
-    firefox = {
-      url = "github:nix-community/flake-firefox-nightly";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-compat.follows = "flake-compat";
-      };
-    };
   };
 
   outputs = { self, nix-systems, flake-utils, flake-compat, nixpkgs
     , nixos-hardware, home-manager, catppuccin, stylix, disko, cats, prompter
-    , lanzaboote, impermanence, juntakami, firefox }@inputs:
+    , lanzaboote, impermanence, juntakami, }@inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       overlays = [
@@ -102,12 +103,10 @@
             cats = inputs.cats.packages.${prev.system}.cats;
             prompter = inputs.prompter.packages.${prev.system}.prompter;
             juntakami = inputs.juntakami.packages.${prev.system}.juntakami;
-            firefox = inputs.firefox.packages.${prev.system}.firefox-bin;
           in {
             kinnison = (import ./packages { pkgs = final; }) // {
               inherit cats prompter juntakami;
             };
-            inherit firefox;
           })
       ];
       defaultSystemModules = [
