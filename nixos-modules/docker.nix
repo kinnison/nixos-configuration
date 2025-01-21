@@ -9,6 +9,9 @@ in {
       enable = true;
       enableOnBoot = true;
     };
+
+    kinnison.user.groups = [ "docker" ];
+
     environment.systemPackages = with pkgs; [ crun docker-compose ];
     kinnison.impermanence.directories = [ "/var/lib/docker" ];
   };
