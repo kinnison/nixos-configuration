@@ -175,6 +175,7 @@ let
       boxes = acc.watchFolders;
       onNotify = "systemctl --user start mbsync.service";
     };
+    folders = { sent = "Inbox"; };
   }) cfg.accounts;
 
   extraMailConfigs = mapAttrs (name: acc: acc.extraConfig) cfg.accounts;
