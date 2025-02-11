@@ -253,6 +253,9 @@ in {
           dpi-aware = mkForce "yes";
         };
         mouse = { hide-when-typing = "yes"; };
+        # As C-S-o is "Open URL" and C-S-u is "Enter unicode" we hijack "C-S-p" next
+        # to those to do copy-url rather than open-url.
+        key-bindings = { show-urls-copy = "Control+Shift+p"; };
       };
     };
 
