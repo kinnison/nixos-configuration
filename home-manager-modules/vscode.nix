@@ -28,6 +28,8 @@ let
       zxh404.vscode-proto3
       vadimcn.vscode-lldb
       redhat.vscode-yaml
+      stkb.rewrap
+      timonwong.shellcheck
       catppuccin.catppuccin-vsc-icons
       catppuccin.catppuccin-vsc
     ] ++ (cfg.pkgs.vscode-utils.extensionsFromVscodeMarketplace
@@ -45,7 +47,12 @@ in {
   config = mkMerge [
     (mkIf cfg.enable {
       stylix.targets.vscode.enable = false;
-      home.packages = with pkgs; [ nixfmt-classic nodePackages.prettier nil ];
+      home.packages = with pkgs; [
+        nixfmt-classic
+        nodePackages.prettier
+        nil
+        shellcheck
+      ];
       programs.vscode = {
         enable = true;
         package = cfg.pkgs.vscode;
