@@ -1,0 +1,26 @@
+diff --git a/qxw-20200708/dicts.c b/qxw-20200708/dicts.c
+index 05b2a3f..fd85982 100644
+--- a/qxw-20200708/dicts.c
++++ b/qxw-20200708/dicts.c
+@@ -40,6 +40,12 @@ Fifth Floor, Boston, MA  02110-1301, USA.
+   char*defdictfn[NDEFDICTS]={
+     "\\Dictionaries\\UKACD18plus.txt"
+     };
++#else
++#ifndef NOT_NIXOS
++  #define NDEFDICTS 1
++  char*defdictfn[NDEFDICTS]={
++    "@SCOWL_DICT@"
++  };
+ #else
+   #define NDEFDICTS 4
+   char*defdictfn[NDEFDICTS]={
+@@ -47,6 +53,8 @@ Fifth Floor, Boston, MA  02110-1301, USA.
+   "/usr/share/dict/words",
+   "/usr/share/dict/british-english",
+   "/usr/share/dict/american-english"};
++
++#endif
+ #endif
+ 
+ // UTILITY FUNCTIONS
