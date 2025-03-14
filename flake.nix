@@ -22,8 +22,7 @@
     };
     # Styling
     stylix = {
-      # Swap back to release-24.11 when the branch is made
-      url = "github:danth/stylix/master";
+      url = "github:danth/stylix/release-24.11";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         home-manager.follows = "home-manager";
