@@ -34,15 +34,7 @@
     };
     catppuccin = {
       url = "github:catppuccin/nix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        nixpkgs-stable.follows = "";
-        home-manager.follows = "home-manager";
-        home-manager-stable.follows = "";
-        nuscht-search.follows = "";
-        catppuccin-v1_1.follows = "";
-        catppuccin-v1_2.follows = "";
-      };
+      inputs = { nixpkgs.follows = "nixpkgs"; };
     };
     # Disk setup
     disko = {
