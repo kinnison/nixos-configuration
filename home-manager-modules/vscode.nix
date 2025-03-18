@@ -42,10 +42,12 @@ in {
         "Place to find vscode-with-extensions and vscode-extensions";
       default = pkgs;
     };
+    serverEnable = mkEnableOption "Visual Studio Code - Remote Server Fixups";
   };
 
   config = mkMerge [
     (mkIf cfg.enable {
+      kinnison.vscode.serverEnable = mkDefault true;
       stylix.targets.vscode.enable = false;
       home.packages = with pkgs; [
         nixfmt-classic
@@ -106,6 +108,9 @@ in {
         "rust-analyzer.lru.capacity" = 512;
         "rust-analyzer.typing.autoClosingAngleBrackets.enable" = true;
       };
+    })
+    (mkIf cfg.serverEnable {
+      services.vscode-server.enable = true;
     })
   ];
 }

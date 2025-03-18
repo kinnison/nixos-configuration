@@ -56,6 +56,15 @@
     # Impermanence support
     impermanence.url = "github:nix-community/impermanence";
 
+    # VSCode remote-server support
+    nixos-vscode-server = {
+      url = "github:nix-community/nixos-vscode-server";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
+
     # Backdrops
     cats = {
       url = "github:kinnison/cats-backgrounds";
@@ -85,7 +94,7 @@
 
   outputs = { self, nix-systems, flake-utils, flake-compat, nixpkgs
     , nixos-hardware, home-manager, catppuccin, stylix, disko, cats, prompter
-    , lanzaboote, impermanence, juntakami, }@inputs:
+    , lanzaboote, impermanence, juntakami, nixos-vscode-server }@inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       overlays = [
@@ -113,6 +122,7 @@
             homes = self.homes;
             hm-modules = [
               catppuccin.homeManagerModules.catppuccin
+              nixos-vscode-server.homeModules.default
               (import ./home-manager-modules)
             ];
           };
