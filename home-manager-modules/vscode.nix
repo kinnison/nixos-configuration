@@ -107,6 +107,7 @@ in {
         "rust-analyzer.inlayHints.typeHints.hideNamedConstructor" = true;
         "rust-analyzer.lru.capacity" = 512;
         "rust-analyzer.typing.autoClosingAngleBrackets.enable" = true;
+        "chat.commandCenter.enabled" = false;
       };
     })
     (mkIf cfg.serverEnable {
