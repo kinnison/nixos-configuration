@@ -18,12 +18,14 @@
   kinnison.email.enable = osConfig.kinnison.gui.enable;
   # I play minecraft, but only on my desktop typically
   kinnison.gaming.minecraft = osConfig.networking.hostName == "lassitude";
+  # I do streaming, but only from my desktop typically
+  kinnison.streaming.enable = osConfig.networking.hostName == "lassitude";
 
   # Keybase is something I only use on personal systems
   services.keybase.enable = true;
   home.packages = lib.mkMerge [
     (with pkgs; [ kinnison.juntakami kinnison.qxw ])
-  # I like kicad, but only on my desktop for now
+    # I like kicad, but only on my desktop for now
     (lib.mkIf (osConfig.networking.hostName == "lassitude") [ pkgs.kicad ])
   ];
 

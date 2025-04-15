@@ -28,6 +28,7 @@ in {
     ./wayland.nix
     ./gaming.nix
     ./spotify.nix
+    ./streaming.nix
   ];
   config = mkMerge [
     (mkIf guicfg.enable {
