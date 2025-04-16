@@ -254,7 +254,7 @@ in {
           #  https://raw.githubusercontent.com/catppuccin/neomutt/7a7f53246a91c70ffe7a973ee48b42dbc254acc6/neomuttrc
 
           color normal		  default default         # Text is "Text"
-          color index		    color2 default ~N       # New Messages are Green
+          color index		    color2 default ~U       # Unread Messages are Green
           color index		    color1 default ~F       # Flagged messages are Red
           color index		    color13 default ~T      # Tagged Messages are Red
           color index		    color1 default ~D       # Messages to delete are Red
@@ -365,7 +365,7 @@ in {
             {
               map = [ "index" ];
               key = "<esc>n";
-              action = "<limit>~N<enter>";
+              action = "<limit>~U<enter>";
             }
             {
               map = [ "index" ];
