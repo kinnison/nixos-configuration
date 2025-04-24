@@ -249,7 +249,7 @@ in {
           term = "xterm-256color";
           # We use 90 as default is 100 and this still permits
           # user definitions to force it if needed.
-          font = mkOverride 90 "InconsolataNerdFont:size=16";
+          font = mkOverride 90 "InconsolataNerdFont:size=20";
           dpi-aware = mkForce "yes";
         };
         mouse = { hide-when-typing = "yes"; };
