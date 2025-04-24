@@ -31,4 +31,8 @@
 
   # I like Spotify for music
   kinnison.sound.spotify = true;
+
+  programs.foot.settings.main.font =
+    lib.mkIf (osConfig.networking.hostName == "catalepsy")
+    (lib.mkForce "InconsolataNerdFont:size=14");
 }
