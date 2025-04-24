@@ -109,9 +109,13 @@ in {
       xwayland = true;
       wrapperFeatures.gtk = true;
       config = {
-        # Override the background that stylix would have put in.
-        # So that wpaperd can take over properly
-        output."*".bg = mkForce "#000000 solid_color";
+        output."*" = {
+          # Override the background that stylix would have put in.
+          # So that wpaperd can take over properly
+          bg = mkForce "#000000 solid_color";
+          # And set the scale to 1 so that we don't have massive fonts on hidpi displays
+          scale = "1";
+        };
         bars = [ ];
         input."type:keyboard" = {
           xkb_layout = "gb";
