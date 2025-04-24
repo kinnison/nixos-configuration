@@ -110,8 +110,6 @@ in {
         "chat.commandCenter.enabled" = false;
       };
     })
-    (mkIf cfg.serverEnable {
-      services.vscode-server.enable = true;
-    })
+    (mkIf cfg.serverEnable { services.vscode-server.enable = true; })
   ];
 }
