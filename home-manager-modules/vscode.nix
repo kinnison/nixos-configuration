@@ -76,7 +76,7 @@ in {
             "editor.defaultFormatter" = "brettm12345.nixfmt-vscode";
           };
           "terminal.integrated.minimumContrastRatio" = 1;
-          "window.zoomLevel" = 2;
+          "window.zoomLevel" = 3;
           "window.titleBarStyle" = "native";
           "workbench.colorTheme" =
             "Catppuccin ${osConfig.kinnison.gui.upperTheme}";
