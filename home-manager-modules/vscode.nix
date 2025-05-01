@@ -108,6 +108,11 @@ in {
         "rust-analyzer.lru.capacity" = 512;
         "rust-analyzer.typing.autoClosingAngleBrackets.enable" = true;
         "chat.commandCenter.enabled" = false;
+        "chat.experimental.offerSetup" = false;
+        "chat.experimental.statusIndicator.enabled" = false;
+        "chat.agent.enabled" = false;
+        "chat.extensionTools.enabled" = false;
+        "chat.agent.maxRequests" = 0;
       };
     })
     (mkIf cfg.serverEnable { services.vscode-server.enable = true; })
