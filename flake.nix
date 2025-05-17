@@ -121,7 +121,7 @@
           _module.args = {
             homes = self.homes;
             hm-modules = [
-              catppuccin.homeManagerModules.catppuccin
+              catppuccin.homeModules.catppuccin
               nixos-vscode-server.homeModules.default
               (import ./home-manager-modules)
             ];
