@@ -113,6 +113,16 @@ in {
         "chat.agent.enabled" = false;
         "chat.extensionTools.enabled" = false;
         "chat.agent.maxRequests" = 0;
+        "accessibility.verbosity.inlineChat" = false;
+        "chat.detectParticipant.enabled" = false;
+        "chat.implicitContext.enabled" = {
+          "panel" = "never";
+          "editing-session" = "never";
+        };
+        "chat.mcp.enabled" = false;
+        "chat.setupFromDialog" = false;
+        "chat.unifiedChatView" = false;
+
       };
     })
     (mkIf cfg.serverEnable { services.vscode-server.enable = true; })
