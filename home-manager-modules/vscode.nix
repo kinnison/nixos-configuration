@@ -55,6 +55,17 @@ in {
         nil
         shellcheck
       ];
+      home.file.".vscode/extensions.json" = {
+        text = ''
+          {
+            "unwantedRecommendations": [
+              "GitHub.copilot",
+              "GitHub.copilot-chat",
+              "ms-vscode.vscode-ai"
+            ]
+          }
+        '';
+      };
       programs.vscode = {
         enable = true;
         package = cfg.pkgs.vscode;
@@ -122,7 +133,11 @@ in {
         "chat.mcp.enabled" = false;
         "chat.setupFromDialog" = false;
         "chat.unifiedChatView" = false;
-
+        "extensions.ignoreRecommendations" = true;
+        "workbench.tips.enabled" = false;
+        "workbench.enableExperiments" = false;
+        "github.copilot.enable" = false;
+        "github.copilot.inlineSuggest.enable" = false;
       };
     })
     (mkIf cfg.serverEnable { services.vscode-server.enable = true; })
