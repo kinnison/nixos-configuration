@@ -29,6 +29,7 @@ in {
     ./gaming.nix
     ./spotify.nix
     ./streaming.nix
+    ./helix.nix
   ];
   config = mkMerge [
     (mkIf guicfg.enable {
