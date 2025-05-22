@@ -1,4 +1,4 @@
-{ config, osConfig, lib, ... }:
+{ config, osConfig, lib, pkgs, ... }:
 with lib;
 let cfg = config.kinnison.helix;
 in {
@@ -7,8 +7,17 @@ in {
   config = mkMerge [
     { kinnison.helix.enable = mkDefault true; }
     (mkIf cfg.enable {
+      programs.vim.defaultEditor = mkForce false;
       programs.helix = {
         enable = true;
+        package = pkgs.kinnison.helix;
+        defaultEditor = true;
+        languages = {
+          language = [{
+            name = "mail";
+            file-types = [{ glob = "neomutt-*"; }];
+          }];
+        };
         settings = {
           theme = mkForce "catppuccin-${osConfig.kinnison.gui.theme}";
           editor = {
