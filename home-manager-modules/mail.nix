@@ -6,6 +6,20 @@ let
   cfg = config.kinnison.email;
   enabled = cfg.enable && (cfg.accounts != { });
 
+  useHelix = config.kinnison.helix.enable;
+
+  hx-mail = pkgs.writeShellApplication {
+    name = "hx-mail";
+    text = ''
+      filename="$1"
+      line=$(grep -n '^$' "$filename" | head -1 | cut -d: -f1)
+      line=$((line + 1))
+      exec hx "$filename:$line"
+    '';
+  };
+
+  editor = if useHelix then "${hx-mail}/bin/hx-mail" else "vim +/^$ ++1";
+
   # Email account options
   emailAccount = { name, ... }: {
     options = {
@@ -323,7 +337,7 @@ in {
             width = 30;
           };
           checkStatsInterval = 60;
-          editor = "vim +/^$ ++1";
+          inherit editor;
           extraConfig = ''
             # General config
             ${cfg.mainMuttConfig}
