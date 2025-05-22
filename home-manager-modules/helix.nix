@@ -16,7 +16,11 @@ in {
           language = [{
             name = "mail";
             file-types = [{ glob = "neomutt-*"; }];
+            language-servers = [ "hanumail" ];
           }];
+          language-server.hanumail = {
+            command = "${pkgs.kinnison.hanumail}/bin/hanumail";
+          };
         };
         settings = {
           theme = mkForce "catppuccin-${osConfig.kinnison.gui.theme}";
