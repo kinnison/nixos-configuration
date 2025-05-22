@@ -12,13 +12,13 @@ in {
         settings = {
           theme = mkForce "catppuccin-${osConfig.kinnison.gui.theme}";
           editor = {
+            bufferline = "always";
             lsp = {
               display-inlay-hints = true;
               display-messages = true;
             };
             line-number = "absolute";
             mouse = false;
-            rulers = [ 80 ];
             popup-border = "all";
             end-of-line-diagnostics = "hint";
             statusline = {
