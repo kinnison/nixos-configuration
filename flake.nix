@@ -89,12 +89,16 @@
         flake-utils.follows = "flake-utils";
       };
     };
-
+    # Helix
+    helix = {
+      url = "github:helix-editor/helix";
+      inputs = { nixpkgs.follows = "nixpkgs"; };
+    };
   };
 
   outputs = { self, nix-systems, flake-utils, flake-compat, nixpkgs
     , nixos-hardware, home-manager, catppuccin, stylix, disko, cats, prompter
-    , lanzaboote, impermanence, juntakami, nixos-vscode-server }@inputs:
+    , lanzaboote, impermanence, juntakami, nixos-vscode-server, helix }@inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       overlays = [
@@ -103,9 +107,10 @@
             cats = inputs.cats.packages.${prev.system}.cats;
             prompter = inputs.prompter.packages.${prev.system}.prompter;
             juntakami = inputs.juntakami.packages.${prev.system}.juntakami;
+            helix = inputs.helix.packages.${prev.system}.helix;
           in {
             kinnison = (import ./packages { pkgs = final; }) // {
-              inherit cats prompter juntakami;
+              inherit cats prompter juntakami helix;
             };
           })
       ];
