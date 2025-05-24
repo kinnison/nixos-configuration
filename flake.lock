@@ -315,11 +315,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1747954835,
-        "narHash": "sha256-P4TIOLj6IRAp89LXJEExejBhwcVUTnKSAJkRBhvYpCI=",
+        "lastModified": 1748093418,
+        "narHash": "sha256-VgXBvuj2PBIzHGu+it8eMGubFV9XogTQUuTm+TlM5ms=",
         "owner": "kinnison",
         "repo": "hanumail",
-        "rev": "3373fafa9eaf5fde051f645c30bcc1ad2e81fadb",
+        "rev": "77d0d107781e9feb82bb8c18eeda05df7d5dafa9",
         "type": "github"
       },
       "original": {
