@@ -35,17 +35,47 @@ in {
         ignores = [ "target" "result" ".direnv/" ];
 
         extraConfig = {
-          branch.autoSetupRebase = "always";
+          column.ui = "auto";
+          branch = {
+            sort = "-committerdate";
+            autoSetupMerge = false;
+            autoSetupRebase = "always";
+          };
           checkout.defaultRemote = "origin";
+          commit.verbose = true;
+          tag.sort = "version:refname";
           init = { defaultBranch = "main"; };
 
           pull.rebase = true;
           pull.ff = "only";
-          push.default = "current";
+
+          push = {
+            default = "current";
+            autoSetupRemote = true;
+            followTags = true;
+          };
+
+          fetch = {
+            prune = true;
+            pruneTags = true;
+            all = true;
+            parallel = 0;
+          };
 
           format.signoff = true;
 
-          rebase.autosquash = true;
+          merge.conflictStyle = "zdiff3";
+
+          rebase = {
+            autoSquash = true;
+            autoStash = true;
+            updateRefs = true;
+          };
+
+          rerere = {
+            enabled = true;
+            autoupdate = true;
+          };
 
           url."ssh://git@github.com/".pushInsteadOf =
             [ "git://github.com/" "https://github.com/" ];
@@ -56,6 +86,12 @@ in {
             "https://git.netsurf-browser.org/"
           ];
           alias = { st = "status"; };
+          diff = {
+            algorithm = "histogram";
+            colorMoved = "plain";
+            mnemonicPrefix = true;
+            renames = true;
+          };
         };
       };
     })
