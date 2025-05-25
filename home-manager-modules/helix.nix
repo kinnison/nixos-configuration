@@ -60,6 +60,16 @@ in {
               ];
             };
           };
+          keys = {
+            insert = {
+              "C-space" = "code_action";
+              "C-." = "completion";
+              "C-left" = "move_prev_word_start";
+              "C-right" = "move_next_word_end";
+              "C-S-left" = "extend_prev_word_start";
+              "C-S-right" = "extend_next_word_end";
+            };
+          };
         };
       };
     })
