@@ -34,13 +34,21 @@ in {
           editor = {
             bufferline = "always";
             lsp = {
-              display-inlay-hints = true;
+              enable = true;
               display-messages = true;
+              display-progress-messages = true;
+              auto-signature-help = true;
+              display-inlay-hints = true;
+              display-signature-help-docs = true;
+            };
+            end-of-line-diagnostics = "hint";
+            inline-diagnostics = {
+              cursor-line = "warning";
+              other-lines = "error";
             };
             line-number = "absolute";
             mouse = false;
             popup-border = "all";
-            end-of-line-diagnostics = "hint";
             statusline = {
               left = [
                 "mode"
@@ -58,6 +66,40 @@ in {
                 "file-encoding"
                 "file-type"
               ];
+              mode = {
+                normal = "CMD";
+                insert = "INS";
+                select = "SEL";
+              };
+            };
+            cursorline = true;
+            completion-replace = true;
+            cursor-shape = {
+              normal = "block";
+              insert = "bar";
+              select = "underline";
+            };
+            whitespace = {
+              render = {
+                space = "none";
+                tab = "all";
+                nbsp = "none";
+                nnbsp = "none";
+                newline = "none";
+              };
+              characters = {
+                space = "·";
+                nbsp = "⍽";
+                nnbsp = "␣";
+                tab = "→";
+                newline = "⏎";
+                tabpad = "·";
+              };
+            };
+            indent-guides = {
+              render = true;
+              #character = "⸽";
+              skip-levels = 0;
             };
           };
           keys = {
