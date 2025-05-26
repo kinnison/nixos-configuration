@@ -18,6 +18,7 @@ in {
               name = "mail";
               file-types = [{ glob = "neomutt-*"; }];
               language-servers = [ "hanumail" ];
+              rulers = [ 78 ];
             }
             {
               name = "nix";
@@ -72,7 +73,6 @@ in {
                 select = "SEL";
               };
             };
-            cursorline = true;
             completion-replace = true;
             cursor-shape = {
               normal = "block";
