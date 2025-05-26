@@ -315,17 +315,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1748093418,
-        "narHash": "sha256-VgXBvuj2PBIzHGu+it8eMGubFV9XogTQUuTm+TlM5ms=",
-        "owner": "kinnison",
-        "repo": "hanumail",
-        "rev": "77d0d107781e9feb82bb8c18eeda05df7d5dafa9",
-        "type": "github"
+        "lastModified": 1748249849,
+        "narHash": "sha256-lHtmZ9cwGilT1EbvT6ud2z3VUH7eL3jG8SbiwxCyFog=",
+        "ref": "refs/heads/main",
+        "rev": "bd40a2489293257b1984749587eab949c6a68b85",
+        "revCount": 4,
+        "type": "git",
+        "url": "https://github.com/kinnison/hanumail"
       },
       "original": {
-        "owner": "kinnison",
-        "repo": "hanumail",
-        "type": "github"
+        "type": "git",
+        "url": "https://github.com/kinnison/hanumail"
       }
     },
     "helix": {

@@ -96,7 +96,7 @@
     };
     # My email LSP
     hanumail = {
-      url = "github:kinnison/hanumail";
+      url = "git+https://github.com/kinnison/hanumail";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "flake-utils";
