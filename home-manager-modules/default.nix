@@ -47,12 +47,8 @@ in {
       #  icon.enable = true;
       #};
       gtk.enable = true;
-      qt = {
-        enable = true;
-        style.name = "kvantum";
-        platformTheme.name = "kvantum";
-      };
-      catppuccin.kvantum.enable = true;
+      qt.enable = true;
+      catppuccin.kvantum.enable = false;
       home.pointerCursor = {
         name = mkForce "catppuccin-${guicfg.theme}-${guicfg.accent}-cursors";
         package = mkForce pkgs.catppuccin-cursors.${cursor-name};

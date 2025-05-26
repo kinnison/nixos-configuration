@@ -69,8 +69,8 @@ in {
       programs.vscode = {
         enable = true;
         package = cfg.pkgs.vscode;
-        extensions = allExtensions;
-        userSettings = {
+        profiles.default.extensions = allExtensions;
+        profiles.default.userSettings = {
           "update.mode" = "none";
           "window.menuBarVisibility" = "toggle";
           "editor.minimap.enabled" = false;
@@ -102,7 +102,7 @@ in {
       ];
     })
     (mkIf (config.kinnison.rust.enable && cfg.enable) {
-      programs.vscode.userSettings = {
+      programs.vscode.profiles.default.userSettings = {
         "rust-analyzer.server.path" =
           "${config.kinnison.rust.package}/bin/rust-analyzer";
         "rust-analyzer.check.command" = "clippy";

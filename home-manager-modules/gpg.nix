@@ -15,7 +15,8 @@ in {
       enableScDaemon = true;
       enableSshSupport = true;
       enableZshIntegration = true;
-      pinentryPackage = mkIf osConfig.kinnison.gui.wayland.enable pinentry-rofi;
+      pinentry.package =
+        mkIf osConfig.kinnison.gui.wayland.enable pinentry-rofi;
       verbose = true;
     };
     programs.gpg = {
