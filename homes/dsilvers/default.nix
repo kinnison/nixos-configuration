@@ -7,9 +7,10 @@
     enable = true;
     email = "dsilvers@digital-scurf.org";
   };
-  # I like rust, and I use vscode to edit it
+  # I like rust, and I use helix instead of vscode to edit it
   kinnison.rust.enable = true;
-  kinnison.vscode.enable = true;
+  kinnison.vscode.enable = false;
+  kinnison.helix.enable = true;
   # I use bitwarden for various things
   kinnison.bitwarden.enable = true;
   # If we have a gui turned on, I want IRC clients

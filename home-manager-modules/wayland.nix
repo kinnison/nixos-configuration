@@ -377,29 +377,18 @@ in {
         show-icons = true;
       };
     };
-    programs.wpaperd = {
+    stylix.targets.wpaperd.enable = false;
+    services.wpaperd = {
       enable = true;
       settings = {
         default = {
-          mode = "stretch";
+          mode = "center";
           sorting = "random";
-          transition-time = "500";
+          transition-time = 500;
           duration = "5m";
+          path = lib.mkForce "${pkgs.kinnison.cats}";
         };
-        any = { path = lib.mkForce "${pkgs.kinnison.cats}"; };
       };
-    };
-    systemd.user.services.wpaperd = {
-      Unit = {
-        Description = "Wallpaper daemon";
-        PartOf = [ "graphical-session.target" ];
-        After = [ "graphical-session-pre.target" ];
-      };
-      Service = {
-        Type = "exec";
-        ExecStart = "${config.programs.wpaperd.package}/bin/wpaperd";
-      };
-      Install = { WantedBy = [ "sway-session.target" ]; };
     };
   };
 }

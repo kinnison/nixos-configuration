@@ -62,9 +62,9 @@ in {
         fira-code-symbols
         inconsolata
         font-awesome
-        (nerdfonts.override {
-          fonts = [ "FiraCode" "DroidSansMono" "Inconsolata" ];
-        })
+        nerd-fonts.fira-code
+        nerd-fonts.droid-sans-mono
+        nerd-fonts.inconsolata
       ];
 
       fonts.fontconfig = {
