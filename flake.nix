@@ -7,27 +7,33 @@
   '';
 
   inputs = {
+    # Core nix stuff
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixos-hardware.url = "github:NixOs/nixos-hardware";
     # While we don't use nix-systems, flake-utils, etc. various of our sub-flakes do
     nix-systems.url = "github:nix-systems/default";
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "nix-systems";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
     flake-compat.url = "github:nix-community/flake-compat";
-    # Core nix stuff
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
-    nixos-hardware.url = "github:NixOs/nixos-hardware";
+    rust-overlay.url = "github:oxalica/rust-overlay";
+    rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
+    # Seems odd to need this one, but it fixes a nixpkgs duplication
+    crane.url = "github:ipetkov/crane";
     # Home Manager for home directories
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # Styling
     stylix = {
-      url = "github:danth/stylix/release-24.11";
+      url = "github:danth/stylix/release-25.05";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         home-manager.follows = "home-manager";
         flake-compat.follows = "flake-compat";
-        flake-utils.follows = "flake-utils";
+        flake-parts.follows = "flake-parts";
         systems.follows = "nix-systems";
       };
     };
@@ -37,16 +43,18 @@
     };
     # Disk setup
     disko = {
-      url = "github:nix-community/disko/v1.8.2";
+      url = "github:nix-community/disko/v1.11.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # Secure boot
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.1";
+      url = "github:nix-community/lanzaboote/v0.4.2";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
+        crane.follows = "crane";
+        flake-parts.follows = "flake-parts";
         flake-compat.follows = "flake-compat";
+        rust-overlay.follows = "rust-overlay";
         # Note, we do not need pre-commit-hooks-nix and its dependencies for building
         # but this introduces a loop in the flakes ("" is self) hence the toplevelMarker
         # below.
@@ -92,7 +100,10 @@
     # Helix
     helix = {
       url = "github:helix-editor/helix";
-      inputs = { nixpkgs.follows = "nixpkgs"; };
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        rust-overlay.follows = "rust-overlay";
+      };
     };
     # My email LSP
     hanumail = {
@@ -104,10 +115,10 @@
     };
   };
 
-  outputs = { self, nix-systems, flake-utils, flake-compat, nixpkgs
-    , nixos-hardware, home-manager, catppuccin, stylix, disko, cats, prompter
-    , lanzaboote, impermanence, juntakami, nixos-vscode-server, helix, hanumail
-    }@inputs:
+  outputs = { self, nix-systems, flake-utils, flake-parts, flake-compat
+    , rust-overlay, crane, nixpkgs, nixos-hardware, home-manager, catppuccin
+    , stylix, disko, cats, prompter, lanzaboote, impermanence, juntakami
+    , nixos-vscode-server, helix, hanumail }@inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       overlays = [
