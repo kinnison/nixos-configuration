@@ -30,6 +30,7 @@ in {
     ./spotify.nix
     ./streaming.nix
     ./helix.nix
+    ./ssh.nix
   ];
   config = mkMerge [
     (mkIf guicfg.enable {

@@ -7,6 +7,7 @@ in {
   config = mkMerge [
     { kinnison.helix.enable = mkDefault true; }
     (mkIf cfg.enable {
+      programs.ssh.matchBlocks."*" = { sendEnv = [ "COLORTERM" ]; };
       programs.vim.defaultEditor = mkForce false;
       programs.helix = {
         enable = true;

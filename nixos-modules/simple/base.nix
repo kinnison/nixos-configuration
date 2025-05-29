@@ -82,7 +82,12 @@ in {
     ];
 
     # We pretty much always want SSH and can mkForce it off later if needs be
-    services.sshd.enable = true;
+    services.openssh = {
+      enable = true;
+      extraConfig = ''
+        AcceptEnv COLORTERM
+      '';
+    };
     kinnison.impermanence.files = mkIf config.services.sshd.enable [
       "/etc/ssh/ssh_host_ed25519_key"
       "/etc/ssh/ssh_host_ed25519_key.pub"
