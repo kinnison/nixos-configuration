@@ -96,6 +96,7 @@ in {
         };
         syntaxHighlighting.enable = true;
         defaultKeymap = "emacs";
+        shellAliases.vi = "hx";
       };
       programs.direnv = {
         enable = true;
