@@ -308,11 +308,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1748249849,
-        "narHash": "sha256-lHtmZ9cwGilT1EbvT6ud2z3VUH7eL3jG8SbiwxCyFog=",
+        "lastModified": 1748600330,
+        "narHash": "sha256-WFq5XymJ0j5WSWu6BFe2wJGL8zwQNvIXt8aJ+e1ORyU=",
         "ref": "refs/heads/main",
-        "rev": "bd40a2489293257b1984749587eab949c6a68b85",
-        "revCount": 4,
+        "rev": "e2ddf849a30ac95981eac53473f99d5d90808a3e",
+        "revCount": 5,
         "type": "git",
         "url": "https://github.com/kinnison/hanumail"
       },
