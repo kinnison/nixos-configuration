@@ -3,13 +3,25 @@
 with lib;
 let
   unfreecfg = config.kinnison.unfree;
+  insecurecfg = config.kinnison.insecure;
   all-user-unfree-pkgs' = mapAttrsToList (name: conf: conf.kinnison.unfree.pkgs)
     config.home-manager.users;
   all-user-unfree-pkgs = flatten all-user-unfree-pkgs';
+  all-user-insecure-pkgs' =
+    mapAttrsToList (name: conf: conf.kinnison.insecure.pkgs)
+    config.home-manager.users;
+  all-user-insecure-pkgs = flatten all-user-insecure-pkgs';
 in {
   options.kinnison.unfree = {
     pkgs = mkOption {
       description = "Package names to permit in the unfree list";
+      type = types.listOf types.str;
+      default = [ ];
+    };
+  };
+  options.kinnison.insecure = {
+    pkgs = mkOption {
+      description = "Package names to permit in the insecure list";
       type = types.listOf types.str;
       default = [ ];
     };
@@ -21,6 +33,13 @@ in {
       options.kinnison.unfree = {
         pkgs = mkOption {
           description = "Package names to permit in the unfree list";
+          type = types.listOf types.str;
+          default = [ ];
+        };
+      };
+      options.kinnison.insecure = {
+        pkgs = mkOption {
+          description = "Package names to permit in the inscure list";
           type = types.listOf types.str;
           default = [ ];
         };
@@ -99,6 +118,9 @@ in {
     # though we do limit it, so here we list what's allowed
     nixpkgs.config.allowUnfreePredicate = pkg:
       builtins.elem (getName pkg) (unfreecfg.pkgs ++ all-user-unfree-pkgs);
+    # Ditto "insecure" software
+    nixpkgs.config.allowInsecurePredicate = pkg:
+      builtins.elem (getName pkg) (insecurecfg.pkgs ++ all-user-insecure-pkgs);
 
     # Generally speaking, our systems need fstrim
     services.fstrim.enable = mkDefault true;

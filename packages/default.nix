@@ -5,4 +5,5 @@
   capture = pkgs.callPackage ./capture { };
   stlink-udev = pkgs.callPackage ./stlink-udev { };
   qxw = pkgs.callPackage ./qxw { };
+  vintagestory = pkgs.callPackage ./upstream/vintagestory.nix { };
 }

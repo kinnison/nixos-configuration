@@ -19,6 +19,9 @@
   kinnison.email.enable = osConfig.kinnison.gui.enable;
   # I play minecraft, but only on my desktop typically
   kinnison.gaming.minecraft = osConfig.networking.hostName == "lassitude";
+  # Playing VintageStory is fun, but needs a lot of faff.
+  # For now, only on my desktop
+  kinnison.gaming.vintagestory = osConfig.networking.hostName == "lassitude";
   # I do streaming, but only from my desktop typically
   kinnison.streaming.enable = osConfig.networking.hostName == "lassitude";
 
