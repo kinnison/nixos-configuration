@@ -59,6 +59,18 @@ in {
             enable = true;
             attributes.enable = true;
           };
+          imports = {
+            granularity = {
+              enforce = false;
+              group = "crate";
+            };
+            group.enable = true;
+            merge.glob = true;
+            preferNoStd = false;
+            preferPrelude = true;
+            prefix = "crate";
+            prefixExternInclude = false;
+          };
         };
       };
     })
