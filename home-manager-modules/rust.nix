@@ -41,7 +41,7 @@ in {
           inlayHints = {
             closureCaptureHints.enable = true;
             closureReturnTypeHints.enable = true;
-            implicitDrops.enable = true;
+            implicitDrops.enable = false;
             lifetimeElisionHints.enable = true;
             lifetimeElisionHints.useParameterNames = true;
             maxLength = 40;
