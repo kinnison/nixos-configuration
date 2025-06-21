@@ -390,11 +390,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1735384145,
-        "narHash": "sha256-Enplf4AqINd4U8VsiTXYpeAU8NGAiqviMZ/4tmphDN8=",
+        "lastModified": 1750446023,
+        "narHash": "sha256-1ffxyO25kc+9KrhUNOU9r9BrE5DOkhS9xBwyB132JAM=",
         "owner": "kinnison",
         "repo": "juntakami",
-        "rev": "ee6b67196d2b94043713d7338c7bd12750971f61",
+        "rev": "febdc954a110f46cd6b4370c2b4dc0d6a623ebb3",
         "type": "github"
       },
       "original": {
