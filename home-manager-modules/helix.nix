@@ -30,6 +30,7 @@ in {
           language-server.hanumail = {
             command = "${pkgs.kinnison.hanumail}/bin/hanumail";
           };
+          language-server.nil = { command = "${pkgs.nil}/bin/nil"; };
         };
         settings = {
           theme = mkForce "catppuccin-${osConfig.kinnison.gui.theme}";
