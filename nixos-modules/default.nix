@@ -18,6 +18,7 @@ in {
     ./printing.nix
     ./stlink.nix
     ./docker.nix
+    ./coredump.nix
   ];
 
   options.kinnison.zram = {
