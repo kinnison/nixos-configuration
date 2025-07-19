@@ -14,22 +14,11 @@ in {
         package = pkgs.kinnison.helix;
         defaultEditor = true;
         languages = {
-          language = [
-            {
-              name = "mail";
-              file-types = [{ glob = "neomutt-*"; }];
-              language-servers = [ "hanumail" ];
-              rulers = [ 78 ];
-            }
-            {
-              name = "nix";
-              auto-format = true;
-              formatter = { command = "${pkgs.nixfmt-classic}/bin/nixfmt"; };
-            }
-          ];
-          language-server.hanumail = {
-            command = "${pkgs.kinnison.hanumail}/bin/hanumail";
-          };
+          language = [{
+            name = "nix";
+            auto-format = true;
+            formatter = { command = "${pkgs.nixfmt-classic}/bin/nixfmt"; };
+          }];
           language-server.nil = { command = "${pkgs.nil}/bin/nil"; };
         };
         settings = {

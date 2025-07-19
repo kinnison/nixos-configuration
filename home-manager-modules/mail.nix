@@ -476,5 +476,18 @@ in {
       }) (attrNames cfg.accounts));
     }
     { accounts.email.accounts = extraMailConfigs; }
+    (mkIf useHelix {
+      programs.helix.languages = {
+        language = [{
+          name = "mail";
+          file-types = [{ glob = "neomutt-*"; }];
+          language-servers = [ "hanumail" ];
+          rulers = [ 78 ];
+        }];
+        language-server.hanumail = {
+          command = "${pkgs.kinnison.hanumail}/bin/hanumail";
+        };
+      };
+    })
   ]);
 }
