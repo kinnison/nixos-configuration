@@ -99,7 +99,7 @@
     };
     # Helix
     helix = {
-      url = "github:helix-editor/helix/25.07";
+      url = "github:helix-editor/helix/25.07.1";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         rust-overlay.follows = "rust-overlay";
