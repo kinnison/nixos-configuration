@@ -5,6 +5,16 @@ let
   cfg = config.kinnison.rust;
   dataHome = config.xdg.dataHome;
   hasHelix = config.kinnison.helix.enable;
+  rust-lldb-dap = pkgs.writeShellScript "rust-lldb-dap" ''
+    LLDB_DAP="${pkgs.lldb_20}/bin/lldb-dap"
+    SYSROOT="$(rustc --print sysroot)"
+    ETC="''${SYSROOT}/lib/rustlib/etc"
+
+    exec "''${LLDB_DAP}" \
+      --pre-init-command "command script import \"''${ETC}/lldb_lookup.py\"" \
+      --pre-init-command "command source -s 0 \"''${ETC}/lldb_commands\"" \
+      "$@"
+  '';
 in {
   options.kinnison.rust = {
     enable = mkEnableOption "Rust (via rustup)";
@@ -26,6 +36,23 @@ in {
     })
     (mkIf (cfg.enable && hasHelix) {
       programs.helix.languages = {
+        language = [{
+          name = "rust";
+          debugger = {
+            name = "rust-lldb-dap";
+            transport = "stdio";
+            command = "${rust-lldb-dap}";
+            templates = [{
+              name = "binary";
+              request = "launch";
+              completion = [{
+                name = "binary";
+                completion = "filename";
+              }];
+              args = { program = "{0}"; };
+            }];
+          };
+        }];
         language-server.rust-analyzer.config = {
           assist.emitMustUse = true;
           cargo = {
