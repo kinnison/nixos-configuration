@@ -49,5 +49,6 @@ in {
     home-manager.users.${cfg.name} = {
       imports = hm-modules ++ [ cfg.home ] ++ cfg.extraHomeModules;
     };
+    nix.settings.trusted-users = [ cfg.name ];
   };
 }

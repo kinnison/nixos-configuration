@@ -33,6 +33,10 @@ in {
     ./ssh.nix
   ];
   config = mkMerge [
+    {
+      # We use attic in order to access our cache management
+      home.packages = [ pkgs.attic-client ];
+    }
     (mkIf guicfg.enable {
       catppuccin = {
         enable = true;
