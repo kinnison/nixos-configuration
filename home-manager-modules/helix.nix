@@ -101,6 +101,12 @@ in {
               "C-right" = "move_next_word_end";
               "C-S-left" = "extend_prev_word_start";
               "C-S-right" = "extend_next_word_end";
+              # Reflow like emacs
+              "A-q" = "@<esc>mip:reflow<ret><right>i";
+            };
+            normal = {
+              # Reflow like emacs
+              "A-q" = "@mip:reflow<ret><right>";
             };
           };
         };
