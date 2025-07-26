@@ -24,6 +24,9 @@ in {
         settings = {
           theme = mkForce "catppuccin-${osConfig.kinnison.gui.theme}";
           editor = {
+            trim-final-newlines = true;
+            trim-trailing-whitespace = true;
+            editor-config = true;
             bufferline = "always";
             lsp = {
               enable = true;
@@ -65,6 +68,7 @@ in {
               };
             };
             completion-replace = true;
+            preview-completion-insert = false;
             cursor-shape = {
               normal = "block";
               insert = "bar";
@@ -107,6 +111,10 @@ in {
             normal = {
               # Reflow like emacs
               "A-q" = "@mip:reflow<ret><right>";
+              "H" = "goto_line_start";
+              "^" = "goto_line_start";
+              "L" = "goto_line_end";
+              "$" = "goto_line_end";
             };
           };
         };
