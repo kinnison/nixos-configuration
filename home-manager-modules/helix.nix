@@ -2,10 +2,16 @@
 with lib;
 let cfg = config.kinnison.helix;
 in {
-  options.kinnison.helix = { enable = mkEnableOption "Helix editor"; };
+  options.kinnison.helix = {
+    enable = mkEnableOption "Helix editor";
+    harper = { enable = mkEnableOption "Harper spell/grammar checker"; };
+  };
 
   config = mkMerge [
-    { kinnison.helix.enable = mkDefault true; }
+    {
+      kinnison.helix.enable = mkDefault true;
+      kinnison.helix.harper.enable = mkDefault true;
+    }
     (mkIf cfg.enable {
       programs.ssh.matchBlocks."*" = { sendEnv = [ "COLORTERM" ]; };
       programs.vim.defaultEditor = mkForce false;
@@ -118,6 +124,27 @@ in {
             };
           };
         };
+      };
+    })
+    (mkIf cfg.harper.enable {
+      programs.helix.languages = {
+        language-server.harper-ls = {
+          command = "${pkgs.harper}/bin/harper-ls";
+        };
+        language = [
+          {
+            name = "markdown";
+            language-servers = [ "markdown-oxide" "marksman" "harper-ls" ];
+          }
+          {
+            name = "nix";
+            language-servers = [ "nil" "harper-ls" ];
+          }
+          (mkIf config.kinnison.rust.enable {
+            name = "rust";
+            language-servers = [ "rust-analyzer" "harper-ls" ];
+          })
+        ];
       };
     })
   ];
