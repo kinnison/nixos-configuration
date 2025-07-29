@@ -131,6 +131,21 @@ in {
       programs.helix.languages = {
         language-server.harper-ls = {
           command = "${pkgs.harper}/bin/harper-ls";
+          config = {
+            harper-ls = {
+              dialect = "British";
+              linters = {
+                # This is critical
+                OxfordComma = true;
+                NoOxfordComma = false;
+                # Since most stuff is comments, turn off these
+                TodoHyphen = false;
+                ExpandWith = false;
+                ExpandWithout = false;
+              };
+              codeActions.ForceStable = true;
+            };
+          };
         };
         language = [
           {
@@ -144,6 +159,10 @@ in {
           (mkIf config.kinnison.rust.enable {
             name = "rust";
             language-servers = [ "rust-analyzer" "harper-ls" ];
+          })
+          (mkIf config.kinnison.git.enable {
+            name = "git-commit";
+            language-servers = [ "harper-ls" ];
           })
         ];
       };
