@@ -62,6 +62,7 @@ in {
               right = [
                 "diagnostics"
                 "selections"
+                "register"
                 "position"
                 "position-percentage"
                 "file-encoding"
