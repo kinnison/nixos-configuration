@@ -131,6 +131,7 @@ in {
       programs.helix.languages = {
         language-server.harper-ls = {
           command = "${pkgs.harper}/bin/harper-ls";
+          args = [ "--stdio" "--skip-version-check" ];
           config = {
             harper-ls = {
               dialect = "British";
@@ -139,7 +140,7 @@ in {
                 OxfordComma = true;
                 NoOxfordComma = false;
                 # Since most stuff is comments, turn off these
-                TodoHyphen = false;
+                ToDoHyphen = false;
                 ExpandWith = false;
                 ExpandWithout = false;
               };
