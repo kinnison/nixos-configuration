@@ -131,7 +131,8 @@ in {
       programs.helix.languages = {
         language-server.harper-ls = {
           command = "${pkgs.harper}/bin/harper-ls";
-          args = [ "--stdio" "--skip-version-check" ];
+          # This needs a newer harper than we currently have
+          # args = [ "--stdio" "--skip-version-check" ];
           config = {
             harper-ls = {
               dialect = "British";
