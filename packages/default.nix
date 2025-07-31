@@ -17,4 +17,5 @@ in {
   capture = pkgs.callPackage ./capture { };
   stlink-udev = pkgs.callPackage ./stlink-udev { };
   qxw = pkgs.callPackage ./qxw { };
+  harper-ls = pkgs.callPackage ./harper.nix { };
 } // append_pkgs
