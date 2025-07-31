@@ -130,7 +130,7 @@ in {
     (mkIf cfg.harper.enable {
       programs.helix.languages = {
         language-server.harper-ls = {
-          command = "${pkgs.harper}/bin/harper-ls";
+          command = "${pkgs.kinnison.harper-ls}/bin/harper-ls";
           # This needs a newer harper than we currently have
           # args = [ "--stdio" "--skip-version-check" ];
           config = {
