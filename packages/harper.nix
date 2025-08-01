@@ -8,7 +8,7 @@ rustPlatform.buildRustPackage rec {
     owner = "kinnison";
     repo = "harper";
     rev = "fix-1064";
-    hash = "sha256-iLCGqcCmFTGHj2K4eKlKb3dnoSTkd2qQUyEVSWt4E7I=";
+    hash = "sha256-QoD0Yqbeas6vrTJYCp/VhLzKbrh7Up01vMPnxRc+oNc=";
   };
 
   buildAndTestSubdir = "harper-ls";
