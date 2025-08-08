@@ -2,7 +2,7 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "harper";
-  version = "0.55.0+fix-1707";
+  version = "0.56.0+fix-1707";
 
   src = fetchFromGitHub {
     owner = "Automattic";
