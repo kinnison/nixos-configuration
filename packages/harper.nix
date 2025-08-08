@@ -8,12 +8,12 @@ rustPlatform.buildRustPackage rec {
     owner = "kinnison";
     repo = "harper";
     rev = "fix-1064";
-    hash = "sha256-QoD0Yqbeas6vrTJYCp/VhLzKbrh7Up01vMPnxRc+oNc=";
+    hash = "sha256-3ri8WPWxL3FYENdh0RNVEYl/3OQaRFR2Kn64tWKd0Jg=";
   };
 
   buildAndTestSubdir = "harper-ls";
 
-  cargoHash = "sha256-etNmmPStjrsl4iS6kJxyzopiTqSCwX6K4dzT3EVxScE=";
+  cargoHash = "sha256-gmJp87pb0fIRI3QejJ1nyzYNMliUGRxD5q9k3Alcoc8=";
 
   passthru.updateScript = nix-update-script { };
 
