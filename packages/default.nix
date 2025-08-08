@@ -17,5 +17,11 @@ in {
   capture = pkgs.callPackage ./capture { };
   stlink-udev = pkgs.callPackage ./stlink-udev { };
   qxw = pkgs.callPackage ./qxw { };
-  harper-ls = pkgs.callPackage ./harper.nix { };
+  harper-ls = let
+    toolchain = pkgs.rust-bin.stable."1.89.0".default;
+    rustPlatform = pkgs.makeRustPlatform {
+      cargo = toolchain;
+      rustc = toolchain;
+    };
+  in pkgs.callPackage ./harper.nix { inherit rustPlatform; };
 } // append_pkgs
