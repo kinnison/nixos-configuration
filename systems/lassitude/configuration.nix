@@ -63,6 +63,7 @@
   kinnison.secureboot.enable = true;
   kinnison.impermanence.enable = true;
   kinnison.virt-manager.enable = true;
+  kinnison.docker.enable = true;
   kinnison.gaming.steam = true;
 
   # Printing at home uses HP
