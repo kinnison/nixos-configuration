@@ -122,6 +122,7 @@
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       overlays = [
+        rust-overlay.overlays.rust-overlay
         (final: prev:
           let
             cats = inputs.cats.packages.${prev.system}.cats;
@@ -208,7 +209,7 @@
       toplevelMarker = "kinnison";
       # Normal flake outputs
       packages = forAllSystems (system:
-        let pkgs = import nixpkgs { inherit system; };
+        let pkgs = import nixpkgs { inherit system overlays; };
         in (import ./packages) { inherit pkgs; });
       devShells = forAllSystems (system:
         let pkgs = import nixpkgs { inherit system; };
