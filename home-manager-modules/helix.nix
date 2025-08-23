@@ -32,6 +32,7 @@ in {
           editor = {
             trim-final-newlines = true;
             trim-trailing-whitespace = true;
+            insert-final-newline = true;
             editor-config = true;
             bufferline = "always";
             lsp = {
