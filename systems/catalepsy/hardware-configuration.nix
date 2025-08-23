@@ -5,6 +5,8 @@
 
   kinnison.batteries = [ "BAT0" "BAT1" ];
 
+  boot.kernelParams = [ "mitigations=off" ];
+
   boot.initrd.availableKernelModules = [
     "virtio_net"
     "virtio_pci"
