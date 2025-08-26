@@ -134,7 +134,7 @@ in {
           # command = "${pkgs.harper}/bin/harper-ls";
           # This needs a newer harper than we currently have
           command = "${pkgs.kinnison.harper-ls}/bin/harper-ls";
-          args = [ "--stdio" "--skip-version-check" ];
+          args = [ "--stdio" ];
           config = {
             harper-ls = {
               dialect = "British";
