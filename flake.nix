@@ -97,14 +97,6 @@
         flake-utils.follows = "flake-utils";
       };
     };
-    # Helix
-    helix = {
-      url = "github:helix-editor/helix/25.07.1";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        rust-overlay.follows = "rust-overlay";
-      };
-    };
     # My email LSP
     hanumail = {
       url = "git+https://github.com/kinnison/hanumail";
@@ -118,7 +110,7 @@
   outputs = { self, nix-systems, flake-utils, flake-parts, flake-compat
     , rust-overlay, crane, nixpkgs, nixos-hardware, home-manager, catppuccin
     , stylix, disko, cats, prompter, lanzaboote, impermanence, juntakami
-    , nixos-vscode-server, helix, hanumail }@inputs:
+    , nixos-vscode-server, hanumail }@inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       overlays = [
@@ -128,11 +120,10 @@
             cats = inputs.cats.packages.${prev.system}.cats;
             prompter = inputs.prompter.packages.${prev.system}.prompter;
             juntakami = inputs.juntakami.packages.${prev.system}.juntakami;
-            helix = inputs.helix.packages.${prev.system}.helix;
             hanumail = inputs.hanumail.packages.${prev.system}.hanumail;
           in {
             kinnison = (import ./packages { pkgs = final; }) // {
-              inherit cats prompter juntakami helix hanumail;
+              inherit cats prompter juntakami hanumail;
             };
           })
       ];

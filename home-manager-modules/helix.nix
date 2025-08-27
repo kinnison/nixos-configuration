@@ -17,7 +17,7 @@ in {
       programs.vim.defaultEditor = mkForce false;
       programs.helix = {
         enable = true;
-        package = pkgs.kinnison.helix;
+        package = pkgs.helix;
         defaultEditor = true;
         languages = {
           language = [{

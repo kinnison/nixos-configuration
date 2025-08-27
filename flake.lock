@@ -321,30 +321,6 @@
         "url": "https://github.com/kinnison/hanumail"
       }
     },
-    "helix": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "rust-overlay": [
-          "rust-overlay"
-        ]
-      },
-      "locked": {
-        "lastModified": 1752849097,
-        "narHash": "sha256-RFSzGAcB0mMg/02ykYfTWXzQjLFu2CJ4BkS5HZ/6pBo=",
-        "owner": "helix-editor",
-        "repo": "helix",
-        "rev": "a05c151bb6e8e9c65ec390b0ae2afe7a5efd619b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "helix-editor",
-        "ref": "25.07.1",
-        "repo": "helix",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -566,7 +542,6 @@
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
         "hanumail": "hanumail",
-        "helix": "helix",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "juntakami": "juntakami",
