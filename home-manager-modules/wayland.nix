@@ -49,7 +49,7 @@ let
       <(${pkgs.sway}/bin/swaymsg -t get_tree | ${pkgs.jq}/bin/jq '.. | select(.orientation? and .output?) | .num' | sort -n) \
       <(seq 1 9) \
       | head -1)
-      
+
     if test "x$NEW_WS" != "x"; then
       swaymsg workspace $NEW_WS
     fi
@@ -86,6 +86,7 @@ in {
       swaylock.enable = true;
       sway.enable = true;
       foot.enable = true;
+      kitty.enable = true;
       waybar.enable = true;
       dunst.enable = true;
     };
@@ -260,6 +261,14 @@ in {
         # As C-S-o is "Open URL" and C-S-u is "Enter unicode" we hijack "C-S-p" next
         # to those to do copy-url rather than open-url.
         key-bindings = { show-urls-copy = "Control+Shift+p"; };
+      };
+    };
+
+    programs.kitty = {
+      enable = true;
+      font = {
+        name = mkOverride 90 "InconsolataNerdFont";
+        size = mkOverride 90 20;
       };
     };
 
