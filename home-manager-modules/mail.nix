@@ -187,7 +187,7 @@ let
     imapnotify = {
       enable = true;
       boxes = acc.watchFolders;
-      onNotify = "systemctl --user start mbsync.service";
+      onNotify = "${pkgs.systemd}/bin/systemctl --user start mbsync.service";
     };
     folders = { sent = "Inbox"; };
   }) cfg.accounts;
