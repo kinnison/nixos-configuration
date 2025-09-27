@@ -253,9 +253,4 @@
       };
     };
 
-  nixConfig = {
-    extra-substituters = [ "https://attic.infrafish.uk/kinnison" ];
-    extra-trusted-public-keys =
-      [ "kinnison:OzaUTPRf8RkUjh52VIW61ZxePd4JhVSvzoL7/SpnxaQ=" ];
-  };
 }
