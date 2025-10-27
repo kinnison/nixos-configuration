@@ -107,8 +107,9 @@ let
         ${concatMapStringsSep "" folder-command folders}
       '';
   in ''
-    # First we clear all mailboxes
+    # First we clear all mailboxes, turn off the Trash folder, etc.
     unmailboxes *
+    unset trash
 
     ${accountConfig primaryAccount}
 
