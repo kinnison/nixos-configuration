@@ -18,6 +18,7 @@ in {
       mailServer = "mail.infrafish.uk";
       displayFolders = [
         "Inbox"
+        "HighBank"
         "listmaster"
         "Canonical"
         "Github"
@@ -37,7 +38,7 @@ in {
         "Sent"
         "Old"
       ];
-      watchFolders = [ "INBOX" "Github" "Gitlab" ];
+      watchFolders = [ "INBOX" "HighBank" "Github" "Gitlab" ];
       signature = ''
         Daniel Silverstone                         http://www.digital-scurf.org/
         PGP mail accepted and encouraged.            Key Id: 3CCE BABE 206C 3B69
