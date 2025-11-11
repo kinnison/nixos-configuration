@@ -81,7 +81,7 @@ in {
   };
 
   config = mkIf guicfg.wayland.enable {
-    home.packages = [ dmenu capture pkgs.swayimg ];
+    home.packages = [ dmenu capture pkgs.swayimg pkgs.wl-clipboard-rs ];
     catppuccin = {
       swaylock.enable = true;
       sway.enable = true;
