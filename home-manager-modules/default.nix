@@ -31,6 +31,7 @@ in {
     ./streaming.nix
     ./helix.nix
     ./ssh.nix
+    ./radicle.nix
   ];
   config = mkMerge [
     (mkIf guicfg.enable {
