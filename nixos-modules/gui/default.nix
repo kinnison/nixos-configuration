@@ -49,7 +49,7 @@ in {
       cursor = {
         name = "catppuccin-${cfg.theme}-${cfg.accent}-cursors";
         package = pkgs.catppuccin-cursors.${cursor-name};
-        size = 16;
+        size = 32;
       };
     };
     services.displayManager.sddm.settings.Theme = {

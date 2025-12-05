@@ -38,7 +38,7 @@ in {
         enable = true;
         flavor = guicfg.theme;
         accent = guicfg.accent;
-        #pointerCursor.enable = true;
+        cursors.enable = true;
       };
       # https://github.com/catppuccin/gtk/issues/262
       # Essentially don't bother - GTK is impossible to theme properly
@@ -53,7 +53,8 @@ in {
       home.pointerCursor = {
         name = mkForce "catppuccin-${guicfg.theme}-${guicfg.accent}-cursors";
         package = mkForce pkgs.catppuccin-cursors.${cursor-name};
-        size = mkForce 16;
+        size = mkForce 32;
+        gtk.enable = true;
       };
       services.udiskie = {
         enable = true;
