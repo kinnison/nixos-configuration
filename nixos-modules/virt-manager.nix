@@ -12,16 +12,7 @@ in {
   config = mkMerge [
     { kinnison.virt-manager.secureBoot = mkDefault true; }
     (mkIf cfg.enable {
-      virtualisation.libvirtd = {
-        enable = true;
-        qemu = {
-          ovmf.enable = true;
-          ovmf.packages = [
-            (mkIf cfg.secureBoot pkgs.OVMFFull.fd)
-            (mkIf (!cfg.secureBoot) pkgs.OVMF.fd)
-          ];
-        };
-      };
+      virtualisation.libvirtd = { enable = true; };
       environment.systemPackages = [ pkgs.virt-manager ];
       kinnison.user.groups = [ "libvirtd" ];
 

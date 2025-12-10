@@ -1,7 +1,18 @@
 { ... }: {
   programs.ssh = {
     enable = true;
-    controlMaster = "auto";
-    controlPersist = "60s";
+    enableDefaultConfig = false;
+    matchBlocks."*" = {
+      controlMaster = "auto";
+      controlPersist = "60s";
+      controlPath = "~/.ssh/maser-%r@%n:%p";
+      forwardAgent = false;
+      addKeysToAgent = "no";
+      compression = false;
+      serverAliveInterval = 0;
+      serverAliveCountMax = 3;
+      hashKnownHosts = false;
+      userKnownHostsFile = "~/.ssh/known_hosts";
+    };
   };
 }

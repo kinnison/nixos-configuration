@@ -376,8 +376,7 @@ in {
     services.dunst = { enable = true; };
     programs.rofi = {
       enable = true;
-      package =
-        pkgs.rofi-wayland.override { plugins = [ pkgs.rofi-emoji-wayland ]; };
+      package = pkgs.rofi.override { plugins = [ pkgs.rofi-emoji ]; };
       extraConfig = {
         modi = "drun,emoji,run";
         kb-primary-paste = "Control+V,Shift+Insert";

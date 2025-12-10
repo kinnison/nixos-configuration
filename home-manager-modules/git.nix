@@ -29,12 +29,14 @@ in {
       programs.git = {
         enable = true;
         lfs.enable = true;
-        userName = usercfg.realName;
-        userEmail = cfg.email;
 
         ignores = [ "target" "result" ".direnv/" ];
 
-        extraConfig = {
+        settings = {
+          user = {
+            name = usercfg.realName;
+            email = cfg.email;
+          };
           column.ui = "auto";
           branch = {
             sort = "-committerdate";

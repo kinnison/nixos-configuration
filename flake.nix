@@ -8,7 +8,7 @@
 
   inputs = {
     # Core nix stuff
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixos-hardware.url = "github:NixOs/nixos-hardware";
     # While we don't use nix-systems, flake-utils, etc. various of our sub-flakes do
     nix-systems.url = "github:nix-systems/default";
@@ -23,12 +23,12 @@
     crane.url = "github:ipetkov/crane";
     # Home Manager for home directories
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # Styling
     stylix = {
-      url = "github:danth/stylix/release-25.05";
+      url = "github:danth/stylix/release-25.11";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-parts.follows = "flake-parts";
@@ -36,7 +36,7 @@
       };
     };
     catppuccin = {
-      url = "github:catppuccin/nix/release-25.05";
+      url = "github:catppuccin/nix";
       inputs = { nixpkgs.follows = "nixpkgs"; };
     };
     # Disk setup
@@ -115,10 +115,11 @@
         rust-overlay.overlays.rust-overlay
         (final: prev:
           let
-            cats = inputs.cats.packages.${prev.system}.cats;
-            prompter = inputs.prompter.packages.${prev.system}.prompter;
-            juntakami = inputs.juntakami.packages.${prev.system}.juntakami;
-            hanumail = inputs.hanumail.packages.${prev.system}.hanumail;
+            system = prev.stdenv.hostPlatform.system;
+            cats = inputs.cats.packages.${system}.cats;
+            prompter = inputs.prompter.packages.${system}.prompter;
+            juntakami = inputs.juntakami.packages.${system}.juntakami;
+            hanumail = inputs.hanumail.packages.${system}.hanumail;
           in {
             kinnison = (import ./packages { pkgs = final; }) // {
               inherit cats prompter juntakami hanumail;
