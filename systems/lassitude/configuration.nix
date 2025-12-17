@@ -10,6 +10,7 @@
     name = "dsilvers";
     realName = "Daniel Silverstone";
     home = homes.dsilvers;
+    groups = [ "dialout" ];
     extra = {
       hashedPassword =
         "$6$jhPpRWgH6hEjTTmH$BZYw8lLV2lalgnsLdbm5r3JsZWxXwf/C7ldSqNaiz8i2xY/gHDEMmn4LK85MzSsOQOpbbZ334s90sPdCDDymH1";
