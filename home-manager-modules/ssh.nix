@@ -5,7 +5,7 @@
     matchBlocks."*" = {
       controlMaster = "auto";
       controlPersist = "60s";
-      controlPath = "~/.ssh/maser-%r@%n:%p";
+      controlPath = "~/.ssh/master-%r@%n:%p";
       forwardAgent = false;
       addKeysToAgent = "no";
       compression = false;
