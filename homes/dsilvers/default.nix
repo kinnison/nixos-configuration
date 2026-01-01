@@ -39,6 +39,6 @@
     lib.mkIf (osConfig.networking.hostName == "catalepsy")
     (lib.mkForce "InconsolataNerdFont:size=14");
 
-  # Radicle, but for now only on the desktop
-  kinnison.radicle.enable = osConfig.networking.hostName == "lassitude";
+  # Radicle
+  kinnison.radicle.enable = true;
 }
