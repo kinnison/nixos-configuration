@@ -27,11 +27,11 @@ in {
     ./vscode.nix
     ./wayland.nix
     ./gaming.nix
-    ./spotify.nix
     ./streaming.nix
     ./helix.nix
     ./ssh.nix
     ./radicle.nix
+    ./plexamp.nix
   ];
   config = mkMerge [
     (mkIf guicfg.enable {

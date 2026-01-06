@@ -33,8 +33,7 @@
     (lib.mkIf (osConfig.networking.hostName == "lassitude") [ pkgs.kicad ])
   ];
 
-  # I like Spotify for music
-  kinnison.sound.spotify = true;
+  kinnison.sound.plexamp = true;
 
   programs.foot.settings.main.font =
     lib.mkIf (osConfig.networking.hostName == "catalepsy")
