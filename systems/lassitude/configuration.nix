@@ -39,21 +39,21 @@
     wayland.extraSwayConfig = {
       output."HDMI-A-1" = {
         mode = "1920x1080@60Hz";
-        pos = "0 0";
+        pos = "1920 0";
         transform = "normal";
       };
       output."DP-1" = {
         mode = "1920x1080@60Hz";
-        pos = "1920 0";
+        pos = "0 0";
         transform = "normal";
       };
       workspaceOutputAssign = [
         {
-          workspace = "1";
+          workspace = "2";
           output = "HDMI-A-1";
         }
         {
-          workspace = "2";
+          workspace = "1";
           output = "DP-1";
         }
       ];
