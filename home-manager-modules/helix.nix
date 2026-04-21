@@ -4,7 +4,7 @@ let
   cfg = config.kinnison.helix;
   mytheme-text = ''
     inherits = "catppuccin-${osConfig.kinnison.gui.theme}"
-    comment = { fg = "yellow" }
+    comment = { fg = "#d9c28f" }
   '';
 in {
   options.kinnison.helix = {
