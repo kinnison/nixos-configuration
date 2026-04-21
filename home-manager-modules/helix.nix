@@ -1,6 +1,11 @@
 { config, osConfig, lib, pkgs, ... }:
 with lib;
-let cfg = config.kinnison.helix;
+let
+  cfg = config.kinnison.helix;
+  mytheme-text = ''
+    inherits = "catppuccin-${osConfig.kinnison.gui.theme}"
+    comment = { fg = "yellow" }
+  '';
 in {
   options.kinnison.helix = {
     enable = mkEnableOption "Helix editor";
@@ -15,6 +20,7 @@ in {
     (mkIf cfg.enable {
       programs.ssh.matchBlocks."*" = { sendEnv = [ "COLORTERM" ]; };
       programs.vim.defaultEditor = mkForce false;
+      xdg.configFile."helix/themes/kinnison.toml" = { text = mytheme-text; };
       programs.helix = {
         enable = true;
         package = pkgs.helix;
@@ -28,7 +34,7 @@ in {
           language-server.nil = { command = "${pkgs.nil}/bin/nil"; };
         };
         settings = {
-          theme = mkForce "catppuccin-${osConfig.kinnison.gui.theme}";
+          theme = mkForce "kinnison";
           editor = {
             trim-final-newlines = true;
             trim-trailing-whitespace = true;
