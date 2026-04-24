@@ -1,20 +1,20 @@
 { lib, stdenv, fetchurl, makeWrapper, makeDesktopItem, copyDesktopItems, xorg
 , gtk2, sqlite, openal, cairo, libGLU, SDL2, freealut, libglvnd, pipewire
-, libpulseaudio, dotnet-runtime_8, }:
+, libpulseaudio, dotnet-runtime_10, }:
 
 stdenv.mkDerivation rec {
   pname = "vintagestory";
-  version = "1.21.6";
+  version = "1.22.0";
 
   src = fetchurl {
     url =
       "https://cdn.vintagestory.at/gamefiles/stable/vs_client_linux-x64_${version}.tar.gz";
-    hash = "sha256-LkiL/8W9MKpmJxtK+s5JvqhOza0BLap1SsaDvbLYR0c=";
+    hash = "sha256-c90Mb5hyL8StLFrKokAgER/u6l3jhhluP5ErgVs4geI=";
   };
 
   nativeBuildInputs = [ makeWrapper copyDesktopItems ];
 
-  buildInputs = [ dotnet-runtime_8 ];
+  buildInputs = [ dotnet-runtime_10 ];
 
   runtimeLibs = lib.makeLibraryPath ([
     gtk2
@@ -45,17 +45,17 @@ stdenv.mkDerivation rec {
 
     mkdir -p $out/share/vintagestory $out/bin $out/share/pixmaps $out/share/fonts/truetype
     cp -r * $out/share/vintagestory
-    cp $out/share/vintagestory/assets/gameicon.xpm $out/share/pixmaps/vintagestory.xpm
+    install -Dm444 $out/share/vintagestory/assets/gameicon.png $out/share/icons/hicolor/512x512/apps/vintagestory.png
     cp $out/share/vintagestory/assets/game/fonts/*.ttf $out/share/fonts/truetype
 
     runHook postInstall
   '';
 
   preFixup = ''
-    makeWrapper ${dotnet-runtime_8}/bin/dotnet $out/bin/vintagestory \
+    makeWrapper ${dotnet-runtime_10}/bin/dotnet $out/bin/vintagestory \
       --prefix LD_LIBRARY_PATH : "${runtimeLibs}" \
       --add-flags $out/share/vintagestory/Vintagestory.dll
-    makeWrapper ${dotnet-runtime_8}/bin/dotnet $out/bin/vintagestory-server \
+    makeWrapper ${dotnet-runtime_10}/bin/dotnet $out/bin/vintagestory-server \
       --prefix LD_LIBRARY_PATH : "${runtimeLibs}" \
       --add-flags $out/share/vintagestory/VintagestoryServer.dll
   '' + ''
