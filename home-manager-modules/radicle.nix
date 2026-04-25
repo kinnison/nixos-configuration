@@ -5,9 +5,13 @@ let
   cfg = config.kinnison.radicle;
   guicfg = osConfig.kinnison.gui;
 in {
-  options.kinnison.radicle = { enable = mkEnableOption "Radicle support"; };
+  options.kinnison.radicle = {
+    enable = mkEnableOption "Radicle support";
+    allowListen = mkEnableOption "Open TCP for listening";
+  };
 
   config = mkMerge [
+    { kinnison.radicle.allowListen = mkDefault true; }
     (mkIf cfg.enable {
       assertions = [{
         assertion = config.kinnison.git.enable;
@@ -17,6 +21,8 @@ in {
     })
     (mkIf (cfg.enable && guicfg.enable) {
       home.packages = with pkgs; [ radicle-desktop ];
+
+      kinnison.allowedTCPPorts = mkIf cfg.allowListen [ 8776 ];
     })
   ];
 }

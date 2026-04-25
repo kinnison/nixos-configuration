@@ -11,6 +11,10 @@ let
     mapAttrsToList (name: conf: conf.kinnison.insecure.pkgs)
     config.home-manager.users;
   all-user-insecure-pkgs = flatten all-user-insecure-pkgs';
+  all-user-tcpports' =
+    mapAttrsToList (name: conf: conf.kinnison.allowedTCPPorts)
+    config.home-manager.users;
+  all-user-tcpports = flatten all-user-tcpports';
 in {
   options.kinnison.unfree = {
     pkgs = mkOption {
@@ -43,6 +47,11 @@ in {
           type = types.listOf types.str;
           default = [ ];
         };
+      };
+      options.kinnison.allowedTCPPorts = mkOption {
+        description = "TCP Ports to open";
+        type = types.listOf types.port;
+        default = [ ];
       };
     }];
 
@@ -124,6 +133,8 @@ in {
 
     # Generally speaking, our systems need fstrim
     services.fstrim.enable = mkDefault true;
+
+    networking.firewall.allowedTCPPorts = all-user-tcpports;
 
     # We like fwupd because it lets us have firmware updates
     services.fwupd.enable = mkDefault true;
