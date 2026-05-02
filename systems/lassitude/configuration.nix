@@ -75,4 +75,7 @@
 
   # We use stlinks on our desktop
   kinnison.stlink.enable = true;
+
+  # My desktop is sometimes a proxy for our alarm system
+  networking.firewall.allowedTCPPorts = [ 10001 ];
 }
