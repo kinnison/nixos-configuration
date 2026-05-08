@@ -149,5 +149,14 @@ in {
 
     # It's always OK for the user to run dmesg IMO
     boot.kernel.sysctl."kernel.dmesg_restrict" = false;
+
+    boot.extraModprobeConfig = ''
+      # Mitigation for dirtyfrag
+      install esp4 /bin/false
+      install esp6 /bin/false
+      install rxrpc /bin/false
+      # Mitigation for Copy-Fail
+      install algif_aead /bin/false
+    '';
   };
 }
