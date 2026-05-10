@@ -15,6 +15,7 @@ let
     mapAttrsToList (name: conf: conf.kinnison.allowedTCPPorts)
     config.home-manager.users;
   all-user-tcpports = flatten all-user-tcpports';
+  bin-false = "${pkgs.coreutils}/bin/false";
 in {
   options.kinnison.unfree = {
     pkgs = mkOption {
@@ -152,11 +153,12 @@ in {
 
     boot.extraModprobeConfig = ''
       # Mitigation for dirtyfrag
-      install esp4 /bin/false
-      install esp6 /bin/false
-      install rxrpc /bin/false
+      install esp4 ${bin-false}
+      install esp6 ${bin-false}
+      install rxrpc ${bin-false}
       # Mitigation for Copy-Fail
-      install algif_aead /bin/false
+      install algif_aead ${bin-false}
     '';
+    boot.blacklistedKernelModules = [ "esp4" "esp6" "rxrpc" "algif_aead" ];
   };
 }
