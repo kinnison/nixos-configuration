@@ -1,5 +1,7 @@
-{ pkgs, sway, jq, slurp, grim, rofi, ... }:
-let swaymsg = "${sway}/bin/swaymsg";
+{ pkgs, sway, wl-clipboard-rs, jq, slurp, grim, rofi, ... }:
+let
+  swaymsg = "${sway}/bin/swaymsg";
+  wl-copy = "${wl-clipboard-rs}/bin/wl-copy";
 in pkgs.writeShellScriptBin "capture" ''
 
   TMPDIR=$(mktemp -d)
@@ -18,8 +20,11 @@ in pkgs.writeShellScriptBin "capture" ''
 
   FILENAME=$(echo $FNAME | ${rofi}/bin/rofi -dmenu -p "Screenshot" -i -mesg "Enter the filename to save the screenshot")
 
+  ${wl-copy} -t image/png < "''${TMPDIR}/grab.png"
+
   if test "x$FILENAME" != "x"; then
     mv "''${TMPDIR}/grab.png" "$FILENAME"
   fi
+
 
 ''
