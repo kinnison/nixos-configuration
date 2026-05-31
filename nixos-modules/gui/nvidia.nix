@@ -17,6 +17,7 @@ in {
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
-    kinnison.unfree.pkgs = [ "nvidia-x11" "nvidia-settings" ];
+    kinnison.unfree.pkgs =
+      [ "nvidia-x11" "nvidia-settings" "nvidia-kernel-modules" ];
   };
 }
