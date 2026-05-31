@@ -10,6 +10,7 @@
     # Core nix stuff
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixos-hardware.url = "github:NixOs/nixos-hardware";
+    nixos-hardware.inputs.nixpkgs.follows = "nixpkgs";
     # While we don't use nix-systems, flake-utils, etc. various of our sub-flakes do
     nix-systems.url = "github:nix-systems/default";
     flake-utils.url = "github:numtide/flake-utils";
