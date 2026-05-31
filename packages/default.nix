@@ -6,7 +6,10 @@ let
 
   only_system_pkgs = {
 
-    vintagestory = pkgs.callPackage ./upstream/vintagestory.nix { };
+    vintagestory = pkgs.callPackage ./upstream/vintagestory.nix {
+      x11Support = false;
+      waylandSupport = true;
+    };
   };
 
   append_pkgs = if is_system_build then only_system_pkgs else { };
