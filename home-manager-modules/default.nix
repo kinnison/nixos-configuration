@@ -40,14 +40,9 @@ in {
         accent = guicfg.accent;
         cursors.enable = true;
       };
-      # https://github.com/catppuccin/gtk/issues/262
-      # Essentially don't bother - GTK is impossible to theme properly
-      # unless you're GNOME
-      #gtk.catppuccin = {
-      #  enable = true;
-      #  icon.enable = true;
-      #};
       gtk.enable = true;
+      # This is needed to quieten HM. Once we have home.stateVersion="26.05" or later, we can remove
+      gtk.gtk4.theme = null;
       qt.enable = true;
       catppuccin.kvantum.enable = false;
       home.pointerCursor = {
