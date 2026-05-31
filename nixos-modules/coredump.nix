@@ -9,10 +9,10 @@ in with lib; {
     { kinnison.coredump.enable = mkDefault false; }
     (mkIf (!cfg.enable) {
       # Try and turn off coredumps
-      systemd.coredump.extraConfig = ''
-        Storage=none
-        ProcessSizeMax=0
-      '';
+      systemd.coredump.settings.Coredump = {
+        Storage = "none";
+        ProcessSizeMax = 0;
+      };
     })
     (mkIf cfg.enable {
       # Coredumps but only for reasonably sized things
