@@ -1,7 +1,7 @@
 # Wayland based configuration
 { osConfig, config, lib, pkgs, ... }:
 let
-  inherit (lib) mkIf mkOption mkForce mkOverride;
+  inherit (lib) mkIf mkOption mkForce mkOverride mkMerge;
   guicfg = osConfig.kinnison.gui;
   batcfg = config.kinnison.batteries;
   hasBatteries = batcfg != [ ];
@@ -210,19 +210,10 @@ in {
     services.swayidle = {
       enable = true;
       systemdTarget = "sway-session.target";
-      events = [
-        {
-          event = "before-sleep";
-          command = "${pkgs.swaylock}/bin/swaylock -fF";
-        }
-        (mkIf isNvidia {
-          event = "after-resume";
-          command = "${from-resume}";
-        })
-        {
-          event = "lock";
-          command = "${pkgs.swaylock}/bin/swaylock -fF";
-        }
+      events = mkMerge [
+        { before-sleep = "${pkgs.swaylock}/bin/swaylock -fF"; }
+        (mkIf isNvidia { "after-resume" = "${from-resume}"; })
+        { lock = "${pkgs.swaylock}/bin/swaylock -fF"; }
       ];
       timeouts = [
         {
