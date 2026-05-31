@@ -56,6 +56,10 @@ in {
       };
     }];
 
+    # We don't need/use zfs at all
+    boot.initrd.supportedFilesystems.zfs = mkForce false;
+    boot.supportedFilesystems.zfs = mkForce false;
+
     boot.loader.systemd-boot.enable = mkDefault true;
     boot.loader.efi.canTouchEfiVariables = true;
 
