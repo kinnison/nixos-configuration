@@ -27,7 +27,8 @@
   # Keybase is something I only use on personal systems
   services.keybase.enable = true;
   home.packages = lib.mkMerge [
-    (with pkgs; [ kinnison.juntakami kinnison.qxw ])
+    # qxw removed because GTK changes mean it needs patches now
+    (with pkgs; [ kinnison.juntakami ])
     # I like kicad, but only on my desktop for now
     (lib.mkIf (osConfig.networking.hostName == "lassitude") [ pkgs.kicad ])
   ];
