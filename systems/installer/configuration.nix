@@ -27,8 +27,10 @@
   hardware.cpu.intel.updateMicrocode =
     lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  boot.initrd.systemd.enable = lib.mkForce false;
-  boot.loader.systemd-boot.enable = false;
+  # We used to disable this, but 26.11 will only have it
+  # so we take the hit now
+  #boot.initrd.systemd.enable = lib.mkForce false;
+  #boot.loader.systemd-boot.enable = false;
 
   # If we run as a VM...
   virtualisation.vmVariant = {
