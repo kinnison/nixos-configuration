@@ -8,7 +8,7 @@
 
   inputs = {
     # Core nix stuff
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixos-hardware.url = "github:NixOs/nixos-hardware";
     nixos-hardware.inputs.nixpkgs.follows = "nixpkgs";
     # While we don't use nix-systems, flake-utils, etc. various of our sub-flakes do
@@ -24,7 +24,7 @@
     crane.url = "github:ipetkov/crane";
     # Home Manager for home directories
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # Styling
