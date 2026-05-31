@@ -3,10 +3,10 @@ let inherit (lib) mkDefault mkForce;
 in rec {
   imports = [ ./hardware-configuration.nix ];
   system.stateVersion = "24.11";
-  networking.hostName = "test";
+  networking.hostName = "testhost";
 
   kinnison.user = {
-    name = "test";
+    name = "testuser";
     realName = "Testy McTestface";
     home = homes.dsilvers;
     extra = { initialPassword = "test"; };
