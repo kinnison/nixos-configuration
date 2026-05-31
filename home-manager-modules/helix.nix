@@ -18,7 +18,7 @@ in {
       kinnison.helix.harper.enable = mkDefault true;
     }
     (mkIf cfg.enable {
-      programs.ssh.matchBlocks."*" = { sendEnv = [ "COLORTERM" ]; };
+      programs.ssh.settings."*" = { SendEnv = [ "COLORTERM" ]; };
       programs.vim.defaultEditor = mkForce false;
       xdg.configFile."helix/themes/kinnison.toml" = { text = mytheme-text; };
       programs.helix = {

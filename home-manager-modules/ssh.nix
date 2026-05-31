@@ -2,17 +2,17 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks."*" = {
-      controlMaster = "auto";
-      controlPersist = "60s";
-      controlPath = "~/.ssh/master-%r@%n:%p";
-      forwardAgent = false;
-      addKeysToAgent = "no";
-      compression = false;
-      serverAliveInterval = 15;
-      serverAliveCountMax = 3;
-      hashKnownHosts = false;
-      userKnownHostsFile = "~/.ssh/known_hosts";
+    settings."*" = {
+      ControlMaster = "auto";
+      ControlPersist = "60s";
+      ControlPath = "~/.ssh/master-%r@%n:%p";
+      ForwardAgent = false;
+      AddKeysToAgent = "no";
+      Compression = false;
+      ServerAliveInterval = 15;
+      ServerAliveCountMax = 3;
+      HashKnownHosts = false;
+      UserKnownHostsFile = "~/.ssh/known_hosts";
     };
   };
 }
