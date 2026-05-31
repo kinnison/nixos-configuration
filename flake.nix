@@ -69,15 +69,6 @@
       };
     };
 
-    # VSCode remote-server support
-    nixos-vscode-server = {
-      url = "github:nix-community/nixos-vscode-server";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-      };
-    };
-
     # Backdrops
     cats = {
       url = "github:kinnison/cats-backgrounds";
@@ -115,7 +106,7 @@
   outputs = { self, nix-systems, flake-utils, flake-parts, flake-compat
     , rust-overlay, crane, nixpkgs, nixos-hardware, home-manager, catppuccin
     , stylix, disko, cats, prompter, lanzaboote, impermanence, juntakami
-    , nixos-vscode-server, hanumail }@inputs:
+    , hanumail }@inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       overlays = [
@@ -146,7 +137,6 @@
             homes = self.homes;
             hm-modules = [
               catppuccin.homeModules.catppuccin
-              nixos-vscode-server.homeModules.default
               (import ./home-manager-modules)
             ];
           };

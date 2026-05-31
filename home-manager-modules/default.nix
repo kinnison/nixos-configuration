@@ -24,7 +24,6 @@ in {
     ./mail.nix
     ./mail-personal.nix
     ./rust.nix
-    ./vscode.nix
     ./wayland.nix
     ./gaming.nix
     ./streaming.nix
