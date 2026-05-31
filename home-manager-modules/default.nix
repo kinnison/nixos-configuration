@@ -84,6 +84,8 @@ in {
       programs.zsh = {
         enable = true;
         enableCompletion = true;
+        # We prefer the layout of zsh dotfiles in ~/ not in ~/.config
+        dotDir = config.home.homeDirectory;
         autosuggestion = {
           enable = true;
           strategy = [ "history" "match_prev_cmd" "completion" ];
