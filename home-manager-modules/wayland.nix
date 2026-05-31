@@ -209,7 +209,6 @@ in {
 
     services.swayidle = {
       enable = true;
-      systemdTarget = "sway-session.target";
       events = mkMerge [
         { before-sleep = "${pkgs.swaylock}/bin/swaylock -fF"; }
         (mkIf isNvidia { "after-resume" = "${from-resume}"; })
@@ -265,10 +264,7 @@ in {
 
     programs.waybar = {
       enable = true;
-      systemd = {
-        enable = true;
-        target = "sway-session.target";
-      };
+      systemd.enable = true;
       style = ''
         * {
           color: @text;
