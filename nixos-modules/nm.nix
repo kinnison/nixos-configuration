@@ -10,7 +10,8 @@ in {
   config = mkIf cfg.enable {
     networking.networkmanager.enable = true;
     kinnison.user.groups = [ "networkmanager" ];
-    networking.wireless.enable = mkForce false;
+    # This is now needed for Network Manager
+    networking.wireless.enable = true;
     kinnison.impermanence.directories = mkIf imperm [
       "/etc/NetworkManager/system-connections"
       "/var/lib/NetworkManager"
