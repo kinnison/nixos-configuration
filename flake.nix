@@ -29,8 +29,7 @@
     };
     # Styling
     stylix = {
-      # TODO: Bring `/release-26.05` back in as soon as stylix makes the tag
-      url = "github:danth/stylix";
+      url = "github:danth/stylix/release-26.05";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-parts.follows = "flake-parts";
