@@ -4,6 +4,8 @@
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   kinnison.nvidia.enable = true;
+  # Desktop doesn't need wireless
+  kinnison.network-manager.wireless = false;
 
   boot.initrd.availableKernelModules = [
     "virtio_net"
