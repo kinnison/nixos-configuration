@@ -50,5 +50,7 @@ in {
       imports = hm-modules ++ [ cfg.home ] ++ cfg.extraHomeModules;
     };
     nix.settings.trusted-users = [ cfg.name ];
+    home-manager.backupFileExtension = "backup";
+    home-manager.overwriteBackup = true;
   };
 }
