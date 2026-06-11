@@ -70,17 +70,17 @@ in
       serviceConfig.Type = "oneshot";
       script = root-reset-src;
     };
-    boot.initrd.systemd.services.persisted-files = {
-      description = "Bring in /etc/machine-id from ${cfg.persistentBase}";
-      wantedBy = [ "initrd.target" ];
-      after = [ "sysroot.mount" ];
-      unitConfig.DefaultDependencies = "no";
-      serviceConfig.Type = "oneshot";
-      script = ''
-        mkdir -p /sysroot/etc
-        ln -snfT ${cfg.persistentBase}/etc/machine-id /sysroot/etc/machine-id
-      '';
-    };
+    # boot.initrd.systemd.services.persisted-files = {
+    #   description = "Bring in /etc/machine-id from ${cfg.persistentBase}";
+    #   wantedBy = [ "initrd.target" ];
+    #   after = [ "sysroot.mount" ];
+    #   unitConfig.DefaultDependencies = "no";
+    #   serviceConfig.Type = "oneshot";
+    #   script = ''
+    #     mkdir -p /sysroot/etc
+    #     ln -snfT ${cfg.persistentBase}/etc/machine-id /sysroot/etc/machine-id
+    #   '';
+    # };
 
     environment.persistence."${cfg.persistentBase}" = {
       directories = cfg.directories ++ [
@@ -89,7 +89,8 @@ in
         "/var/lib/systemd"
         "/var/log"
       ];
-      files = cfg.files;
+      files = [ "/etc/machine-id" ] ++ cfg.files;
+      #enableDebugging = true;
     };
 
     environment.systemPackages = [ root-scan-pkg ];
