@@ -42,6 +42,7 @@ in
     kinnison.gui.upperTheme = mkUpper cfg.theme;
     kinnison.gui.upperAccent = mkUpper cfg.accent;
     catppuccin.enable = true;
+    catppuccin.autoEnable = true;
     catppuccin.flavor = lib.mkDefault cfg.theme;
     catppuccin.accent = lib.mkDefault cfg.accent;
     catppuccin.tty.enable = false;

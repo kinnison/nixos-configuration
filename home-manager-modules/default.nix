@@ -42,6 +42,7 @@ in
     (mkIf guicfg.enable {
       catppuccin = {
         enable = true;
+        autoEnable = true;
         flavor = guicfg.theme;
         accent = guicfg.accent;
         cursors.enable = true;
