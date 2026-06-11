@@ -1,8 +1,15 @@
 # Printing setup for CUPS etc.
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 with lib;
-let cfg = config.kinnison.printing;
-in {
+let
+  cfg = config.kinnison.printing;
+in
+{
   options.kinnison.printing = {
     enable = mkEnableOption "Printing with CUPS etc.";
     drivers = mkOption {
@@ -30,7 +37,10 @@ in {
 
     environment.systemPackages = with pkgs; [ system-config-printer ];
 
-    kinnison.impermanence.directories =
-      [ "/var/cache/cups" "/var/spool/cups" "/var/lib/cups" ];
+    kinnison.impermanence.directories = [
+      "/var/cache/cups"
+      "/var/spool/cups"
+      "/var/lib/cups"
+    ];
   };
 }

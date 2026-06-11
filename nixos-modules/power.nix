@@ -3,7 +3,8 @@ with lib;
 let
   batcfg = config.kinnison.batteries;
   imperm = config.kinnison.impermanence.enable;
-in {
+in
+{
   options.kinnison.batteries = mkOption {
     description = "Batteries, if any";
     type = types.listOf types.str;
@@ -39,8 +40,11 @@ in {
     };
 
     # Turn on the extra governors
-    boot.kernelModules =
-      [ "cpufreq_ondemand" "cpufreq_powersave" "cpufreq_performance" ];
+    boot.kernelModules = [
+      "cpufreq_ondemand"
+      "cpufreq_powersave"
+      "cpufreq_performance"
+    ];
 
     # Impermanence support
     kinnison.impermanence.directories = mkIf imperm [ "/var/lib/upower" ];

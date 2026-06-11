@@ -1,4 +1,10 @@
-{ pkgs, stdenv, fetchurl, scowl, ... }:
+{
+  pkgs,
+  stdenv,
+  fetchurl,
+  scowl,
+  ...
+}:
 stdenv.mkDerivation {
   pname = "qxw";
   version = "20200708";
@@ -12,7 +18,13 @@ stdenv.mkDerivation {
   postPatch = ''
     substituteInPlace dicts.c --subst-var-by SCOWL_DICT ${scowl}/share/dict/wbritish_s.95
   '';
-  nativeBuildInputs = with pkgs; [ gnumake pkg-config gtk2 pcre scowl ];
+  nativeBuildInputs = with pkgs; [
+    gnumake
+    pkg-config
+    gtk2
+    pcre
+    scowl
+  ];
 
   makeFlags = "DESTDIR=$(out)/";
   postInstall = ''

@@ -1,6 +1,14 @@
 # This is the nixos installer for my stuff
 
-{ modulesPath, homes, lib, config, pkgs, ... }: {
+{
+  modulesPath,
+  homes,
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+{
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-base.nix"
     ./systems.nix
@@ -24,8 +32,7 @@
   kinnison.network-manager.enable = true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode =
-    lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # We used to disable this, but 26.11 will only have it
   # so we take the hit now
@@ -40,7 +47,9 @@
       "-m 4G"
     ];
 
-    environment.sessionVariables = { WLR_NO_HARDWARE_CURSORS = "1"; };
+    environment.sessionVariables = {
+      WLR_NO_HARDWARE_CURSORS = "1";
+    };
 
     boot.kernelParams = [ "mitigations=off" ];
   };

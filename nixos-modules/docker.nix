@@ -1,8 +1,17 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-let cfg = config.kinnison.docker;
-in {
-  options.kinnison.docker = { enable = mkEnableOption "Docker support"; };
+let
+  cfg = config.kinnison.docker;
+in
+{
+  options.kinnison.docker = {
+    enable = mkEnableOption "Docker support";
+  };
 
   config = mkIf cfg.enable {
     virtualisation.docker = {
@@ -12,7 +21,10 @@ in {
 
     kinnison.user.groups = [ "docker" ];
 
-    environment.systemPackages = with pkgs; [ crun docker-compose ];
+    environment.systemPackages = with pkgs; [
+      crun
+      docker-compose
+    ];
     kinnison.impermanence.directories = [ "/var/lib/docker" ];
   };
 }

@@ -1,7 +1,10 @@
 { config, lib, ... }:
-let cfg = config.kinnison.coredump;
+let
+  cfg = config.kinnison.coredump;
 
-in with lib; {
+in
+with lib;
+{
   options.kinnison.coredump = {
     enable = mkEnableOption "Dump cores persistently with systemd-coredump";
   };

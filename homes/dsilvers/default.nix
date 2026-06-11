@@ -1,4 +1,10 @@
-{ osConfig, pkgs, lib, ... }: {
+{
+  osConfig,
+  pkgs,
+  lib,
+  ...
+}:
+{
   home.stateVersion = "24.11";
   # Turn on GnuPG if we have a gui enabled since that'll be needed for yubikeys etc.
   kinnison.gnupg.enable = osConfig.kinnison.gui.enable;
@@ -35,9 +41,9 @@
 
   kinnison.sound.plexamp = true;
 
-  programs.foot.settings.main.font =
-    lib.mkIf (osConfig.networking.hostName == "catalepsy")
-    (lib.mkForce "InconsolataNerdFont:size=14");
+  programs.foot.settings.main.font = lib.mkIf (osConfig.networking.hostName == "catalepsy") (
+    lib.mkForce "InconsolataNerdFont:size=14"
+  );
 
   # Radicle
   kinnison.radicle.enable = true;

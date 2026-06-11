@@ -1,5 +1,11 @@
 # The various Bitwarden related things
-{ osConfig, config, lib, pkgs, ... }:
+{
+  osConfig,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.kinnison.bitwarden;
@@ -7,7 +13,8 @@ let
   pinentry-rofi = pkgs.kinnison.pinentry-rofi.override {
     rofi = config.programs.rofi.package;
   };
-in {
+in
+{
   options.kinnison.bitwarden = {
     enable = mkEnableOption "Bitwarden Client(s)";
     vault = mkOption {
@@ -42,4 +49,3 @@ in {
     })
   ];
 }
-

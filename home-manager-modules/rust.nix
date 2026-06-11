@@ -1,5 +1,10 @@
 # Rust configuration for home directory
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.kinnison.rust;
@@ -15,7 +20,8 @@ let
       --pre-init-command "command source -s 0 \"''${ETC}/lldb_commands\"" \
       "$@"
   '';
-in {
+in
+{
   options.kinnison.rust = {
     enable = mkEnableOption "Rust (via rustup)";
     package = mkOption {
@@ -36,23 +42,31 @@ in {
     })
     (mkIf (cfg.enable && hasHelix) {
       programs.helix.languages = {
-        language = [{
-          name = "rust";
-          debugger = {
-            name = "rust-lldb-dap";
-            transport = "stdio";
-            command = "${rust-lldb-dap}";
-            templates = [{
-              name = "binary";
-              request = "launch";
-              completion = [{
-                name = "binary";
-                completion = "filename";
-              }];
-              args = { program = "{0}"; };
-            }];
-          };
-        }];
+        language = [
+          {
+            name = "rust";
+            debugger = {
+              name = "rust-lldb-dap";
+              transport = "stdio";
+              command = "${rust-lldb-dap}";
+              templates = [
+                {
+                  name = "binary";
+                  request = "launch";
+                  completion = [
+                    {
+                      name = "binary";
+                      completion = "filename";
+                    }
+                  ];
+                  args = {
+                    program = "{0}";
+                  };
+                }
+              ];
+            };
+          }
+        ];
         language-server.rust-analyzer.config = {
           assist.emitMustUse = true;
           cargo = {

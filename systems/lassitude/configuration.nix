@@ -1,6 +1,7 @@
 # Configuration for my personal laptop Catalepsy (was Cataplexy)
 
-{ pkgs, homes, ... }: rec {
+{ pkgs, homes, ... }:
+rec {
   imports = [ ./hardware-configuration.nix ];
 
   system.stateVersion = "24.11";
@@ -12,8 +13,7 @@
     home = homes.dsilvers;
     groups = [ "dialout" ];
     extra = {
-      hashedPassword =
-        "$6$jhPpRWgH6hEjTTmH$BZYw8lLV2lalgnsLdbm5r3JsZWxXwf/C7ldSqNaiz8i2xY/gHDEMmn4LK85MzSsOQOpbbZ334s90sPdCDDymH1";
+      hashedPassword = "$6$jhPpRWgH6hEjTTmH$BZYw8lLV2lalgnsLdbm5r3JsZWxXwf/C7ldSqNaiz8i2xY/gHDEMmn4LK85MzSsOQOpbbZ334s90sPdCDDymH1";
     };
   };
 
@@ -24,7 +24,9 @@
       "-m 8G"
     ];
 
-    environment.sessionVariables = { WLR_NO_HARDWARE_CURSORS = "1"; };
+    environment.sessionVariables = {
+      WLR_NO_HARDWARE_CURSORS = "1";
+    };
 
     boot.kernelParams = [ "mitigations=off" ];
     virtualisation.diskSize = 5120;

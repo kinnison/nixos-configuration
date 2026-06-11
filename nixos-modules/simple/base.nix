@@ -1,22 +1,29 @@
 # Base Role for all systems which I want
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 let
   unfreecfg = config.kinnison.unfree;
   insecurecfg = config.kinnison.insecure;
-  all-user-unfree-pkgs' = mapAttrsToList (name: conf: conf.kinnison.unfree.pkgs)
-    config.home-manager.users;
+  all-user-unfree-pkgs' = mapAttrsToList (
+    name: conf: conf.kinnison.unfree.pkgs
+  ) config.home-manager.users;
   all-user-unfree-pkgs = flatten all-user-unfree-pkgs';
-  all-user-insecure-pkgs' =
-    mapAttrsToList (name: conf: conf.kinnison.insecure.pkgs)
-    config.home-manager.users;
+  all-user-insecure-pkgs' = mapAttrsToList (
+    name: conf: conf.kinnison.insecure.pkgs
+  ) config.home-manager.users;
   all-user-insecure-pkgs = flatten all-user-insecure-pkgs';
-  all-user-tcpports' =
-    mapAttrsToList (name: conf: conf.kinnison.allowedTCPPorts)
-    config.home-manager.users;
+  all-user-tcpports' = mapAttrsToList (
+    name: conf: conf.kinnison.allowedTCPPorts
+  ) config.home-manager.users;
   all-user-tcpports = flatten all-user-tcpports';
   bin-false = "${pkgs.coreutils}/bin/false";
-in {
+in
+{
   options.kinnison.unfree = {
     pkgs = mkOption {
       description = "Package names to permit in the unfree list";
@@ -34,27 +41,29 @@ in {
 
   config = {
 
-    home-manager.sharedModules = [{
-      options.kinnison.unfree = {
-        pkgs = mkOption {
-          description = "Package names to permit in the unfree list";
-          type = types.listOf types.str;
+    home-manager.sharedModules = [
+      {
+        options.kinnison.unfree = {
+          pkgs = mkOption {
+            description = "Package names to permit in the unfree list";
+            type = types.listOf types.str;
+            default = [ ];
+          };
+        };
+        options.kinnison.insecure = {
+          pkgs = mkOption {
+            description = "Package names to permit in the inscure list";
+            type = types.listOf types.str;
+            default = [ ];
+          };
+        };
+        options.kinnison.allowedTCPPorts = mkOption {
+          description = "TCP Ports to open";
+          type = types.listOf types.port;
           default = [ ];
         };
-      };
-      options.kinnison.insecure = {
-        pkgs = mkOption {
-          description = "Package names to permit in the inscure list";
-          type = types.listOf types.str;
-          default = [ ];
-        };
-      };
-      options.kinnison.allowedTCPPorts = mkOption {
-        description = "TCP Ports to open";
-        type = types.listOf types.port;
-        default = [ ];
-      };
-    }];
+      }
+    ];
 
     # We don't need/use zfs at all
     boot.initrd.supportedFilesystems.zfs = mkForce false;
@@ -70,7 +79,9 @@ in {
     environment.variables.LANG = mkDefault "en_GB.UTF-8";
     console.keyMap = mkDefault "uk";
 
-    users = { defaultUserShell = pkgs.zsh; };
+    users = {
+      defaultUserShell = pkgs.zsh;
+    };
 
     security.sudo = {
       enable = mkDefault true;
@@ -130,11 +141,11 @@ in {
 
     # We are not prudish about non-free software for the most part,
     # though we do limit it, so here we list what's allowed
-    nixpkgs.config.allowUnfreePredicate = pkg:
-      builtins.elem (getName pkg) (unfreecfg.pkgs ++ all-user-unfree-pkgs);
+    nixpkgs.config.allowUnfreePredicate =
+      pkg: builtins.elem (getName pkg) (unfreecfg.pkgs ++ all-user-unfree-pkgs);
     # Ditto "insecure" software
-    nixpkgs.config.allowInsecurePredicate = pkg:
-      builtins.elem (getName pkg) (insecurecfg.pkgs ++ all-user-insecure-pkgs);
+    nixpkgs.config.allowInsecurePredicate =
+      pkg: builtins.elem (getName pkg) (insecurecfg.pkgs ++ all-user-insecure-pkgs);
 
     # Generally speaking, our systems need fstrim
     services.fstrim.enable = mkDefault true;
@@ -143,8 +154,11 @@ in {
 
     # We like fwupd because it lets us have firmware updates
     services.fwupd.enable = mkDefault true;
-    kinnison.impermanence.directories =
-      [ "/var/lib/fwupd" "/var/cache/fwupd" "/var/cache/fwupdmgr" ];
+    kinnison.impermanence.directories = [
+      "/var/lib/fwupd"
+      "/var/cache/fwupd"
+      "/var/cache/fwupdmgr"
+    ];
 
     # We like vim and want it for the default editor (eww nano)
     programs.vim = {
@@ -163,6 +177,11 @@ in {
       # Mitigation for Copy-Fail
       install algif_aead ${bin-false}
     '';
-    boot.blacklistedKernelModules = [ "esp4" "esp6" "rxrpc" "algif_aead" ];
+    boot.blacklistedKernelModules = [
+      "esp4"
+      "esp6"
+      "rxrpc"
+      "algif_aead"
+    ];
   };
 }

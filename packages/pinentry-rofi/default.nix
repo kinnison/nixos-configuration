@@ -1,4 +1,13 @@
-{ lib, stdenv, fetchFromGitHub, makeWrapper, bash, rofi, coreutils, gnused, gawk
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  makeWrapper,
+  bash,
+  rofi,
+  coreutils,
+  gnused,
+  gawk,
 }:
 stdenv.mkDerivation {
   pname = "pinentry-rofi";
@@ -21,7 +30,11 @@ stdenv.mkDerivation {
     sed -E -e's@^#!.*$@#!${bash}/bin/bash@' -e's@^ROFI="[^ ]+@ROFI="${rofi}/bin/rofi@' < src/pinentry-rofi.sh > $out/bin/pinentry-rofi
     chmod +x $out/bin/pinentry-rofi
     wrapProgram $out/bin/pinentry-rofi --prefix PATH : ${
-      lib.makeBinPath [ coreutils gnused gawk ]
+      lib.makeBinPath [
+        coreutils
+        gnused
+        gawk
+      ]
     }
   '';
 

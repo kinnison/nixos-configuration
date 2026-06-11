@@ -1,9 +1,16 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkIf mkEnableOption mkForce mkMerge mkDefault;
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkForce
+    mkMerge
+    mkDefault
+    ;
   cfg = config.kinnison.network-manager;
   imperm = config.kinnison.impermanence.enable;
-in {
+in
+{
   options.kinnison.network-manager = {
     enable = mkEnableOption "Network Manager based networking";
     wireless = mkEnableOption "Network Manager based wireless support";

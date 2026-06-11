@@ -1,4 +1,8 @@
-{ stdenv, group ? "plugdev", ... }:
+{
+  stdenv,
+  group ? "plugdev",
+  ...
+}:
 stdenv.mkDerivation {
   name = "stlink-udev";
   version = "1.0.3-2";

@@ -3,9 +3,12 @@
 let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.kinnison.sound;
-in {
+in
+{
 
-  options.kinnison.sound = { enable = mkEnableOption "System sound support"; };
+  options.kinnison.sound = {
+    enable = mkEnableOption "System sound support";
+  };
 
   config = mkIf cfg.enable {
     security.polkit.enable = true;

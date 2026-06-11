@@ -1,13 +1,26 @@
 # Wayland GUI setup
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
-  inherit (lib) mkEnableOption mkIf mkMerge mkForce mkOption types;
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkMerge
+    mkForce
+    mkOption
+    types
+    ;
   cfg = config.kinnison.gui.wayland;
   enable = config.kinnison.gui.enable && cfg.enable;
   autoLogin = config.kinnison.user.autoLogin;
   autoLoginUser = config.kinnison.user.name;
   isNvidia = config.kinnison.nvidia.enable;
-in {
+in
+{
   options.kinnison.gui.wayland = {
     enable = mkEnableOption "Wayland GUI";
     extraSwayConfig = mkOption {
@@ -33,14 +46,21 @@ in {
         wlr.enable = true;
         # Enable GTK portal for GTK apps
         extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-        config = { common = { default = "wlr"; }; };
+        config = {
+          common = {
+            default = "wlr";
+          };
+        };
       };
 
       boot.plymouth.enable = true;
       stylix.targets.plymouth.enable = false;
 
       boot.initrd.systemd.enable = true;
-      boot.kernelParams = [ "quiet" "splash" ];
+      boot.kernelParams = [
+        "quiet"
+        "splash"
+      ];
 
       catppuccin = {
         sddm = {
@@ -83,8 +103,10 @@ in {
       hardware.graphics.enable = true;
 
       kinnison.user.groups = [ "input" ];
-      kinnison.impermanence.directories =
-        [ "/var/lib/sddm" "/var/lib/plymouth" ];
+      kinnison.impermanence.directories = [
+        "/var/lib/sddm"
+        "/var/lib/plymouth"
+      ];
     }
     (mkIf autoLogin {
       services.displayManager.autoLogin = {
@@ -97,9 +119,7 @@ in {
       security.pam.services.login.enableGnomeKeyring = true;
       security.pam.services.sddm-autologin.text = mkForce ''
         auth     requisite pam_nologin.so
-        auth     required  pam_succeed_if.so uid >= ${
-          toString config.services.displayManager.sddm.autoLogin.minimumUid
-        } quiet
+        auth     required  pam_succeed_if.so uid >= ${toString config.services.displayManager.sddm.autoLogin.minimumUid} quiet
         auth     optional  ${pkgs.systemd}/lib/security/pam_systemd_loadkey.so
         auth     optional  ${pkgs.gnome-keyring}/lib/security/pam_gnome_keyring.so
         auth     required  pam_permit.so

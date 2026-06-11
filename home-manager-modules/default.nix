@@ -1,21 +1,27 @@
 # The various packages provided directly by my system and home configs
-{ lib, pkgs, osConfig, config, ... }:
+{
+  lib,
+  pkgs,
+  osConfig,
+  config,
+  ...
+}:
 let
   inherit (lib) mkMerge mkIf mkForce;
   guicfg = osConfig.kinnison.gui;
   nmcfg = osConfig.kinnison.network-manager;
   bluecfg = osConfig.kinnison.bluetooth;
   sndcfg = osConfig.kinnison.sound;
-  mkUpper = str:
-    (lib.toUpper (builtins.substring 0 1 str))
-    + (builtins.substring 1 (builtins.stringLength str) str);
+  mkUpper =
+    str:
+    (lib.toUpper (builtins.substring 0 1 str)) + (builtins.substring 1 (builtins.stringLength str) str);
   cursor-name = "${guicfg.theme}${mkUpper guicfg.accent}";
-  catppuccin-sources-names =
-    builtins.map (n: config.catppuccin.sources.${n}) [ "rofi" ];
+  catppuccin-sources-names = builtins.map (n: config.catppuccin.sources.${n}) [ "rofi" ];
   closure = pkgs.closureInfo {
     rootPaths = builtins.map (s: s.outPath) catppuccin-sources-names;
   };
-in {
+in
+{
   imports = [
     ./bitwarden.nix
     ./git.nix
@@ -54,17 +60,23 @@ in {
         automount = true;
         notify = true;
         settings = {
-          device_config = [{
-            device_file = "/dev/fd0";
-            ignore = true;
-          }];
+          device_config = [
+            {
+              device_file = "/dev/fd0";
+              ignore = true;
+            }
+          ];
         };
       };
       services.gnome-keyring = {
         enable = true;
         components = [ "secrets" ];
       };
-      home.packages = [ pkgs.libsecret pkgs.firefox closure ];
+      home.packages = [
+        pkgs.libsecret
+        pkgs.firefox
+        closure
+      ];
     })
     (mkIf (guicfg.enable && bluecfg.enable) {
       services.blueman-applet.enable = true;
@@ -81,7 +93,11 @@ in {
         dotDir = config.home.homeDirectory;
         autosuggestion = {
           enable = true;
-          strategy = [ "history" "match_prev_cmd" "completion" ];
+          strategy = [
+            "history"
+            "match_prev_cmd"
+            "completion"
+          ];
         };
         history = {
           append = true;
@@ -97,12 +113,16 @@ in {
       programs.direnv = {
         enable = true;
         enableZshIntegration = true;
-        nix-direnv = { enable = true; };
+        nix-direnv = {
+          enable = true;
+        };
       };
 
       programs.vim = {
         enable = true;
-        settings = { background = "dark"; };
+        settings = {
+          background = "dark";
+        };
         extraConfig = ''
           set mouse=
         '';

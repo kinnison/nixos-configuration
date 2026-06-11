@@ -1,5 +1,12 @@
 # Rofi Lock script package
-{ pkgs, lib, rofi, swaylock, sway, ... }:
+{
+  pkgs,
+  lib,
+  rofi,
+  swaylock,
+  sway,
+  ...
+}:
 let
   actions = [
     {
@@ -32,7 +39,8 @@ let
       ${e.action}
       ;;
   '') actions;
-in pkgs.writeShellScriptBin "rofi-lock" ''
+in
+pkgs.writeShellScriptBin "rofi-lock" ''
 
   ACTION=$(echo -e "${action-str}" | ${rofi}/bin/rofi -dmenu -p "Action" -no-custom -i -mesg "Select what to do next" -window-title "Lock/Shutdown" -format d)
 

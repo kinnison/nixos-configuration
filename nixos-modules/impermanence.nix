@@ -1,5 +1,10 @@
 # Impermanence core support
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.kinnison.impermanence;
@@ -9,17 +14,18 @@ let
   root-reset-src-raw = builtins.readFile ./impermanence-root-reset.sh;
   root-reset-src =
     replaceStrings [ "@ROOT_DEVICE@" ] [ config.fileSystems."/".device ]
-    root-reset-src-raw;
+      root-reset-src-raw;
   root-scan-src-raw = builtins.readFile ./impermanence-root-scan.sh;
   root-scan-src =
     replaceStrings [ "@ROOT_DEVICE@" ] [ config.fileSystems."/".device ]
-    root-scan-src-raw;
+      root-scan-src-raw;
   root-scan-pkg = pkgs.writeShellApplication {
     name = "root-scan";
     runtimeInputs = [ pkgs.btrfs-progs ];
     text = root-scan-src;
   };
-in {
+in
+{
   options.kinnison.impermanence = {
     enable = mkEnableOption "Impermanence support";
     persistentBase = mkOption {
@@ -43,8 +49,7 @@ in {
     assertions = [
       {
         assertion = config.fileSystems ? ${cfg.persistentBase};
-        message =
-          "kinnison.impermanence.persistentBase is `${cfg.persistentBase}` but that is not a filesystem";
+        message = "kinnison.impermanence.persistentBase is `${cfg.persistentBase}` but that is not a filesystem";
       }
       {
         assertion = config.fileSystems."/".fsType == "btrfs";

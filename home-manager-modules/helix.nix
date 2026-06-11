@@ -1,4 +1,10 @@
-{ config, osConfig, lib, pkgs, ... }:
+{
+  config,
+  osConfig,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.kinnison.helix;
@@ -6,10 +12,13 @@ let
     inherits = "catppuccin-${osConfig.kinnison.gui.theme}"
     comment = { fg = "#d9c28f" }
   '';
-in {
+in
+{
   options.kinnison.helix = {
     enable = mkEnableOption "Helix editor";
-    harper = { enable = mkEnableOption "Harper spell/grammar checker"; };
+    harper = {
+      enable = mkEnableOption "Harper spell/grammar checker";
+    };
   };
 
   config = mkMerge [
@@ -18,20 +27,27 @@ in {
       kinnison.helix.harper.enable = mkDefault true;
     }
     (mkIf cfg.enable {
-      programs.ssh.settings."*" = { SendEnv = [ "COLORTERM" ]; };
+      programs.ssh.settings."*" = {
+        SendEnv = [ "COLORTERM" ];
+      };
       programs.vim.defaultEditor = mkForce false;
-      xdg.configFile."helix/themes/kinnison.toml" = { text = mytheme-text; };
+      xdg.configFile."helix/themes/kinnison.toml" = {
+        text = mytheme-text;
+      };
       programs.helix = {
         enable = true;
         package = pkgs.helix;
         defaultEditor = true;
         languages = {
-          language = [{
-            name = "nix";
-            auto-format = true;
-            formatter = { command = "${pkgs.nixfmt-classic}/bin/nixfmt"; };
-          }];
-          language-server.nil = { command = "${pkgs.nil}/bin/nil"; };
+          language = [
+            {
+              name = "nix";
+              auto-format = true;
+            }
+          ];
+          language-server.nil = {
+            command = "${pkgs.nil}/bin/nil";
+          };
         };
         settings = {
           theme = mkForce "kinnison";
@@ -160,15 +176,25 @@ in {
         language = [
           {
             name = "markdown";
-            language-servers = [ "markdown-oxide" "marksman" "harper-ls" ];
+            language-servers = [
+              "markdown-oxide"
+              "marksman"
+              "harper-ls"
+            ];
           }
           {
             name = "nix";
-            language-servers = [ "nil" "harper-ls" ];
+            language-servers = [
+              "nil"
+              "harper-ls"
+            ];
           }
           (mkIf config.kinnison.rust.enable {
             name = "rust";
-            language-servers = [ "rust-analyzer" "harper-ls" ];
+            language-servers = [
+              "rust-analyzer"
+              "harper-ls"
+            ];
           })
           (mkIf config.kinnison.git.enable {
             name = "git-commit";

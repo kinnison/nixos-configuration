@@ -14,17 +14,21 @@ let
 
   append_pkgs = if is_system_build then only_system_pkgs else { };
 
-in {
+in
+{
   rofi-lock = pkgs.callPackage ./rofi-lock { };
   pinentry-rofi = pkgs.callPackage ./pinentry-rofi { };
   capture = pkgs.callPackage ./capture { };
   stlink-udev = pkgs.callPackage ./stlink-udev { };
   qxw = pkgs.callPackage ./qxw { };
-  harper-ls = let
-    toolchain = pkgs.rust-bin.stable."1.89.0".default;
-    rustPlatform = pkgs.makeRustPlatform {
-      cargo = toolchain;
-      rustc = toolchain;
-    };
-  in pkgs.callPackage ./harper.nix { inherit rustPlatform; };
-} // append_pkgs
+  harper-ls =
+    let
+      toolchain = pkgs.rust-bin.stable."1.89.0".default;
+      rustPlatform = pkgs.makeRustPlatform {
+        cargo = toolchain;
+        rustc = toolchain;
+      };
+    in
+    pkgs.callPackage ./harper.nix { inherit rustPlatform; };
+}
+// append_pkgs

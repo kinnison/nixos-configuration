@@ -1,1 +1,7 @@
-{ ... }: { imports = [ ./base.nix ./installable.nix ]; }
+{ ... }:
+{
+  imports = [
+    ./base.nix
+    ./installable.nix
+  ];
+}

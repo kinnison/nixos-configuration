@@ -1,5 +1,11 @@
 # Email configuration per my preferences
-{ osConfig, config, lib, pkgs, ... }:
+{
+  osConfig,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 let
   # Configuration related
@@ -21,100 +27,103 @@ let
   editor = if useHelix then "${hx-mail}/bin/hx-mail" else "vim +/^$ ++1";
 
   # Email account options
-  emailAccount = { name, ... }: {
-    options = {
-      name = mkOption {
-        type = types.str;
-        readOnly = true;
-        description =
-          "The name for the account, eg. 'home' set to the attribute name";
-      };
-      primary = mkOption {
-        type = types.bool;
-        description = "Whether this address is primary";
-        default = false;
-      };
-      realName = mkOption {
-        type = types.str;
-        description = "The 'real' name for the email account";
-      };
-      address = mkOption {
-        type = types.str;
-        description = "The email address for the account";
-      };
-      userName = mkOption {
-        type = types.str;
-        description = "The username to log into the imap/smtp server with";
-      };
-      mailServer = mkOption {
-        type = types.str;
-        description = "The hostname of the mail server";
-      };
+  emailAccount =
+    { name, ... }:
+    {
+      options = {
+        name = mkOption {
+          type = types.str;
+          readOnly = true;
+          description = "The name for the account, eg. 'home' set to the attribute name";
+        };
+        primary = mkOption {
+          type = types.bool;
+          description = "Whether this address is primary";
+          default = false;
+        };
+        realName = mkOption {
+          type = types.str;
+          description = "The 'real' name for the email account";
+        };
+        address = mkOption {
+          type = types.str;
+          description = "The email address for the account";
+        };
+        userName = mkOption {
+          type = types.str;
+          description = "The username to log into the imap/smtp server with";
+        };
+        mailServer = mkOption {
+          type = types.str;
+          description = "The hostname of the mail server";
+        };
 
-      displayFolders = mkOption {
-        type = types.listOf types.str;
-        default = [ "Inbox" ];
-        example = ''[ "Inbox" ]'';
-        description = "List of folders *in order* to display for this account";
-      };
+        displayFolders = mkOption {
+          type = types.listOf types.str;
+          default = [ "Inbox" ];
+          example = ''[ "Inbox" ]'';
+          description = "List of folders *in order* to display for this account";
+        };
 
-      watchFolders = mkOption {
-        type = types.listOf types.str;
-        default = [ "Inbox" ];
-        example = ''[ "Inbox" ]'';
-        description =
-          "List of folders to watch via imapnotify for this account";
-      };
+        watchFolders = mkOption {
+          type = types.listOf types.str;
+          default = [ "Inbox" ];
+          example = ''[ "Inbox" ]'';
+          description = "List of folders to watch via imapnotify for this account";
+        };
 
-      signature = mkOption {
-        type = types.str;
-        description = "Email signature for this account";
-      };
+        signature = mkOption {
+          type = types.str;
+          description = "Email signature for this account";
+        };
 
-      extraConfig = mkOption {
-        type = types.attrs;
-        description = "Any extra configuration for the account";
-        default = { };
+        extraConfig = mkOption {
+          type = types.attrs;
+          description = "Any extra configuration for the account";
+          default = { };
+        };
+      };
+      config = {
+        name = name;
       };
     };
-    config = { name = name; };
-  };
 
   # Configuration file building, scripting, etc.
-  folder-config = let
-    accounts = attrValues cfg.accounts;
-    primaryAccount = head (filter (a: a.primary) accounts ++ accounts);
-    otherAccounts = filter (a: a != primaryAccount) accounts;
+  folder-config =
+    let
+      accounts = attrValues cfg.accounts;
+      primaryAccount = head (filter (a: a.primary) accounts ++ accounts);
+      otherAccounts = filter (a: a != primaryAccount) accounts;
 
-    accountConfig = account:
-      let
-        baseDir = "${cfg.maildirBase}/${account.name}";
-        folders = account.displayFolders;
-        folder-parts = folder: splitString "/" folder;
-        folder-suffix = folder: last (folder-parts folder);
-        folder-prefix = folder:
-          concatStringsSep "" (map (f: "  ") (folder-parts folder));
-        folder-name = folder: ''
-          "${folder-prefix folder}${
-            folder-suffix folder
-          }" "${baseDir}/${folder}"
+      accountConfig =
+        account:
+        let
+          baseDir = "${cfg.maildirBase}/${account.name}";
+          folders = account.displayFolders;
+          folder-parts = folder: splitString "/" folder;
+          folder-suffix = folder: last (folder-parts folder);
+          folder-prefix = folder: concatStringsSep "" (map (f: "  ") (folder-parts folder));
+          folder-name = folder: ''
+            "${folder-prefix folder}${folder-suffix folder}" "${baseDir}/${folder}"
+          '';
+          folder-command = folder: "named-mailboxes ${folder-name folder}";
+        in
+        ''
+          # Configuration for account '${account.name}'
+
+          named-mailboxes "---${account.name}---" "${baseDir}/.null"
+          ${concatMapStringsSep "" folder-command folders}
         '';
-        folder-command = folder: "named-mailboxes ${folder-name folder}";
-      in ''
-        # Configuration for account '${account.name}'
+    in
+    ''
+      # First we clear all mailboxes, turn off the Trash folder, etc.
+      unmailboxes *
+      unset trash
 
-        named-mailboxes "---${account.name}---" "${baseDir}/.null"
-        ${concatMapStringsSep "" folder-command folders}
-      '';
-  in ''
-    # First we clear all mailboxes, turn off the Trash folder, etc.
-    unmailboxes *
-    unset trash
+      ${accountConfig primaryAccount}
 
-    ${accountConfig primaryAccount}
-
-    ${concatMapStringsSep "\n\n" accountConfig otherAccounts}
-  '';
+      ${concatMapStringsSep "\n\n" accountConfig otherAccounts}
+    '';
   mkGetMailPassScript = acc: ''
     #!${pkgs.bash}/bin/bash
     ${pkgs.libsecret}/bin/secret-tool lookup \
@@ -141,17 +150,16 @@ let
     };
   }) cfg.accounts;
   ## Set Password scripts
-  setPasswordScripts = map (acc:
-    pkgs.writeShellScriptBin "set-email-password-${acc.name}"
-    (mkSetMailPassScript acc)) (attrValues cfg.accounts);
+  setPasswordScripts = map (
+    acc: pkgs.writeShellScriptBin "set-email-password-${acc.name}" (mkSetMailPassScript acc)
+  ) (attrValues cfg.accounts);
 
   emailAccounts = mapAttrs (name: acc: {
     primary = acc.primary;
     realName = acc.realName;
     address = acc.address;
     userName = acc.userName;
-    passwordCommand =
-      "${config.xdg.configHome}/neomutt/.${acc.name}-email-password";
+    passwordCommand = "${config.xdg.configHome}/neomutt/.${acc.name}-email-password";
     imap = {
       host = acc.mailServer;
       port = 993;
@@ -190,12 +198,15 @@ let
       boxes = acc.watchFolders;
       onNotify = "${pkgs.systemd}/bin/systemctl --user start mbsync.service";
     };
-    folders = { sent = "Inbox"; };
+    folders = {
+      sent = "Inbox";
+    };
   }) cfg.accounts;
 
   extraMailConfigs = mapAttrs (name: acc: acc.extraConfig) cfg.accounts;
 
-in {
+in
+{
   options.kinnison.email = {
     enable = mkEnableOption "Email Configuration";
 
@@ -390,8 +401,7 @@ in {
             {
               map = [ "index" ];
               key = "V";
-              action =
-                "<change-folder-readonly>${cfg.maildirBase}/mu<enter><shell-escape>mu find --format=links --linksdir=${cfg.maildirBase}/mu --clearlinks ";
+              action = "<change-folder-readonly>${cfg.maildirBase}/mu<enter><shell-escape>mu find --format=links --linksdir=${cfg.maildirBase}/mu --clearlinks ";
             }
           ];
         };
@@ -416,24 +426,23 @@ in {
 
       xdg.dataFile."mail/.presync" = {
         executable = true;
-        text = let
-          mbsyncAccounts = filter (a: a.mbsync.enable)
-            (attrValues config.accounts.email.accounts);
-        in ''
-          #!/bin/sh
+        text =
+          let
+            mbsyncAccounts = filter (a: a.mbsync.enable) (attrValues config.accounts.email.accounts);
+          in
+          ''
+            #!/bin/sh
 
-          for account in ${
-            concatMapStringsSep " " (a: a.name) mbsyncAccounts
-          }; do
-            target="${cfg.maildirBase}/$account/.null"
-            ${pkgs.coreutils}/bin/ln -sf /dev/null "$target"
-            MAILPASS=$(${config.xdg.configHome}/neomutt/.''${account}-email-password)
-            if test "x$MAILPASS" = "x"; then
-              echo "Cannot continue, missing $account password"
-              exit 1;
-            fi
-          done
-        '';
+            for account in ${concatMapStringsSep " " (a: a.name) mbsyncAccounts}; do
+              target="${cfg.maildirBase}/$account/.null"
+              ${pkgs.coreutils}/bin/ln -sf /dev/null "$target"
+              MAILPASS=$(${config.xdg.configHome}/neomutt/.''${account}-email-password)
+              if test "x$MAILPASS" = "x"; then
+                echo "Cannot continue, missing $account password"
+                exit 1;
+              fi
+            done
+          '';
       };
       xdg.configFile."neomutt/mailcap" = {
         executable = false;
@@ -449,7 +458,9 @@ in {
       # We use msmtpq to send email, which means if we save the mail offline we
       # can run this queue runner from time to time.
       systemd.user.services.msmtp-queue-runner = {
-        Unit = { Description = "msmtp-queue runner"; };
+        Unit = {
+          Description = "msmtp-queue runner";
+        };
         Service = {
           Type = "oneshot";
           ExecStart = "${pkgs.msmtp}/bin/msmtp-queue -r";
@@ -457,34 +468,42 @@ in {
       };
 
       systemd.user.timers.msmtp-queue-runner = {
-        Unit = { Description = "msmtp-queue runner"; };
+        Unit = {
+          Description = "msmtp-queue runner";
+        };
         Timer = {
           Unit = "msmtp-queue-runner.service";
           OnCalendar = "*:0/5";
         };
-        Install = { WantedBy = [ "timers.target" ]; };
+        Install = {
+          WantedBy = [ "timers.target" ];
+        };
       };
     }
     {
       xdg.configFile = getPasswordFiles;
       home.packages = setPasswordScripts;
       accounts.email.accounts = emailAccounts;
-      systemd.user.services = builtins.listToAttrs (map (acc: {
-        name = "imapnotify-${acc}";
-        value = {
-          Service.ExecStartPre = "${config.xdg.dataHome}/mail/.presync";
-        };
-      }) (attrNames cfg.accounts));
+      systemd.user.services = builtins.listToAttrs (
+        map (acc: {
+          name = "imapnotify-${acc}";
+          value = {
+            Service.ExecStartPre = "${config.xdg.dataHome}/mail/.presync";
+          };
+        }) (attrNames cfg.accounts)
+      );
     }
     { accounts.email.accounts = extraMailConfigs; }
     (mkIf useHelix {
       programs.helix.languages = {
-        language = [{
-          name = "mail";
-          file-types = [{ glob = "neomutt-*"; }];
-          language-servers = [ "hanumail" ];
-          rulers = [ 78 ];
-        }];
+        language = [
+          {
+            name = "mail";
+            file-types = [ { glob = "neomutt-*"; } ];
+            language-servers = [ "hanumail" ];
+            rulers = [ 78 ];
+          }
+        ];
         language-server.hanumail = {
           command = "${pkgs.kinnison.hanumail}/bin/hanumail";
         };

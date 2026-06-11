@@ -1,8 +1,10 @@
 # The various packages provided directly by my system and home configs
 { lib, config, ... }:
 with lib;
-let zram = config.kinnison.zram;
-in {
+let
+  zram = config.kinnison.zram;
+in
+{
   imports = [
     ./user.nix
     ./nm.nix

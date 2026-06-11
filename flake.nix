@@ -38,7 +38,9 @@
     };
     catppuccin = {
       url = "github:catppuccin/nix";
-      inputs = { nixpkgs.follows = "nixpkgs"; };
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
     };
     # Disk setup
     disko = {
@@ -103,26 +105,52 @@
     };
   };
 
-  outputs = { self, nix-systems, flake-utils, flake-parts, flake-compat
-    , rust-overlay, crane, nixpkgs, nixos-hardware, home-manager, catppuccin
-    , stylix, disko, cats, prompter, lanzaboote, impermanence, juntakami
-    , hanumail }@inputs:
+  outputs =
+    {
+      self,
+      nix-systems,
+      flake-utils,
+      flake-parts,
+      flake-compat,
+      rust-overlay,
+      crane,
+      nixpkgs,
+      nixos-hardware,
+      home-manager,
+      catppuccin,
+      stylix,
+      disko,
+      cats,
+      prompter,
+      lanzaboote,
+      impermanence,
+      juntakami,
+      hanumail,
+    }@inputs:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       overlays = [
         rust-overlay.overlays.rust-overlay
-        (final: prev:
+        (
+          final: prev:
           let
             system = prev.stdenv.hostPlatform.system;
             cats = inputs.cats.packages.${system}.cats;
             prompter = inputs.prompter.packages.${system}.prompter;
             juntakami = inputs.juntakami.packages.${system}.juntakami;
             hanumail = inputs.hanumail.packages.${system}.hanumail;
-          in {
+          in
+          {
             kinnison = (import ./packages { pkgs = final; }) // {
-              inherit cats prompter juntakami hanumail;
+              inherit
+                cats
+                prompter
+                juntakami
+                hanumail
+                ;
             };
-          })
+          }
+        )
       ];
       defaultSystemModules = [
         catppuccin.nixosModules.catppuccin
@@ -143,36 +171,48 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
         }
-        ({ config, pkgs, ... }: {
-          nix = {
-            #nixPath = [ "nixpkgs=${nixpkgs}" ];
-            #registry.nixpkgs = {
-            #  from = {
-            #    id = "nixpkgs";
-            #    type = "indirect";
-            #  };
-            #  flake = nixpkgs;
-            #};
-            package = pkgs.nixVersions.stable;
-            extraOptions = ''
-              experimental-features = nix-command flakes
-            '';
-            settings = { auto-optimise-store = true; };
-            channel.enable = false; # We use flakes
-          };
-          nixpkgs.overlays = overlays;
-        })
+        (
+          { config, pkgs, ... }:
+          {
+            nix = {
+              #nixPath = [ "nixpkgs=${nixpkgs}" ];
+              #registry.nixpkgs = {
+              #  from = {
+              #    id = "nixpkgs";
+              #    type = "indirect";
+              #  };
+              #  flake = nixpkgs;
+              #};
+              package = pkgs.nixVersions.stable;
+              extraOptions = ''
+                experimental-features = nix-command flakes
+              '';
+              settings = {
+                auto-optimise-store = true;
+              };
+              channel.enable = false; # We use flakes
+            };
+            nixpkgs.overlays = overlays;
+          }
+        )
       ];
-      systemPair = name: body:
+      systemPair =
+        name: body:
         let
           installerBody = body // {
-            modules = body.modules ++ [{ kinnison.installer-image = true; }];
+            modules = body.modules ++ [ { kinnison.installer-image = true; } ];
           };
-        in {
+        in
+        {
           "${name}" = nixpkgs.lib.nixosSystem body;
           "${name}-installable" = nixpkgs.lib.nixosSystem installerBody;
         };
-      makeInstaller = { systems, flakeInputs, baseModules }:
+      makeInstaller =
+        {
+          systems,
+          flakeInputs,
+          baseModules,
+        }:
         nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = baseModules ++ [
@@ -191,43 +231,60 @@
             }
           ];
         };
-    in {
+    in
+    {
       # We use this to detect if we recurse back into ourselves during flake traversal
       toplevelMarker = "kinnison";
       # Normal flake outputs
-      packages = forAllSystems (system:
-        let pkgs = import nixpkgs { inherit system overlays; };
-        in (import ./packages) { inherit pkgs; });
-      devShells = forAllSystems (system:
-        let pkgs = import nixpkgs { inherit system; };
-        in with pkgs; {
-          default = mkShell { buildInputs = [ gnumake nvd ]; };
-        });
+      packages = forAllSystems (
+        system:
+        let
+          pkgs = import nixpkgs { inherit system overlays; };
+        in
+        (import ./packages) { inherit pkgs; }
+      );
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+        in
+        with pkgs;
+        {
+          default = mkShell {
+            buildInputs = [
+              gnumake
+              nvd
+            ];
+          };
+        }
+      );
       nixosModules.default = import ./nixos-modules;
       nixosConfigurations =
         # The test system is used by `make runvm` et al.
         (systemPair "test" {
           system = "x86_64-linux";
-          modules = self.lib.defaultSystemModules
-            ++ [ ./systems/test/configuration.nix ];
-        }) //
-        # Daniel's personal laptop
-        (systemPair "catalepsy" {
-          system = "x86_64-linux";
-          modules = self.lib.defaultSystemModules ++ [
-            nixos-hardware.nixosModules.lenovo-thinkpad-t480
-            ./systems/catalepsy/configuration.nix
-          ];
-        }) //
-        # Daniel's personal desktop
-        (systemPair "lassitude" {
-          system = "x86_64-linux";
-          modules = self.lib.defaultSystemModules ++ [
-            nixos-hardware.nixosModules.common-cpu-amd
-            nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
-            ./systems/lassitude/configuration.nix
-          ];
-        }) // {
+          modules = self.lib.defaultSystemModules ++ [ ./systems/test/configuration.nix ];
+        })
+        //
+          # Daniel's personal laptop
+          (systemPair "catalepsy" {
+            system = "x86_64-linux";
+            modules = self.lib.defaultSystemModules ++ [
+              nixos-hardware.nixosModules.lenovo-thinkpad-t480
+              ./systems/catalepsy/configuration.nix
+            ];
+          })
+        //
+          # Daniel's personal desktop
+          (systemPair "lassitude" {
+            system = "x86_64-linux";
+            modules = self.lib.defaultSystemModules ++ [
+              nixos-hardware.nixosModules.common-cpu-amd
+              nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
+              ./systems/lassitude/configuration.nix
+            ];
+          })
+        // {
           # The installer contains all of the above systems,
           # adds disko support, and is a GUI installer
           installer = self.lib.makeInstaller {

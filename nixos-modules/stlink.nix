@@ -1,9 +1,15 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 with lib;
 let
   cfg = config.kinnison.stlink;
   stlink-udev = pkgs.kinnison.stlink-udev.override { group = cfg.group; };
-in {
+in
+{
   options.kinnison.stlink = {
     enable = mkEnableOption "Turn on STLink capabilities";
     group = mkOption {

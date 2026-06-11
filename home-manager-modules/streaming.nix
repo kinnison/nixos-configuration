@@ -1,10 +1,17 @@
-{ config, osConfig, lib, pkgs, ... }:
+{
+  config,
+  osConfig,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.kinnison.streaming;
   guicfg = osConfig.kinnison.gui;
   plugins = pkgs.obs-studio-plugins;
-in {
+in
+{
   options.kinnison.streaming = {
     enable = mkEnableOption "Streaming capability such as obs-studio";
   };
@@ -24,4 +31,3 @@ in {
     };
   };
 }
-

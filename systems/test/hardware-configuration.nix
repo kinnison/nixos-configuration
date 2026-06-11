@@ -1,5 +1,10 @@
 # This is the "hardware" configuration for a basic test VM
-{ config, lib, modulesPath, ... }:
+{
+  config,
+  lib,
+  modulesPath,
+  ...
+}:
 
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
@@ -29,8 +34,7 @@
   boot.extraModulePackages = [ ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode =
-    lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   disko.devices = {
     disk = {
@@ -56,7 +60,9 @@
                 type = "luks";
                 name = "testcrypt";
                 askPassword = true;
-                settings = { allowDiscards = true; };
+                settings = {
+                  allowDiscards = true;
+                };
                 content = {
                   type = "lvm_pv";
                   vg = "testvg";
@@ -80,7 +86,11 @@
                 "/root-blank" = { };
                 "/root" = {
                   mountpoint = "/";
-                  mountOptions = [ "compress=zstd" "defaults" "relatime" ];
+                  mountOptions = [
+                    "compress=zstd"
+                    "defaults"
+                    "relatime"
+                  ];
                 };
               };
             };
@@ -91,7 +101,10 @@
               type = "filesystem";
               format = "ext4";
               mountpoint = "/persist";
-              mountOptions = [ "defaults" "relatime" ];
+              mountOptions = [
+                "defaults"
+                "relatime"
+              ];
             };
           };
           nix = {
@@ -100,7 +113,10 @@
               type = "filesystem";
               format = "ext4";
               mountpoint = "/nix";
-              mountOptions = [ "defaults" "relatime" ];
+              mountOptions = [
+                "defaults"
+                "relatime"
+              ];
             };
           };
           home = {
@@ -109,7 +125,10 @@
               type = "filesystem";
               format = "ext4";
               mountpoint = "/home";
-              mountOptions = [ "defaults" "relatime" ];
+              mountOptions = [
+                "defaults"
+                "relatime"
+              ];
             };
           };
         };

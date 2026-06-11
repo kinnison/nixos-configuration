@@ -1,9 +1,17 @@
-{ config, lib, modulesPath, ... }:
+{
+  config,
+  lib,
+  modulesPath,
+  ...
+}:
 
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  kinnison.batteries = [ "BAT0" "BAT1" ];
+  kinnison.batteries = [
+    "BAT0"
+    "BAT1"
+  ];
 
   boot.kernelParams = [ "mitigations=off" ];
 
@@ -28,11 +36,13 @@
     "virtio_rng"
     "virtio_gpu"
   ];
-  boot.kernelModules = [ "kvm-intel" "acpi_call" ];
+  boot.kernelModules = [
+    "kvm-intel"
+    "acpi_call"
+  ];
   boot.extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
 
-  hardware.cpu.intel.updateMicrocode =
-    lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   # Disk setup
   disko.devices = {
@@ -59,7 +69,9 @@
                 type = "luks";
                 name = "catacrypt";
                 askPassword = true;
-                settings = { allowDiscards = true; };
+                settings = {
+                  allowDiscards = true;
+                };
                 content = {
                   type = "lvm_pv";
                   vg = "catavg";
@@ -83,7 +95,11 @@
                 "/root-blank" = { };
                 "/root" = {
                   mountpoint = "/";
-                  mountOptions = [ "compress=zstd" "defaults" "relatime" ];
+                  mountOptions = [
+                    "compress=zstd"
+                    "defaults"
+                    "relatime"
+                  ];
                 };
               };
             };
@@ -94,7 +110,10 @@
               type = "filesystem";
               format = "ext4";
               mountpoint = "/persist";
-              mountOptions = [ "defaults" "relatime" ];
+              mountOptions = [
+                "defaults"
+                "relatime"
+              ];
             };
           };
           nix = {
@@ -103,7 +122,10 @@
               type = "filesystem";
               format = "ext4";
               mountpoint = "/nix";
-              mountOptions = [ "defaults" "relatime" ];
+              mountOptions = [
+                "defaults"
+                "relatime"
+              ];
             };
           };
           home = {
@@ -112,7 +134,10 @@
               type = "filesystem";
               format = "ext4";
               mountpoint = "/home";
-              mountOptions = [ "defaults" "relatime" ];
+              mountOptions = [
+                "defaults"
+                "relatime"
+              ];
             };
           };
         };

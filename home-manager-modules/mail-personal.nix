@@ -1,8 +1,10 @@
 # My personal email configuration, on by default and primary by default
 { config, lib, ... }:
 with lib;
-let cfg = config.kinnison.email.personal;
-in {
+let
+  cfg = config.kinnison.email.personal;
+in
+{
   options.kinnison.email.personal.enable = mkOption {
     type = types.bool;
     description = "Include personal email configuration";
@@ -32,7 +34,12 @@ in {
         "Sent"
         "Old"
       ];
-      watchFolders = [ "INBOX" "HighBank" "Github" "Gitlab" ];
+      watchFolders = [
+        "INBOX"
+        "HighBank"
+        "Github"
+        "Gitlab"
+      ];
       signature = ''
         Daniel Silverstone                         http://www.digital-scurf.org/
         PGP mail accepted and encouraged.            Key Id: 3CCE BABE 206C 3B69

@@ -1,6 +1,8 @@
 { homes, lib, ... }:
-let inherit (lib) mkDefault mkForce;
-in rec {
+let
+  inherit (lib) mkDefault mkForce;
+in
+rec {
   imports = [ ./hardware-configuration.nix ];
   system.stateVersion = "24.11";
   networking.hostName = "testhost";
@@ -9,7 +11,9 @@ in rec {
     name = "testuser";
     realName = "Testy McTestface";
     home = homes.dsilvers;
-    extra = { initialPassword = "test"; };
+    extra = {
+      initialPassword = "test";
+    };
   };
 
   virtualisation.vmVariantWithBootLoader = {
@@ -19,7 +23,9 @@ in rec {
       "-m 4G"
     ];
 
-    environment.sessionVariables = { WLR_NO_HARDWARE_CURSORS = "1"; };
+    environment.sessionVariables = {
+      WLR_NO_HARDWARE_CURSORS = "1";
+    };
 
     boot.kernelParams = [ "mitigations=off" ];
     virtualisation.diskSize = 5120;

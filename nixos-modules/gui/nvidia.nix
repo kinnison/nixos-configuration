@@ -1,8 +1,10 @@
 { config, lib, ... }:
 with lib;
-let cfg = config.kinnison.nvidia;
+let
+  cfg = config.kinnison.nvidia;
 
-in {
+in
+{
   options.kinnison.nvidia.enable = mkEnableOption "Nvidia GPU";
 
   config = mkIf cfg.enable {
@@ -17,7 +19,10 @@ in {
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
-    kinnison.unfree.pkgs =
-      [ "nvidia-x11" "nvidia-settings" "nvidia-kernel-modules" ];
+    kinnison.unfree.pkgs = [
+      "nvidia-x11"
+      "nvidia-settings"
+      "nvidia-kernel-modules"
+    ];
   };
 }

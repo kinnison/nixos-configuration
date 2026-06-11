@@ -1,12 +1,21 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   cfg = config.kinnison.gui;
-  mkUpper = str:
-    (lib.toUpper (builtins.substring 0 1 str))
-    + (builtins.substring 1 (builtins.stringLength str) str);
+  mkUpper =
+    str:
+    (lib.toUpper (builtins.substring 0 1 str)) + (builtins.substring 1 (builtins.stringLength str) str);
   cursor-name = "${cfg.theme}${mkUpper cfg.accent}";
-in {
-  imports = [ ./wayland.nix ./nvidia.nix ];
+in
+{
+  imports = [
+    ./wayland.nix
+    ./nvidia.nix
+  ];
   options.kinnison.gui = {
     enable = lib.mkEnableOption "gui";
     theme = lib.mkOption {
@@ -37,8 +46,7 @@ in {
     catppuccin.accent = lib.mkDefault cfg.accent;
     catppuccin.tty.enable = false;
     environment.systemPackages = lib.mkMerge [
-      (lib.mkIf config.kinnison.network-manager.enable
-        [ pkgs.networkmanagerapplet ])
+      (lib.mkIf config.kinnison.network-manager.enable [ pkgs.networkmanagerapplet ])
       [ config.stylix.cursor.package ]
     ];
     stylix = {

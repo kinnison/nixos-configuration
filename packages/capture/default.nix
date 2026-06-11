@@ -1,8 +1,18 @@
-{ pkgs, sway, wl-clipboard-rs, jq, slurp, grim, rofi, ... }:
+{
+  pkgs,
+  sway,
+  wl-clipboard-rs,
+  jq,
+  slurp,
+  grim,
+  rofi,
+  ...
+}:
 let
   swaymsg = "${sway}/bin/swaymsg";
   wl-copy = "${wl-clipboard-rs}/bin/wl-copy";
-in pkgs.writeShellScriptBin "capture" ''
+in
+pkgs.writeShellScriptBin "capture" ''
 
   TMPDIR=$(mktemp -d)
   cleanup () { rm -rf "$TMPDIR"; }

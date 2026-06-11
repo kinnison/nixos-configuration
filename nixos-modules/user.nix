@@ -1,9 +1,15 @@
-{ config, lib, hm-modules, ... }:
+{
+  config,
+  lib,
+  hm-modules,
+  ...
+}:
 let
   inherit (lib) mkOption mkIf mkForce;
   cfg = config.kinnison.user;
   imperm = config.kinnison.impermanence.enable;
-in {
+in
+{
   options.kinnison.user = {
     name = mkOption {
       type = lib.types.str;
@@ -28,8 +34,7 @@ in {
       default = cfg.name;
     };
     autoLogin = mkOption {
-      description =
-        "Whether or not to try and automatically log in to graphical envs";
+      description = "Whether or not to try and automatically log in to graphical envs";
       type = lib.types.bool;
       default = true;
     };
@@ -45,7 +50,8 @@ in {
       isNormalUser = true;
       extraGroups = cfg.groups ++ [ "wheel" ];
       description = cfg.realName;
-    } // cfg.extra;
+    }
+    // cfg.extra;
     home-manager.users.${cfg.name} = {
       imports = hm-modules ++ [ cfg.home ] ++ cfg.extraHomeModules;
     };
