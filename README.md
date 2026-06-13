@@ -19,3 +19,17 @@ incorporating any files into your own configs.
 There are a number of `nixosConfigurations` which are the system configs
 for my personal machines as well as a custom installer ISO and some test
 VMs.
+
+# How to use
+
+If you have radicle, then you can acquire the repository by doing:
+
+`rad clone rad:z2rxyrRCgCvYSUp5osYkuZHVv1Vzp`
+
+If, on the other hand, you're without radicle (eg. setting up a new
+system in panic mode, yes Daniel I mean you) or if you're using this
+flake from another, then
+
+`git clone https://radicle.infrafish.uk/z2rxyrRCgCvYSUp5osYkuZHVv1Vzp.git nixos-configuration`
+
+will get you what you need.
